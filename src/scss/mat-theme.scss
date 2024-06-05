@@ -1,0 +1,38 @@
+// @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+// @import '@angular/material/prebuilt-themes/indigo-pink.css';
+// @import '@angular/material/prebuilt-themes/pink-bluegrey.css';
+//  @import "@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import "@angular/material/theming";
+@import "material-icons/iconfont/material-icons.scss";
+@import "mat-theme-dark";
+@import "mat-theme-light";
+@import "custom-components-theme";
+@import "mat-typography";
+// @import "variables";
+// @import "sizing";
+@import "fonts/font";
+
+
+$mat-toolbar-height: 56px; //Custom Property 
+$dark: dark;
+$light: light;
+@include mat-core();
+@include angular-material-theme($light-theme);
+@include custom-components-theme($light-theme, $light);
+@include angular-material-typography($config);
+
+.dark-theme {
+
+    // Dark theme
+    @include custom-components-theme($dark-theme, $dark);
+    $palette-primary: map-get($dark-theme, primary);
+    $palette-accent: map-get($dark-theme, accent);
+    $palette-warn: map-get($dark-theme, warn);
+    $color-accent: mat-color($palette-accent);
+
+    @include angular-material-color($dark-theme);
+
+    code {
+        color: $color-accent;
+    }
+}

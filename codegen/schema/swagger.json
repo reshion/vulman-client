@@ -1,0 +1,428 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API",
+    "version": "0.1"
+  },
+  "paths": {
+    "/api/tenants": {
+      "get": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Adds a new user - with oneOf examples",
+        "operationId": "list",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Adds a new tenant - with oneOf examples",
+        "operationId": "store",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoreTenantRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/tenants/{id}": {
+      "get": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Get Tenant information",
+        "description": "Returns Tenant data",
+        "operationId": "show",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tenant id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Update Tenant information",
+        "description": "Returns Tenant data",
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tenant id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoreTenantRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Delete Tenant",
+        "description": "Returns deleted Tenant data",
+        "operationId": "destroy",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Tenant id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Login user",
+        "operationId": "login",
+        "requestBody": {
+          "description": "Logs in a user",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "JWT access token",
+                  "type": "string"
+                },
+                "example": "Bearer 4|oeXad4kChJT43wli90LOd1VbFhtuGuEdvxvEHMAtcb025185"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/current": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get current user",
+        "description": "Returns the current user",
+        "operationId": "current",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BaseModel": {
+        "title": "BaseModel",
+        "description": "BaseModel",
+        "properties": {
+          "id": {
+            "title": "ID",
+            "description": "ID",
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "created_at": {
+            "title": "Created at",
+            "description": "Created at",
+            "type": "string",
+            "format": "datetime",
+            "example": "2020-01-27 17:50:45"
+          },
+          "updated_at": {
+            "title": "Updated at",
+            "description": "Updated at",
+            "type": "string",
+            "format": "datetime",
+            "example": "2020-01-27 17:50:45"
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "BaseModel"
+        }
+      },
+      "Company": {
+        "title": "Company",
+        "description": "Company model",
+        "type": "object",
+        "xml": {
+          "name": "Company"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedBaseModel"
+          },
+          {
+            "properties": {
+              "tenant_id": {
+                "title": "Tenant ID",
+                "description": "Tenant's id of the Company",
+                "type": "integer",
+                "format": "int64",
+                "example": 1
+              },
+              "tenant": {
+                "$ref": "#/components/schemas/Tenant"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "NamedBaseModel": {
+        "title": "NamedBaseModel",
+        "description": "NamedBaseModel",
+        "type": "object",
+        "xml": {
+          "name": "NamedBaseModel"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseModel"
+          },
+          {
+            "properties": {
+              "name": {
+                "title": "Name",
+                "description": "Name of the User",
+                "type": "string",
+                "example": "Elmofuchto"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "Tenant": {
+        "title": "Tenant",
+        "description": "Tenant model",
+        "xml": {
+          "name": "Tenant"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedBaseModel"
+          }
+        ]
+      },
+      "User": {
+        "title": "User",
+        "description": "User model",
+        "type": "object",
+        "xml": {
+          "name": "User"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseModel"
+          },
+          {
+            "properties": {
+              "email_verified_at": {
+                "title": "Email verified at",
+                "description": "Email verified at",
+                "type": "string",
+                "format": "datetime",
+                "example": "2020-01-27 17:50:45"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "LoginRequest": {
+        "title": "LoginRequest",
+        "properties": {
+          "email": {
+            "title": "email",
+            "description": "Email of of User",
+            "type": "string",
+            "example": "test@example.com"
+          },
+          "password": {
+            "title": "Password",
+            "description": "Users password",
+            "type": "string",
+            "example": "password"
+          }
+        },
+        "type": "object"
+      },
+      "StoreTenantRequest": {
+        "title": "StoreTenantRequest",
+        "properties": {
+          "name": {
+            "title": "name",
+            "description": "Name of the new Tenant",
+            "type": "string",
+            "example": "A nice Tenant"
+          }
+        },
+        "type": "object"
+      },
+      "TenantResource": {
+        "title": "TenantResource",
+        "description": "TenantResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tenant"
+            }
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "TenantResource"
+        }
+      }
+    },
+    "securitySchemes": {
+      "sanctum": {
+        "type": "apiKey",
+        "description": "Enter token in format (Bearer <token>)",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+@mixin set-mat-dialog-theme($theme) {
+
+  $palette-primary: map-get($theme, primary);
+  $palette-accent: map-get($theme, accent);
+  $palette-warn: map-get($theme, warn);
+
+  $palette-fg: map-get($theme, foreground);
+  $palette-bg: map-get($theme, background);
+
+ 
+  $color-primary: mat-color($palette-primary);
+  $color-primary-state: mat-color($palette-primary, 900);
+  $color-accent: mat-color($palette-accent);
+
+  $color-fg: mat-color($palette-fg, base);
+  $color-bg: mat-color($palette-bg, card);
+  
+  .mat-dialog-fullscreen {
+    .mat-dialog-container {
+        .mat-dialog-content {
+            max-height: unset;
+        }
+    }
+  }
+  .mat-dialog {
+    border-left: 1rem solid transparent;
+    padding-left: 5px;
+
+    
+    &.active {
+        background-color: mat-color($palette-primary,400)
+    }
+    &.active-light {
+        background-color: mat-color($palette-accent, A200); 
+    }
+  }
+}
+

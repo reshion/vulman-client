@@ -1,0 +1,6 @@
+// Min width generator
+@for $value from 0 through 20 {
+    .t4m-mw-#{$value * 5} {
+        min-width: $value * 5 +0%
+    }
+}

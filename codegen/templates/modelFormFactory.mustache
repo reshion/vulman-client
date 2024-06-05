@@ -1,0 +1,46 @@
+{{^useRxJS6}}
+import { Observable }                                        from 'rxjs/Observable';
+{{/useRxJS6}}
+{{#useRxJS6}}
+import { Observable }                                        from 'rxjs';
+{{/useRxJS6}}
+import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
+
+/**
+ * Mustache template FormGroup Factory Class to get FormGroup
+ *
+ */
+export class {{classname}}FormGroupFactory {
+
+  /**
+   * Get FormGroup
+   *
+   * @param {object} data
+   * @returns {FormGroup}
+   */
+  static getFormGroup(data?: {{classname}}): FormGroup {
+    const formGroup = new FormGroup({
+      {{#vars}}
+        {{#isPrimitiveType}}
+          {{#nullable}}
+            {{name}}: new FormControl(data?.{{name}}),
+          {{/nullable}}
+          {{^nullable}}
+            {{name}}: new FormControl(data?.{{name}}, Validators.required),
+          {{/nullable}}
+        {{/isPrimitiveType}}       
+        {{^isPrimitiveType}}
+          {{#isContainer}}
+            {{#items}}
+              {{#isObject}}
+                  {{name}}: {{{complexType}}}.getFormGroup(data?.{{name}}),
+              {{/isObject}}
+            {{/items}}
+          {{/isContainer}}
+        {{/isPrimitiveType}}
+      {{/vars}}
+    });
+
+    return formGroup;
+  }
+}

@@ -1,0 +1,141 @@
+{{^useRxJS6}}
+import { Observable }                                        from 'rxjs/Observable';
+{{/useRxJS6}}
+{{#useRxJS6}}
+import { Observable }                                        from 'rxjs';
+{{/useRxJS6}}
+import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
+
+export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{ {{>modelGenericAdditionalProperties}}
+
+
+{{#vars}}
+    {{#description}}
+    /**
+     * {{{description}}}
+     */
+    {{/description}} 
+    @Expose()
+    {{^isPrimitiveType}}
+    {{#isContainer}}
+    {{#items}}
+    {{#isObject}}
+    @Type(() => {{{complexType}}})
+    {{/isObject}}
+    {{/items}}
+    {{/isContainer}}
+    {{/isPrimitiveType}}
+    {{#is this 'read-only'}}readonly {{/is}}{{name}}{{^nullable}}!{{/nullable}}: {{#is this 'enum'}}{{{datatypeWithEnum}}}{{/is}}{{#isNot this 'enum'}}{{{datatype}}}{{/isNot}}{{#nullable}} | undefined{{/nullable}};
+{{/vars}}
+
+{{#vars}}
+    /**
+    {{#description}}
+     * Description: {{{description}}}
+    {{/description}} 
+    {{^isPrimitiveType}}
+    {{#isContainer}}
+    {{#items}}
+    {{#isObject}}
+     * Complex type: {{{complexType}}}
+    {{/isObject}}
+    {{/items}}
+    {{/isContainer}}
+    {{/isPrimitiveType}}
+    {{#nullable}}
+     * Nullable property
+    {{/nullable}}
+    {{#required}}
+     * Required property
+    {{/required}}
+     * datatype: {{datatype}}
+     * datatypeWithEnum: {{datatypeWithEnum}}
+     * {{#is this 'read-only'}}readonly {{/is}}{{name}}: {{#is this 'enum'}}{{{datatypeWithEnum}}}{{/is}}{{#isNot this 'enum'}}{{{datatype}}}{{/isNot}}   
+     */
+{{/vars}}
+
+    // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
+
+    constructor(init: Partial<{{classname}}> = {}) {
+        {{#parent}}super(init) {{/parent}} 
+         {{#vars}}
+            {{#isPrimitiveType}}
+            
+                    init.{{name}} ? this.{{name}} = init.{{name}} : null{{^@last}},{{/@last}}
+               
+            {{/isPrimitiveType}}
+            {{^isPrimitiveType}}
+                {{#isContainer}}
+                    {{#items}}
+                        {{#isObject}}
+                            this.{{name}} = init.{{name}}?.map(x => new {{{datatype}}}(x)) || [] {{^@last}},{{/@last}}
+                        {{/isObject}}
+                    {{/items}}
+                {{/isContainer}}
+                {{^isContainer}}
+                    {{^isObject}}
+                        init.{{name}} ? this.{{name}} = init.{{name}} : null{{^@last}},{{/@last}}
+                    {{/isObject}}
+                    {{#isObject}}
+                        this.{{name}} = new {{{datatype}}}(init.{{name}} || {}){{^@last}},{{/@last}}
+                    {{/isObject}}
+                {{/isContainer}}               
+            {{/isPrimitiveType}}            
+      {{/vars}}
+    }
+
+    static {{#parent}}override{{/parent}}  getForm(data?: {{classname}} | {{classname}}[] | null): FormGroup {
+
+
+        if(!data) {
+            return {{classname}}.getFormGroup(new {{classname}}());
+        }
+
+         if(Array.isArray(data)) {
+            let arrayForm = new FormArray<any>([]);
+            
+            if(data.length > 0) {
+                arrayForm =  new FormArray<any>(data.map(item => {{classname}}.getFormGroup(item)));                
+            }
+            return new FormGroup({
+                arrayForm
+            });        
+        } else {
+             return  {{classname}}.getFormGroup(data);
+        }       
+     
+    }
+
+     /**
+   * Get FormGroup
+   *
+   * @param {object} data
+   * @returns {FormGroup}
+   */
+  static {{#parent}}override{{/parent}}  getFormGroup(data?: {{classname}}): FormGroup {
+       
+        return new FormGroup({           
+            {{#vars}}           
+                {{#isPrimitiveType}}                              
+                        {{name}}: new FormControl(data?.{{name}}, [{{#required}}Validators.required, {{/required}}{{#isNumeric}}Validators.pattern('^[0-9]*$'){{/isNumeric}}]){{^@last}},{{/@last}}
+                {{/isPrimitiveType}}       
+                {{^isPrimitiveType}}
+                {{^isContainer}}
+                    {{^isObject}}
+                        {{name}}: new FormControl(data?.{{name}}, [{{#required}}Validators.required, {{/required}}{{#isNumeric}}Validators.pattern('^[0-9]*$'){{/isNumeric}}]){{^@last}},{{/@last}}
+                    {{/isObject}}
+                {{/isContainer}}  
+                    {{#isObject}}
+                        {{name}}: (() => { 
+                            const fg = {{{complexType}}}.getForm(data?.{{name}});
+                            fg.addValidators([{{#required}}Validators.required, {{/required}}{{#isNumeric}}Validators.pattern('^[0-9]*$'){{/isNumeric}}]);
+                            return fg;
+                        })(){{^@last}},{{/@last}}
+                    {{/isObject}}  
+                {{/isPrimitiveType}}
+            {{/vars}}
+        });
+    }
+  
+
+}{{>modelGenericEnums}}

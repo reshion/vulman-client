@@ -1,0 +1,43 @@
+@mixin set-mat-form-field-theme($theme) {
+
+    $palette-primary: map-get($theme, primary);
+    $palette-accent: map-get($theme, accent);
+    $palette-warn: map-get($theme, warn);
+    $palette-bg: map-get($theme, background);
+  
+   
+    $primary: mat-color($palette-primary);
+    $primary-state: mat-color($palette-primary, 900);
+    $accent: mat-color($palette-accent);
+    $bg: mat-color($palette-bg, background);
+    $elevation: mat-color($palette-bg, elevation);
+   
+    $config: mat-get-color-config($theme);
+    $palette-fg: map-get($config, foreground);
+    
+    mat-form-field {
+        &.mat-form-field {
+            width: 100%;
+            textarea.mat-input-element.cdk-textarea-autosize {
+                padding: 1rem 1rem 3rem 1rem;
+                resize: vertical;
+                overflow: hidden;
+                width: calc(100% - 2rem);
+            }
+            textarea.mat-input-element,
+            input.mat-input-element {
+                caret-color: mat-color($palette-fg, text) !important
+            }
+           
+            &.mat-focused {
+                .mat-form-field-label {
+                    color: mat-color($palette-primary, 400); 
+                }
+                .mat-form-field-ripple {
+                    background-color: mat-color($palette-primary, 400);
+                }
+            }
+
+        }
+    }
+}

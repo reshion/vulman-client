@@ -1,0 +1,58 @@
+@mixin set-mat-select-theme($theme, $layout) {
+    $palette-primary: map-get($theme, primary);
+    $palette-accent: map-get($theme, accent);
+    $palette-warn: map-get($theme, warn);
+    $palette-bg: map-get($theme, background);
+
+    $color-primary: mat-color($palette-primary);
+    $color-primary-state: mat-color($palette-primary, 900);
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    $bg: green;
+    $color: red;
+    $accent: '';
+    $accent-selected: '';
+
+    @if $layout ==$dark {
+        $bg: mat-color($palette-primary) !important;
+        $color: mat-color($foreground, text) !important;
+        $accent: mat-color($palette-accent, lighter) !important;
+        $accent-selected: mat-color($palette-accent) !important;
+
+
+    }
+
+    @else {
+        $bg: mat-color($foreground, lighter) !important;
+        $color: mat-color($foreground, default-contrast) !important;
+        $accent: mat-color($palette-accent, darker) !important;
+        $accent-selected: mat-color($palette-accent) !important;
+    }
+
+    .mat-mdc-select-panel {
+        &.mat-primary {
+            background: $bg;
+            color: $color;
+            position: relative;
+            height: 100%;
+
+            .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+
+                .mdc-list-item__primary-text {
+                    color: $accent ;
+                }
+            }
+        }
+    }
+
+    .mat-primary {
+
+        .mdc-text-field--focused:not(.mdc-text-field--disabled) {
+            .mdc-floating-label {
+                color: $accent-selected;
+            }
+        }
+    }
+}

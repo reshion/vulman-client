@@ -1,0 +1,50 @@
+@mixin set-mat-toolbar-theme($theme, $layout) {
+    $palette-primary: map-get($theme, primary);
+    $palette-accent: map-get($theme, accent);
+    $palette-warn: map-get($theme, warn);
+    $palette-bg: map-get($theme, background);
+
+    $color-primary: mat-color($palette-primary);
+    $color-primary-state: mat-color($palette-primary, 900);
+
+    $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+
+    $bg-toolbar: green;
+    $color-toolbar: red;
+
+    @if $layout ==$dark {
+        $bg-toolbar: mat-color($palette-primary) !important;
+        $color-toolbar: mat-color($foreground, text) !important;
+
+    }
+
+    @else {
+        $bg-toolbar: mat-color($foreground, lighter) !important;
+        $color-toolbar: mat-color($foreground, default-contrast) !important;
+    }
+
+    mat-toolbar {
+        position: relative;
+
+        // display: flex;
+        // flex-direction: column;
+        // height: 100%;
+        .vertical-collapsed {
+            border-radius: 50%;
+        }
+
+        border-left: 1px solid transparent;
+        border-right: 1px solid transparent;
+        background: inherit;
+        height: $mat-toolbar-height !important;
+        max-height: $mat-toolbar-height !important;
+    }
+
+    app-top-toolbar {
+        >mat-toolbar {
+            background: $bg-toolbar;
+            color: $color-toolbar;
+        }
+    }
+}

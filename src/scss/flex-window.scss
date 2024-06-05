@@ -1,0 +1,44 @@
+@mixin set-flex-window-theme($theme) {
+    $palette-primary: map-get($theme, primary);
+    $palette-accent: map-get($theme, accent);
+    $palette-warn: map-get($theme, warn);
+    $palette-bg: map-get($theme, background);
+
+
+    $color-primary: mat-color($palette-primary);
+    $color-primary-state: mat-color($palette-primary, 900);
+    $color-accent: mat-color($palette-accent);
+    $color-bg: mat-color($palette-bg, background);
+
+
+
+    app-flex-window {
+        mat-toolbar {
+            height: $mat-toolbar-height !important;
+            max-height: $mat-toolbar-height !important;
+        }
+
+        .flex-window-body {
+            height: 100%;
+            max-height: 100%;
+
+            .mat-table-container {
+                position: relative;
+                height: calc(100% - 56px);
+            }
+
+            &:has(~ mat-toolbar > *) {
+
+                height: calc(100% - #{$mat-toolbar-height *  2}) !important;
+                max-height: calc(100% - #{$mat-toolbar-height *  2}) !important;
+
+            }
+        }
+
+        .flex-window-footer {
+            &:empty {
+                display: none;
+            }
+        }
+    }
+}

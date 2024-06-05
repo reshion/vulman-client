@@ -1,0 +1,21 @@
+{{>licenseInfo}}
+{{#models}}
+
+import { Type, Expose } from 'class-transformer';
+// @dynamic
+{{#model}}
+
+{{#tsImports}}
+import { {{classname}} } from './{{filename}}';
+{{/tsImports}}
+
+{{#description}}
+/**
+ * model.mustache
+ *
+ * {{{description}}}
+ */
+{{/description}}
+{{#is this 'enum'}}{{>modelEnum}}{{/is}}{{#isNot this 'enum'}}{{#is this 'alias'}}{{>modelAlias}}{{/is}}{{#isNot this 'alias'}}{{#taggedUnions}}{{>modelTaggedUnion}}{{/taggedUnions}}{{^taggedUnions}}{{>modelGeneric}}{{/taggedUnions}}{{/isNot}}{{/isNot}}
+{{/model}}
+{{/models}}
