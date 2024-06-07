@@ -26,13 +26,13 @@ export class NamedBaseModel extends BaseModel {
 
 
     /**
-     * Name of the User
+     * Name of the entity
      */
     @Expose()
     name!: string;
 
     /**
-     * Description: Name of the User
+     * Description: Name of the entity
      * datatype: string
      * datatypeWithEnum: string
      * name: string   

@@ -1,5 +1,15 @@
+export * from './assessments.service';
+import { AssessmentsService } from './assessments.service';
+export * from './assets.service';
+import { AssetsService } from './assets.service';
+export * from './companies.service';
+import { CompaniesService } from './companies.service';
+export * from './riskResponses.service';
+import { RiskResponsesService } from './riskResponses.service';
 export * from './tenants.service';
 import { TenantsService } from './tenants.service';
 export * from './user.service';
 import { UserService } from './user.service';
-export const APIS = [TenantsService, UserService];
+export * from './vulnerabilities.service';
+import { VulnerabilitiesService } from './vulnerabilities.service';
+export const APIS = [AssessmentsService, AssetsService, CompaniesService, RiskResponsesService, TenantsService, UserService, VulnerabilitiesService];

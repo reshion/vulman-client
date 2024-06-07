@@ -17,8 +17,10 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
-import { StoreTenantRequest } from '../model/storeTenantRequest';
+import { TenantPagingResource } from '../model/tenantPagingResource';
 import { TenantResource } from '../model/tenantResource';
+import { TenantStoreRequest } from '../model/tenantStoreRequest';
+import { TenantUpdateRequest } from '../model/tenantUpdateRequest';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -63,13 +65,13 @@ export class TenantsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public destroy(id: number, observe?: 'body', reportProgress?: boolean): Observable<TenantResource>;
-    public destroy(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TenantResource>>;
-    public destroy(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TenantResource>>;
-    public destroy(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public destroyTenant(id: number, observe?: 'body', reportProgress?: boolean): Observable<TenantResource>;
+    public destroyTenant(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TenantResource>>;
+    public destroyTenant(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TenantResource>>;
+    public destroyTenant(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling destroy.');
+            throw new Error('Required parameter id was null or undefined when calling destroyTenant.');
         }
 
         let headers = this.defaultHeaders;
@@ -103,15 +105,27 @@ export class TenantsService {
     }
 
     /**
-     * Adds a new user - with oneOf examples
+     * Lists tenants
      * 
+     * @param page Page number
+     * @param count Number of items per page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public list(observe?: 'body', reportProgress?: boolean): Observable<TenantResource>;
-    public list(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TenantResource>>;
-    public list(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TenantResource>>;
-    public list(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public listTenants(page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<TenantPagingResource>;
+    public listTenants(page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TenantPagingResource>>;
+    public listTenants(page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TenantPagingResource>>;
+    public listTenants(page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (count !== undefined && count !== null) {
+            queryParameters = queryParameters.set('count', <any>count);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -133,8 +147,9 @@ export class TenantsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<TenantResource>(`${this.basePath}/api/tenants`,
+        return this.httpClient.get<TenantPagingResource>(`${this.basePath}/api/tenants`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -150,13 +165,13 @@ export class TenantsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public show(id: number, observe?: 'body', reportProgress?: boolean): Observable<TenantResource>;
-    public show(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TenantResource>>;
-    public show(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TenantResource>>;
-    public show(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public showTenant(id: number, observe?: 'body', reportProgress?: boolean): Observable<TenantResource>;
+    public showTenant(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TenantResource>>;
+    public showTenant(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TenantResource>>;
+    public showTenant(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling show.');
+            throw new Error('Required parameter id was null or undefined when calling showTenant.');
         }
 
         let headers = this.defaultHeaders;
@@ -190,16 +205,16 @@ export class TenantsService {
     }
 
     /**
-     * Adds a new tenant - with oneOf examples
+     * Adds a new tenant
      * 
      * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public store(body?: StoreTenantRequest, observe?: 'body', reportProgress?: boolean): Observable<TenantResource>;
-    public store(body?: StoreTenantRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TenantResource>>;
-    public store(body?: StoreTenantRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TenantResource>>;
-    public store(body?: StoreTenantRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public storeTenant(body?: TenantStoreRequest, observe?: 'body', reportProgress?: boolean): Observable<TenantResource>;
+    public storeTenant(body?: TenantStoreRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TenantResource>>;
+    public storeTenant(body?: TenantStoreRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TenantResource>>;
+    public storeTenant(body?: TenantStoreRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
         let headers = this.defaultHeaders;
@@ -246,13 +261,13 @@ export class TenantsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public update(id: number, body?: StoreTenantRequest, observe?: 'body', reportProgress?: boolean): Observable<TenantResource>;
-    public update(id: number, body?: StoreTenantRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TenantResource>>;
-    public update(id: number, body?: StoreTenantRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TenantResource>>;
-    public update(id: number, body?: StoreTenantRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateTenant(id: number, body?: TenantUpdateRequest, observe?: 'body', reportProgress?: boolean): Observable<TenantResource>;
+    public updateTenant(id: number, body?: TenantUpdateRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TenantResource>>;
+    public updateTenant(id: number, body?: TenantUpdateRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TenantResource>>;
+    public updateTenant(id: number, body?: TenantUpdateRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling update.');
+            throw new Error('Required parameter id was null or undefined when calling updateTenant.');
         }
 
 

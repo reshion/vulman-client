@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "generate-api": "java -jar ./codegen/swagger-codegen-cli-3.0.33.jar generate --additional-properties ngVersion=14 -D debugOperations=false debugModels=true,  withInterfaces=true -l typescript-angular -t ./codegen/templates -o ./src/app/api -c ./codegen/swagger-codegen-cli.cfg.json -i ./codegen/schema/swagger.json > swagger.out.txt",
+    "generate-api": "java -jar ./codegen/swagger-codegen-cli-3.0.57.jar generate --additional-properties ngVersion=14 -D debugOperations=true debugModels=true,  withInterfaces=true -l typescript-angular -t ./codegen/templates -o ./src/app/api -c ./codegen/swagger-codegen-cli.cfg.json -i ./codegen/schema/swagger.json > swagger.out.txt",
     "generate-api-original": "java -jar ./codegen/swagger-codegen-cli-3.0.33.jar generate --additional-properties  ngVersion=12 -D debugOperations=false debugModels=true,  withInterfaces=true -l typescript-angular  -o ./src/app/api-original -c ./codegen/swagger-codegen-cli.cfg.json -i ./codegen/schema/swagger.json > swagger.out.txt"
   },
   "private": true,

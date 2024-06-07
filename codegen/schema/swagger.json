@@ -5,20 +5,842 @@
     "version": "0.1"
   },
   "paths": {
-    "/api/tenants": {
+    "/api/assessments": {
       "get": {
         "tags": [
-          "Tenants"
+          "Assessments"
         ],
-        "summary": "Adds a new user - with oneOf examples",
-        "operationId": "list",
+        "summary": "Lists assessments",
+        "operationId": "listAssessments",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TenantResource"
+                  "$ref": "#/components/schemas/AssessmentPagingResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Assessments"
+        ],
+        "summary": "Adds a new assessment",
+        "operationId": "storeAssessment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentStoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/assessments/{id}": {
+      "get": {
+        "tags": [
+          "Assessments"
+        ],
+        "summary": "Get Assessment information",
+        "description": "Returns Assessment data",
+        "operationId": "showAssessment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Assessment id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Assessments"
+        ],
+        "summary": "Update Assessment information",
+        "description": "Returns updated Assessment data",
+        "operationId": "updateAssessment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Assessment id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentStoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Assessments"
+        ],
+        "summary": "Delete Assessment",
+        "description": "Deletes a single Assessment",
+        "operationId": "deleteAssessment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Assessment id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/assets": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Lists assets",
+        "operationId": "listAssets",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetPagingResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Adds a new asset",
+        "operationId": "storeAsset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetStoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/assets/{id}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Get Asset information",
+        "description": "Returns Asset data",
+        "operationId": "showAsset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Asset id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Update Asset information",
+        "description": "Returns updated Asset data",
+        "operationId": "updateAsset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Asset id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetStoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Delete Asset",
+        "description": "Deletes a single Asset",
+        "operationId": "deleteAsset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Asset id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/companies": {
+      "get": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Lists companies",
+        "operationId": "listCompanies",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyPagingResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Adds a new company",
+        "operationId": "storeCompany",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyStoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/companies/{id}": {
+      "get": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Get Company information",
+        "description": "Returns Company data",
+        "operationId": "showCompany",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Company id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Update Company information",
+        "description": "Returns Company data",
+        "operationId": "updateCompany",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Company id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompanyUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Companies"
+        ],
+        "summary": "Delete Company",
+        "description": "Returns deleted Company data",
+        "operationId": "destroyCompany",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Company id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/risk-responses": {
+      "get": {
+        "tags": [
+          "RiskResponses"
+        ],
+        "summary": "Lists risk-responses",
+        "operationId": "listRiskResponses",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskResponsePagingResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "RiskResponses"
+        ],
+        "summary": "Adds a new risk-response",
+        "operationId": "storeRiskResponse",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskResponseStoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskResponseResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/risk-responses/{id}": {
+      "get": {
+        "tags": [
+          "RiskResponses"
+        ],
+        "summary": "Get RiskResponse information",
+        "description": "Returns RiskResponse data",
+        "operationId": "showRiskResponse",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "RiskResponse id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskResponseResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "RiskResponses"
+        ],
+        "summary": "Update RiskResponse information",
+        "description": "Returns updated RiskResponse data",
+        "operationId": "updateRiskResponse",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "RiskResponse id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RiskResponseStoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskResponseResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "RiskResponses"
+        ],
+        "summary": "Delete RiskResponse",
+        "description": "Deletes a single RiskResponse",
+        "operationId": "deleteRiskResponse",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "RiskResponse id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RiskResponseResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/tenants": {
+      "get": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Lists tenants",
+        "operationId": "listTenants",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantPagingResource"
                 }
               }
             }
@@ -34,13 +856,13 @@
         "tags": [
           "Tenants"
         ],
-        "summary": "Adds a new tenant - with oneOf examples",
-        "operationId": "store",
+        "summary": "Adds a new tenant",
+        "operationId": "storeTenant",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StoreTenantRequest"
+                "$ref": "#/components/schemas/TenantStoreRequest"
               }
             }
           }
@@ -71,7 +893,7 @@
         ],
         "summary": "Get Tenant information",
         "description": "Returns Tenant data",
-        "operationId": "show",
+        "operationId": "showTenant",
         "parameters": [
           {
             "name": "id",
@@ -107,7 +929,7 @@
         ],
         "summary": "Update Tenant information",
         "description": "Returns Tenant data",
-        "operationId": "update",
+        "operationId": "updateTenant",
         "parameters": [
           {
             "name": "id",
@@ -123,7 +945,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/StoreTenantRequest"
+                "$ref": "#/components/schemas/TenantUpdateRequest"
               }
             }
           }
@@ -152,7 +974,7 @@
         ],
         "summary": "Delete Tenant",
         "description": "Returns deleted Tenant data",
-        "operationId": "destroy",
+        "operationId": "destroyTenant",
         "parameters": [
           {
             "name": "id",
@@ -231,7 +1053,207 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/vulnerabilities": {
+      "get": {
+        "tags": [
+          "Vulnerabilities"
+        ],
+        "summary": "Lists vulnerabilities",
+        "operationId": "listVulnerabilities",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VulnerabilityPagingResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Vulnerabilities"
+        ],
+        "summary": "Adds a new vulnerability",
+        "operationId": "storeVulnerability",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VulnerabilityStoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VulnerabilityResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/vulnerabilities/{id}": {
+      "get": {
+        "tags": [
+          "Vulnerabilities"
+        ],
+        "summary": "Get Vulnerability information",
+        "description": "Returns Vulnerability data",
+        "operationId": "showVulnerability",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Vulnerability id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VulnerabilityResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Vulnerabilities"
+        ],
+        "summary": "Update Vulnerability information",
+        "description": "Returns updated Vulnerability data",
+        "operationId": "updateVulnerability",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Vulnerability id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VulnerabilityStoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VulnerabilityResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Vulnerabilities"
+        ],
+        "summary": "Delete Vulnerability",
+        "description": "Deletes a single Vulnerability",
+        "operationId": "deleteVulnerability",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Vulnerability id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VulnerabilityResource"
                 }
               }
             }
@@ -247,6 +1269,88 @@
   },
   "components": {
     "schemas": {
+      "AssessmentLifecycleStatus": {
+        "type": "string",
+        "enum": [
+          "OPEN",
+          "CLOSED"
+        ]
+      },
+      "RiskResponseLifecycleStatus": {
+        "type": "string",
+        "enum": [
+          "OPEN",
+          "IN_PROGRESS",
+          "CLOSED"
+        ]
+      },
+      "Assessment": {
+        "title": "Assessment",
+        "description": "Assessment model",
+        "type": "object",
+        "xml": {
+          "name": "Assessment"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedBaseModel"
+          },
+          {
+            "properties": {
+              "created": {
+                "title": "created",
+                "description": "Created date of the Assessment",
+                "type": "string",
+                "format": "date",
+                "example": "2020-01-27 17:50:45"
+              },
+              "lifecycle_status": {
+                "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "Asset": {
+        "title": "Asset",
+        "description": "Asset model",
+        "type": "object",
+        "xml": {
+          "name": "Asset"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseModel"
+          },
+          {
+            "properties": {
+              "fqdn": {
+                "title": "fqdn",
+                "description": "FQDN of the asset",
+                "type": "string",
+                "format": "string",
+                "example": "example.com"
+              },
+              "unique_id": {
+                "title": "unique_id",
+                "description": "The unique id of the Asset",
+                "type": "string",
+                "format": "string",
+                "example": "1"
+              },
+              "operating_system": {
+                "title": "operating_system",
+                "description": "The operating system of the Asset",
+                "type": "string",
+                "format": "string",
+                "example": "Windows"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
       "BaseModel": {
         "title": "BaseModel",
         "description": "BaseModel",
@@ -321,9 +1425,47 @@
             "properties": {
               "name": {
                 "title": "Name",
-                "description": "Name of the User",
+                "description": "Name of the entity",
                 "type": "string",
                 "example": "Elmofuchto"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "RiskResponse": {
+        "title": "RiskResponse",
+        "description": "RiskResponse model",
+        "type": "object",
+        "xml": {
+          "name": "RiskResponse"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NamedBaseModel"
+          },
+          {
+            "properties": {
+              "created": {
+                "title": "created",
+                "description": "Created date of the RiskResponse",
+                "type": "string",
+                "format": "date",
+                "example": "2020-01-27 17:50:45"
+              },
+              "lifecycle_status": {
+                "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
+              },
+              "assessment_id": {
+                "title": "Assessment ID",
+                "description": "Assessment's id of the RiskResponse",
+                "type": "integer",
+                "format": "int64",
+                "example": 1
+              },
+              "assessment": {
+                "$ref": "#/components/schemas/Assessment"
               }
             },
             "type": "object"
@@ -351,7 +1493,7 @@
         },
         "allOf": [
           {
-            "$ref": "#/components/schemas/BaseModel"
+            "$ref": "#/components/schemas/NamedBaseModel"
           },
           {
             "properties": {
@@ -361,11 +1503,168 @@
                 "type": "string",
                 "format": "datetime",
                 "example": "2020-01-27 17:50:45"
+              },
+              "company": {
+                "$ref": "#/components/schemas/Company"
               }
             },
             "type": "object"
           }
         ]
+      },
+      "Vulnerability": {
+        "title": "Vulnerability",
+        "description": "Vulnerability model",
+        "type": "object",
+        "xml": {
+          "name": "Vulnerability"
+        },
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseModel"
+          },
+          {
+            "properties": {
+              "cve_id": {
+                "title": "cve_id",
+                "description": "CVE ID of the vulnerability",
+                "type": "string",
+                "format": "string",
+                "example": "CVE-2021-1234"
+              },
+              "cve_details": {
+                "title": "cve_details",
+                "description": "Details of the vulnerability",
+                "type": "string",
+                "format": "json",
+                "example": "{'description': 'This is a vulnerability', 'severity': 'High'}"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "AssessmentStoreRequest": {
+        "title": "AssessmentStoreRequest",
+        "properties": {
+          "name": {
+            "title": "name",
+            "description": "Name of the new Assessment",
+            "type": "string",
+            "example": "Approve"
+          },
+          "created": {
+            "title": "created",
+            "description": "The date the Assessment was created",
+            "type": "string",
+            "format": "date",
+            "example": "2021-10-10"
+          },
+          "lifecycle_status": {
+            "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+          }
+        },
+        "type": "object"
+      },
+      "AssessmentUpdateRequest": {
+        "title": "AssessmentUpdateRequest",
+        "properties": {
+          "name": {
+            "title": "name",
+            "description": "Name of the new Assessment",
+            "type": "string",
+            "example": "Approve"
+          },
+          "created": {
+            "title": "created",
+            "description": "The date the Assessment was created",
+            "type": "string",
+            "format": "date",
+            "example": "2021-10-10"
+          },
+          "lifecycle_status": {
+            "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+          }
+        },
+        "type": "object"
+      },
+      "AssetStoreRequest": {
+        "title": "AssetStoreRequest",
+        "properties": {
+          "fqdn": {
+            "title": "fqdn",
+            "description": "FQDN of the new Asset",
+            "type": "string",
+            "example": "example.com"
+          },
+          "unique_id": {
+            "title": "unique_id",
+            "description": "The unique id of the Asset",
+            "type": "string",
+            "example": "1"
+          },
+          "operating_system": {
+            "title": "operating_system",
+            "description": "The operating system of the Asset",
+            "type": "string",
+            "example": "Windows"
+          }
+        },
+        "type": "object"
+      },
+      "AssetUpdateRequest": {
+        "title": "AssetUpdateRequest",
+        "properties": {
+          "fqdn": {
+            "title": "fqdn",
+            "description": "FQDN of the new Asset",
+            "type": "string",
+            "example": "example.com"
+          },
+          "unique_id": {
+            "title": "unique_id",
+            "description": "The unique id of the Asset",
+            "type": "string",
+            "example": "1"
+          },
+          "operating_system": {
+            "title": "operating_system",
+            "description": "The operating system of the Asset",
+            "type": "string",
+            "example": "Windows"
+          }
+        },
+        "type": "object"
+      },
+      "CompanyStoreRequest": {
+        "title": "CompanyStoreRequest",
+        "properties": {
+          "name": {
+            "title": "name",
+            "description": "Name of the new company",
+            "type": "string",
+            "example": "A nice company"
+          },
+          "tenant_id": {
+            "title": "tenant_id",
+            "description": "The tenant id of the company",
+            "type": "integer",
+            "example": "1"
+          }
+        },
+        "type": "object"
+      },
+      "CompanyUpdateRequest": {
+        "title": "CompanyUpdateRequest",
+        "properties": {
+          "name": {
+            "title": "name",
+            "description": "Name of the company",
+            "type": "string",
+            "example": "A nice Tenant"
+          }
+        },
+        "type": "object"
       },
       "LoginRequest": {
         "title": "LoginRequest",
@@ -385,8 +1684,58 @@
         },
         "type": "object"
       },
-      "StoreTenantRequest": {
-        "title": "StoreTenantRequest",
+      "RiskResponseStoreRequest": {
+        "title": "RiskResponseStoreRequest",
+        "properties": {
+          "name": {
+            "title": "name",
+            "description": "Name of the new Assessment",
+            "type": "string",
+            "example": "Approve"
+          },
+          "created": {
+            "title": "created",
+            "description": "The date the RiskResponse was created",
+            "type": "string",
+            "format": "date",
+            "example": "2021-10-10"
+          },
+          "lifecycle_status": {
+            "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
+          },
+          "assessment_id": {
+            "title": "assessment_id",
+            "description": "The assessment id of the risk response",
+            "type": "integer",
+            "example": "1"
+          }
+        },
+        "type": "object"
+      },
+      "RiskResponseUpdateRequest": {
+        "title": "RiskResponseUpdateRequest",
+        "properties": {
+          "name": {
+            "title": "name",
+            "description": "Name of the new Assessment",
+            "type": "string",
+            "example": "Approve"
+          },
+          "created": {
+            "title": "created",
+            "description": "The date the RiskResponse was created",
+            "type": "string",
+            "format": "date",
+            "example": "2021-10-10"
+          },
+          "lifecycle_status": {
+            "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
+          }
+        },
+        "type": "object"
+      },
+      "TenantStoreRequest": {
+        "title": "TenantStoreRequest",
         "properties": {
           "name": {
             "title": "name",
@@ -396,6 +1745,251 @@
           }
         },
         "type": "object"
+      },
+      "TenantUpdateRequest": {
+        "title": "TenantUpdateRequest",
+        "properties": {
+          "name": {
+            "title": "name",
+            "description": "Update name of the new Tenant",
+            "type": "string",
+            "example": "A nice Tenant"
+          }
+        },
+        "type": "object"
+      },
+      "VulnerabilityStoreRequest": {
+        "title": "VulnerabilityStoreRequest",
+        "properties": {
+          "cve_id": {
+            "title": "cve_id",
+            "description": "ID of the new Vulnerability",
+            "type": "string",
+            "example": "CVE-2021-1234"
+          },
+          "cve_details": {
+            "title": "cve_details",
+            "description": "Details of the new Vulnerability",
+            "type": "string",
+            "example": "{'description': 'This is a vulnerability', 'severity': 'High'}"
+          }
+        },
+        "type": "object"
+      },
+      "VulnerabilityUpdateRequest": {
+        "title": "VulnerabilityUpdateRequest",
+        "properties": {
+          "cve_id": {
+            "title": "cve_id",
+            "description": "ID of the new Vulnerability",
+            "type": "string",
+            "example": "CVE-2021-1234"
+          },
+          "cve_details": {
+            "title": "cve_details",
+            "description": "Details of the new Vulnerability",
+            "type": "string",
+            "example": "{'description': 'This is a vulnerability', 'severity': 'High'}"
+          }
+        },
+        "type": "object"
+      },
+      "AssessmentPagingResource": {
+        "title": "AssessmentPagingResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Assessment"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          }
+        },
+        "type": "object"
+      },
+      "AssessmentResource": {
+        "title": "AssessmentResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Assessment"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "AssetPagingResource": {
+        "title": "AssetPagingResource",
+        "description": "AssetPagingResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "AssetPagingResource"
+        }
+      },
+      "AssetResource": {
+        "title": "AssetResource",
+        "description": "AssetResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asset"
+            }
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "AssetResource"
+        }
+      },
+      "CompanyPagingResource": {
+        "title": "CompanyPagingResource",
+        "description": "CompanyPagingResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Company"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "CompanyPagingResource"
+        }
+      },
+      "CompanyResource": {
+        "title": "CompanyResource",
+        "description": "CompanyResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Company"
+            }
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "CompanyResource"
+        }
+      },
+      "Meta": {
+        "title": "Meta",
+        "properties": {
+          "current_page": {
+            "title": "Current Page",
+            "description": "Current Page of the data",
+            "type": "integer"
+          },
+          "from": {
+            "title": "From",
+            "description": "From",
+            "type": "integer"
+          },
+          "last_page": {
+            "title": "Last Page",
+            "description": "Last Page of the data",
+            "type": "integer"
+          },
+          "per_page": {
+            "title": "Per Page",
+            "description": "Per Page of the data",
+            "type": "integer"
+          },
+          "to": {
+            "title": "To",
+            "description": "To",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "description": "Total",
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "RiskResponsePagingResource": {
+        "title": "RiskResponsePagingResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RiskResponse"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          }
+        },
+        "type": "object"
+      },
+      "RiskResponseResource": {
+        "title": "RiskResponseResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RiskResponse"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "TenantPagingResource": {
+        "title": "TenantPagingResource",
+        "description": "TenantPagingResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tenant"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "TenantPagingResource"
+        }
       },
       "TenantResource": {
         "title": "TenantResource",
@@ -414,12 +2008,61 @@
         "xml": {
           "name": "TenantResource"
         }
+      },
+      "UserResource": {
+        "title": "UserResource",
+        "description": "UserResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "UserResource"
+        }
+      },
+      "VulnerabilityPagingResource": {
+        "title": "VulnerabilityPagingResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Vulnerability"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          }
+        },
+        "type": "object"
+      },
+      "VulnerabilityResource": {
+        "title": "VulnerabilityResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Vulnerability"
+            }
+          }
+        },
+        "type": "object"
       }
     },
     "securitySchemes": {
       "sanctum": {
         "type": "apiKey",
-        "description": "Enter token in format (Bearer <token>)",
+        "description": "Enter token in format Bearer 4|oeXad4kChJT43wli90LOd1VbFhtuGuEdvxvEHMAtcb025185",
         "name": "Authorization",
         "in": "header"
       }

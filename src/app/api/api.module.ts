@@ -3,16 +3,26 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
+import { AssessmentsService } from './api/assessments.service';
+import { AssetsService } from './api/assets.service';
+import { CompaniesService } from './api/companies.service';
+import { RiskResponsesService } from './api/riskResponses.service';
 import { TenantsService } from './api/tenants.service';
 import { UserService } from './api/user.service';
+import { VulnerabilitiesService } from './api/vulnerabilities.service';
 
 @NgModule({
   imports:      [],
   declarations: [],
   exports:      [],
   providers: [
+    AssessmentsService,
+    AssetsService,
+    CompaniesService,
+    RiskResponsesService,
     TenantsService,
-    UserService ]
+    UserService,
+    VulnerabilitiesService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

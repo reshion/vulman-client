@@ -12,7 +12,8 @@
 import { Type, Expose } from 'class-transformer';
 // @dynamic
 
-import { BaseModel } from './baseModel';
+import { Company } from './company';
+import { NamedBaseModel } from './namedBaseModel';
 
 /**
  * model.mustache
@@ -22,7 +23,7 @@ import { BaseModel } from './baseModel';
 import { Observable }                                        from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
 
-export class User extends BaseModel { 
+export class User extends NamedBaseModel { 
 
 
     /**
@@ -30,6 +31,8 @@ export class User extends BaseModel {
      */
     @Expose()
     email_verified_at!: string;
+    @Expose()
+    company!: Company;
 
     /**
      * Description: Email verified at
@@ -37,14 +40,20 @@ export class User extends BaseModel {
      * datatypeWithEnum: string
      * email_verified_at: string   
      */
+    /**
+     * datatype: Company
+     * datatypeWithEnum: Company
+     * company: Company   
+     */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
     constructor(init: Partial<User> = {}) {
         super(init)  
             
-                    init.email_verified_at ? this.email_verified_at = init.email_verified_at : null
+                    init.email_verified_at ? this.email_verified_at = init.email_verified_at : null,
                
+                        this.company = new Company(init.company || {})
     }
 
     static override  getForm(data?: User | User[] | null): FormGroup {
@@ -78,7 +87,12 @@ export class User extends BaseModel {
   static override  getFormGroup(data?: User): FormGroup {
        
         return new FormGroup({           
-                        email_verified_at: new FormControl(data?.email_verified_at, [])
+                        email_verified_at: new FormControl(data?.email_verified_at, []),
+                        company: (() => { 
+                            const fg = Company.getForm(data?.company);
+                            fg.addValidators([]);
+                            return fg;
+                        })()
         });
     }
   

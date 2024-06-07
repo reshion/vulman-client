@@ -18,7 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { LoginRequest } from '../model/loginRequest';
-import { User } from '../model/user';
+import { UserResource } from '../model/userResource';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -62,9 +62,9 @@ export class UserService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public current(observe?: 'body', reportProgress?: boolean): Observable<User>;
-    public current(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<User>>;
-    public current(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<User>>;
+    public current(observe?: 'body', reportProgress?: boolean): Observable<UserResource>;
+    public current(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserResource>>;
+    public current(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserResource>>;
     public current(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -87,7 +87,7 @@ export class UserService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<User>(`${this.basePath}/api/user/current`,
+        return this.httpClient.get<UserResource>(`${this.basePath}/api/user/current`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
