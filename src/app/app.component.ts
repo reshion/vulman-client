@@ -12,9 +12,9 @@ export class AppComponent
 
   constructor(private tenentService: API.TenantsService)
   {
-    tenentService.update(1, { name: 'test' }).subscribe(x =>
+    tenentService.updateTenant(1, { name: 'test' }).subscribe(x =>
     {
-      x.data
+      x.data[0]
     })
   }
 }
