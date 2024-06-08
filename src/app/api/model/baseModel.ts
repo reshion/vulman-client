@@ -16,7 +16,7 @@ import { Type, Expose } from 'class-transformer';
 /**
  * model.mustache
  *
- * BaseModel
+ * Base Model
  */
 import { Observable }                                        from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
@@ -25,7 +25,7 @@ export class BaseModel {
 
 
     /**
-     * ID
+     * Id
      */
     @Expose()
     id!: number;
@@ -41,7 +41,7 @@ export class BaseModel {
     updated_at!: string;
 
     /**
-     * Description: ID
+     * Description: Id
      * datatype: number
      * datatypeWithEnum: number
      * id: number   

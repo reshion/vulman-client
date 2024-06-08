@@ -25,26 +25,20 @@ import { AbstractControl, FormControl, FormGroup, FormArray, Validators }       
 export class CompanyResource { 
 
 
-    /**
-     * Data wrapper
-     */
     @Expose()
-    @Type(() => Company)
-    data!: Array<Company>;
+    data!: Company;
 
     /**
-     * Description: Data wrapper
-     * Complex type: Company
-     * datatype: Array&lt;Company&gt;
-     * datatypeWithEnum: Array&lt;Company&gt;
-     * data: Array<Company>   
+     * datatype: Company
+     * datatypeWithEnum: Company
+     * data: Company   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
     constructor(init: Partial<CompanyResource> = {}) {
          
-                            this.data = init.data?.map(x => new Company(x)) || [] 
+                        this.data = new Company(init.data || {})
     }
 
     static   getForm(data?: CompanyResource | CompanyResource[] | null): FormGroup {
@@ -78,6 +72,11 @@ export class CompanyResource {
   static   getFormGroup(data?: CompanyResource): FormGroup {
        
         return new FormGroup({           
+                        data: (() => { 
+                            const fg = Company.getForm(data?.data);
+                            fg.addValidators([]);
+                            return fg;
+                        })()
         });
     }
   

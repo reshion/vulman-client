@@ -25,26 +25,20 @@ import { AbstractControl, FormControl, FormGroup, FormArray, Validators }       
 export class TenantResource { 
 
 
-    /**
-     * Data wrapper
-     */
     @Expose()
-    @Type(() => Tenant)
-    data!: Array<Tenant>;
+    data!: Tenant;
 
     /**
-     * Description: Data wrapper
-     * Complex type: Tenant
-     * datatype: Array&lt;Tenant&gt;
-     * datatypeWithEnum: Array&lt;Tenant&gt;
-     * data: Array<Tenant>   
+     * datatype: Tenant
+     * datatypeWithEnum: Tenant
+     * data: Tenant   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
     constructor(init: Partial<TenantResource> = {}) {
          
-                            this.data = init.data?.map(x => new Tenant(x)) || [] 
+                        this.data = new Tenant(init.data || {})
     }
 
     static   getForm(data?: TenantResource | TenantResource[] | null): FormGroup {
@@ -78,6 +72,11 @@ export class TenantResource {
   static   getFormGroup(data?: TenantResource): FormGroup {
        
         return new FormGroup({           
+                        data: (() => { 
+                            const fg = Tenant.getForm(data?.data);
+                            fg.addValidators([]);
+                            return fg;
+                        })()
         });
     }
   

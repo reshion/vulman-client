@@ -1,38 +1,94 @@
 // @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 // @import '@angular/material/prebuilt-themes/indigo-pink.css';
-// @import '@angular/material/prebuilt-themes/pink-bluegrey.css';
-//  @import "@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import '@angular/material/prebuilt-themes/pink-bluegrey.css';
+//@import "@angular/material/prebuilt-themes/pink-bluegrey.css";
 @import "@angular/material/theming";
 @import "material-icons/iconfont/material-icons.scss";
 @import "mat-theme-dark";
 @import "mat-theme-light";
+@import "mat-theme-customer-1";
 @import "custom-components-theme";
 @import "mat-typography";
-// @import "variables";
-// @import "sizing";
+@import "variables";
+@import "sizing";
 @import "fonts/font";
 
 
-$mat-toolbar-height: 56px; //Custom Property 
+@include mat-core();
+@include angular-material-theme($dark-theme);
+@include angular-material-typography($config);
 $dark: dark;
 $light: light;
-@include mat-core();
-@include angular-material-theme($light-theme);
-@include custom-components-theme($light-theme, $light);
-@include angular-material-typography($config);
+$mat-toolbar-height: 56px; //Custom Property 
+
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+
+// Plus imports for other components in your app.
+// @use "scss/mat-theme.scss";
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+// @include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$client-app-primary: mat.define-palette(mat.$indigo-palette);
+$client-app-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$client-app-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+// $client-app-theme: mat.define-dark-theme((color: (primary: $client-app-primary,
+//                 accent: $client-app-accent,
+//                 warn: $client-app-warn,
+//             )));
+
+// $client-app-light-theme: mat.define-light-theme((color: (primary: $client-app-primary,
+//                 accent: $client-app-accent,
+//                 warn: $client-app-warn,
+//             )));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+
+
+@include mat.all-component-themes($dark-theme);
+
+
+.light-theme {
+    @include custom-components-theme($customer-1-theme, $light);
+    @include angular-material-color($customer-1-theme);
+    $palette-primary: map-get($customer-1-theme, primary);
+    $palette-accent: map-get($customer-1-theme, accent);
+    $palette-warn: map-get($customer-1-theme, warn);
+    $color-accent: mat-color($palette-accent);
+
+    code {
+        color: $color-accent;
+    }
+
+}
+
+// @include mat-core();
+// @include angular-material-theme($light-theme);
+// @include custom-components-theme($light-theme, $light);
+// @include angular-material-typography($config);
 
 .dark-theme {
 
     // Dark theme
+
     @include custom-components-theme($dark-theme, $dark);
     $palette-primary: map-get($dark-theme, primary);
     $palette-accent: map-get($dark-theme, accent);
     $palette-warn: map-get($dark-theme, warn);
     $color-accent: mat-color($palette-accent);
 
-    @include angular-material-color($dark-theme);
 
-    code {
-        color: $color-accent;
-    }
 }

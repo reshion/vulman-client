@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
 import { SharedModule } from './shared/shared.module';
-import { PagesModule } from './pages/pages.module';
+import * as API from './api/api.module';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LayoutModule } from '@angular/cdk/layout';
+import { Configuration } from './api';
+import { environment } from '../environments/environment';
+export const config = new Configuration({
+  basePath: environment.API_BASE_PATH,
+  withCredentials: true,
+});
 
 @NgModule({
   declarations: [
@@ -22,7 +25,15 @@ import { PagesModule } from './pages/pages.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     SharedModule,
+    API.ApiModule.forRoot(() => config),
+    LayoutModule,
+  ],
+  exports: [
+    API.ApiModule
   ],
   providers: [],
   bootstrap: [AppComponent]

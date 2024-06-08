@@ -16,7 +16,6 @@
     @if $layout ==$dark {
         $bg-toolbar: mat-color($palette-primary) !important;
         $color-toolbar: mat-color($foreground, text) !important;
-
     }
 
     @else {
@@ -36,7 +35,7 @@
 
         border-left: 1px solid transparent;
         border-right: 1px solid transparent;
-        background: inherit;
+        // background: inherit;
         height: $mat-toolbar-height !important;
         max-height: $mat-toolbar-height !important;
     }

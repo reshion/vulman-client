@@ -20,26 +20,20 @@ import { AbstractControl, FormControl, FormGroup, FormArray, Validators }       
 export class RiskResponseResource { 
 
 
-    /**
-     * Data wrapper
-     */
     @Expose()
-    @Type(() => RiskResponse)
-    data!: Array<RiskResponse>;
+    data!: RiskResponse;
 
     /**
-     * Description: Data wrapper
-     * Complex type: RiskResponse
-     * datatype: Array&lt;RiskResponse&gt;
-     * datatypeWithEnum: Array&lt;RiskResponse&gt;
-     * data: Array<RiskResponse>   
+     * datatype: RiskResponse
+     * datatypeWithEnum: RiskResponse
+     * data: RiskResponse   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
     constructor(init: Partial<RiskResponseResource> = {}) {
          
-                            this.data = init.data?.map(x => new RiskResponse(x)) || [] 
+                        this.data = new RiskResponse(init.data || {})
     }
 
     static   getForm(data?: RiskResponseResource | RiskResponseResource[] | null): FormGroup {
@@ -73,6 +67,11 @@ export class RiskResponseResource {
   static   getFormGroup(data?: RiskResponseResource): FormGroup {
        
         return new FormGroup({           
+                        data: (() => { 
+                            const fg = RiskResponse.getForm(data?.data);
+                            fg.addValidators([]);
+                            return fg;
+                        })()
         });
     }
   

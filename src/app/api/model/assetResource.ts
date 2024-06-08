@@ -25,26 +25,20 @@ import { AbstractControl, FormControl, FormGroup, FormArray, Validators }       
 export class AssetResource { 
 
 
-    /**
-     * Data wrapper
-     */
     @Expose()
-    @Type(() => Asset)
-    data!: Array<Asset>;
+    data!: Asset;
 
     /**
-     * Description: Data wrapper
-     * Complex type: Asset
-     * datatype: Array&lt;Asset&gt;
-     * datatypeWithEnum: Array&lt;Asset&gt;
-     * data: Array<Asset>   
+     * datatype: Asset
+     * datatypeWithEnum: Asset
+     * data: Asset   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
     constructor(init: Partial<AssetResource> = {}) {
          
-                            this.data = init.data?.map(x => new Asset(x)) || [] 
+                        this.data = new Asset(init.data || {})
     }
 
     static   getForm(data?: AssetResource | AssetResource[] | null): FormGroup {
@@ -78,6 +72,11 @@ export class AssetResource {
   static   getFormGroup(data?: AssetResource): FormGroup {
        
         return new FormGroup({           
+                        data: (() => { 
+                            const fg = Asset.getForm(data?.data);
+                            fg.addValidators([]);
+                            return fg;
+                        })()
         });
     }
   

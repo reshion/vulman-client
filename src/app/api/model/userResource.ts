@@ -25,26 +25,20 @@ import { AbstractControl, FormControl, FormGroup, FormArray, Validators }       
 export class UserResource { 
 
 
-    /**
-     * Data wrapper
-     */
     @Expose()
-    @Type(() => User)
-    data!: Array<User>;
+    data!: User;
 
     /**
-     * Description: Data wrapper
-     * Complex type: User
-     * datatype: Array&lt;User&gt;
-     * datatypeWithEnum: Array&lt;User&gt;
-     * data: Array<User>   
+     * datatype: User
+     * datatypeWithEnum: User
+     * data: User   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
     constructor(init: Partial<UserResource> = {}) {
          
-                            this.data = init.data?.map(x => new User(x)) || [] 
+                        this.data = new User(init.data || {})
     }
 
     static   getForm(data?: UserResource | UserResource[] | null): FormGroup {
@@ -78,6 +72,11 @@ export class UserResource {
   static   getFormGroup(data?: UserResource): FormGroup {
        
         return new FormGroup({           
+                        data: (() => { 
+                            const fg = User.getForm(data?.data);
+                            fg.addValidators([]);
+                            return fg;
+                        })()
         });
     }
   

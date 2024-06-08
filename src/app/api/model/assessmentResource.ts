@@ -20,26 +20,20 @@ import { AbstractControl, FormControl, FormGroup, FormArray, Validators }       
 export class AssessmentResource { 
 
 
-    /**
-     * Data wrapper
-     */
     @Expose()
-    @Type(() => Assessment)
-    data!: Array<Assessment>;
+    data!: Assessment;
 
     /**
-     * Description: Data wrapper
-     * Complex type: Assessment
-     * datatype: Array&lt;Assessment&gt;
-     * datatypeWithEnum: Array&lt;Assessment&gt;
-     * data: Array<Assessment>   
+     * datatype: Assessment
+     * datatypeWithEnum: Assessment
+     * data: Assessment   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
     constructor(init: Partial<AssessmentResource> = {}) {
          
-                            this.data = init.data?.map(x => new Assessment(x)) || [] 
+                        this.data = new Assessment(init.data || {})
     }
 
     static   getForm(data?: AssessmentResource | AssessmentResource[] | null): FormGroup {
@@ -73,6 +67,11 @@ export class AssessmentResource {
   static   getFormGroup(data?: AssessmentResource): FormGroup {
        
         return new FormGroup({           
+                        data: (() => { 
+                            const fg = Assessment.getForm(data?.data);
+                            fg.addValidators([]);
+                            return fg;
+                        })()
         });
     }
   

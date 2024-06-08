@@ -1,0 +1,162 @@
+$dark-primary-text: rgba(black, 0.87);
+$dark-secondary-text: rgba(black, 0.54);
+$dark-disabled-text: rgba(black, 0.38);
+$dark-dividers: rgba(black, 0.12);
+$dark-focused: rgba(black, 0.12);
+$light-primary-text: white;
+$light-secondary-text: rgba(white, 0.7);
+$light-disabled-text: rgba(white, 0.5);
+$light-dividers: rgba(white, 0.12);
+$light-focused: rgba(white, 0.12);
+
+
+
+$mat-grey: (
+    50: #fbfbfb,
+    100: #f6f6f6,
+    200: #f1f1f1,
+    300: #e6e6e6,
+    400: #c4c4c4,
+    500: #a5a5a5,
+    600: #7c7c7c,
+    700: #676767,
+    800: #484848,
+    900: #262626,
+    A100: #E6E6E6,
+    A200: #C8C8C8,
+    A400: #9E9E9E,
+    A700: #707070,
+    contrast: (50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+        A100: $dark-primary-text,
+        A200: $dark-primary-text,
+        A400: $dark-primary-text,
+        A700: $dark-primary-text,
+    )
+);
+
+$mat-patrol: (
+    50: #e4f7ff,
+    100: #bbecff,
+    200: #90e0ff,
+    300: #66d4ff,
+    400: #4ecbfd,
+    500: #47c2f8,
+    600: #3eb2e3,
+    700: #2f9dc7,
+    800: #228aad,
+    900: #00687f,
+    A100: #007A93,
+    A200: #5097AB,
+    A400: #79AEBF,
+    A700: #A6CAD8,
+    contrast: (50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+        A100: $dark-primary-text,
+        A200: $dark-primary-text,
+        A400: $dark-primary-text,
+        A700: $dark-primary-text,
+    )
+);
+
+$mat-red: (
+    50: #f5e6e8,
+    100: #e7c2c4,
+    200: #c78986,
+    300: #af5f5a,
+    400: #af4237,
+    500: #aa321e,
+    600: #9e2a1d,
+    700: #8e2319,
+    800: #811d14,
+    900: #71180c,
+    A100: #71180C,
+    A200: #5A130A,
+    A400: #5A130A,
+    A700: #440E07,
+    contrast: (50: $dark-primary-text,
+        100: $dark-primary-text,
+        200: $dark-primary-text,
+        300: $dark-primary-text,
+        400: $dark-primary-text,
+        500: $light-primary-text,
+        600: $light-primary-text,
+        700: $light-primary-text,
+        800: $light-primary-text,
+        900: $light-primary-text,
+        A100: $light-primary-text,
+        A200: $light-primary-text,
+        A400: $light-primary-text,
+        A700: $light-primary-text,
+
+    )
+);
+
+
+
+
+
+//  mat-palette($base-palette, $default: 500, $lighter: 100, $darker: 700, $text: $default)
+
+$mat-light-theme-background: (
+    status-bar: map-get($mat-grey, 50),
+    app-bar: map-get($mat-grey, 300),
+    background: map-get($mat-grey, 50),
+    hover: rgba(black, 0.04),
+    // TODO(kara): check style with Material Design UX
+    card: white,
+    dialog: white,
+    disabled-button: rgba(black, 0.12),
+    raised-button: white,
+    focused-button: $dark-focused,
+    selected-button: map-get($mat-grey, 300),
+    selected-disabled-button: map-get($mat-grey, 400),
+    disabled-button-toggle: map-get($mat-grey, 200),
+    unselected-chip: map-get($mat-grey, 300),
+    disabled-list-option: map-get($mat-grey, 200),
+    tooltip: map-get($mat-grey, 700),
+);
+
+$mat-light-theme-foreground: (
+    base: black,
+    divider: $dark-dividers,
+    dividers: $dark-dividers,
+    disabled: $dark-disabled-text,
+    disabled-button: rgba(black, 0.26),
+    disabled-text: $dark-disabled-text,
+    elevation: black,
+    hint-text: $dark-disabled-text,
+    secondary-text: $dark-secondary-text,
+    icon: rgba(black, 0.54),
+    icons: rgba(black, 0.54),
+    text: rgba(black, 0.87),
+    slider-min: rgba(black, 0.87),
+    slider-off: rgba(black, 0.26),
+    slider-off-active: rgba(black, 0.38),
+);
+
+$customer-1-primary: mat-palette($mat-grey, 500, 100, 900);
+$customer-1-accent: mat-palette($mat-patrol, 500, 100, 900);
+$customer-1-warn: mat-palette($mat-red, 600);
+$customer-1-background: map_get($mat-grey, 600);
+$customer-1-dark-foreground: map_get($mat-grey, 800);
+
+$base-color: #aeaeae;
+
+$customer-1-theme: mat-light-theme($customer-1-primary, $customer-1-accent, $customer-1-warn);
