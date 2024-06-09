@@ -4,11 +4,14 @@ import { CommonModule } from '@angular/common';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { SharedModule } from '../shared/shared.module';
+import { NavMenuComponent } from '@app/nav-menu/nav-menu.component';
 
 
 @NgModule({
   declarations: [
-    PagesComponent
+    PagesComponent,
+    NavMenuComponent,
+
   ],
   imports: [
     CommonModule,

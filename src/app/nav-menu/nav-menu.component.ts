@@ -7,6 +7,7 @@ import { StorageKey } from '../shared/enums/storage-key.enum';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { ThemeKey } from '../shared/enums/theme-key.enum';
 import { SidenavService } from '../shared/services/sidenav/sidenav.service';
+import { AuthService } from '@app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -17,7 +18,6 @@ export class NavMenuComponent
 {
 
   isExpanded = false;
-
   ThemeKey = ThemeKey;
   currentTheme: ThemeKey = this.storageService.getItem<ThemeKey>(StorageKey.THEME);
   theme: ThemeKey = this.currentTheme == ThemeKey.DARK ? ThemeKey.LIGHT : ThemeKey.DARK;
@@ -26,6 +26,7 @@ export class NavMenuComponent
   constructor(
     public sidenavService: SidenavService,
     public storageService: StorageService,
+    public authService: AuthService,
     @Inject(DOCUMENT) private document: Document,
   )
   {

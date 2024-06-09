@@ -12,7 +12,7 @@
 // @import 'mat-tab';
 @import 'mat-toolbar';
 // @import 'mat-button-toggle-group';
-// @import 'mat-button';
+@import 'mat-button';
 @import "mat-dialog";
 // @import "mat-progress-bar";
 // @import "mat-badge"; 
@@ -34,7 +34,7 @@
     // @include set-mat-table-theme($theme);
     @include set-mat-toolbar-theme($theme, $layout);
     // @include set-mat-button-toggle-group-theme($theme);
-    // @include set-mat-button-theme($theme, $layout);
+    @include set-mat-button-theme($theme, $layout);
     @include set-mat-dialog-theme($theme);
     // @include set-mat-progress-bar-theme($theme);
     // @include mat-tree-color($theme); 

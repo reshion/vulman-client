@@ -1066,6 +1066,25 @@
         ]
       }
     },
+    "/api/user/logout": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logout user",
+        "operationId": "logout",
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
     "/api/vulnerabilities": {
       "get": {
         "tags": [

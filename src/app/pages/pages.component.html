@@ -1,14 +1,13 @@
+<app-nav-menu></app-nav-menu>
+
 <mat-sidenav-container class="sidenav-container" autosize>
     <mat-sidenav #drawer class="sidenav" fixedInViewport="false"
-        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="(isHandset$ | async) === false">
         <mat-nav-list class="d-flex flex-column h-100">
-            <a mat-list-item [routerLink]="['scenario/grid']"
-                queryParamsHandling="merge"
-                routerLinkActive="active">
-                <mat-icon matListItemIcon matTooltip="Szenarios"
-                    [matTooltipPosition]="'below'" matTooltipHideDelay="100">view_in_ar</mat-icon>
+            <a mat-list-item [routerLink]="['scenario/grid']" queryParamsHandling="merge" routerLinkActive="active">
+                <mat-icon matListItemIcon matTooltip="Szenarios" [matTooltipPosition]="'below'"
+                    matTooltipHideDelay="100">view_in_ar</mat-icon>
                 <span [class.d-none]="collapsed">Tenants</span>
             </a>
             <mat-divider class="mb-auto"></mat-divider>

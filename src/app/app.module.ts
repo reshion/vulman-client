@@ -6,11 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { SharedModule } from './shared/shared.module';
 import * as API from './api/api.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@angular/cdk/layout';
 import { Configuration } from './api';
 import { environment } from '../environments/environment';
+import { TokenInterceptor } from './shared/interceptors/token/token.interceptor';
 export const config = new Configuration({
   basePath: environment.API_BASE_PATH,
   withCredentials: true,
@@ -19,7 +20,6 @@ export const config = new Configuration({
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +33,16 @@ export const config = new Configuration({
     LayoutModule,
   ],
   exports: [
-    API.ApiModule
+    API.ApiModule,
+
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

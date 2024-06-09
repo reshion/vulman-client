@@ -1,26 +1,21 @@
-import { Component } from '@angular/core';
-import * as API from './api';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent
+export class AppComponent implements OnInit 
 {
   title = 'client-app';
 
-  constructor(private tenentService: API.TenantsService)
+  constructor(private authService: AuthService)
   {
 
-
-    API.Tenant.getForm();
   }
-  test()
+  ngOnInit(): void
   {
-    this.tenentService.showTenant(1).subscribe(x =>
-    {
-
-    })
+    this.authService.loadUser();
   }
 }

@@ -1,0 +1,26 @@
+@mixin set-mat-button-theme($theme, $layout) {
+    $palette-primary: map-get($theme, primary);
+    $palette-accent: map-get($theme, accent);
+    $palette-warn: map-get($theme, warn);
+
+    $color-primary: mat-color($palette-primary, A100);
+    $color-primary-state: mat-color($palette-primary, 900);
+    $color-accent: mat-color($palette-accent);
+
+    @if $layout ==dark or $layout ==light {
+        mat-stroked-button {
+            color: $color-primary;
+            background: $color-primary-state;
+
+            &.mat-primary {
+                color: $color-primary;
+                background: $color-primary-state;
+            }
+
+            &.mat-accent {
+                color: $color-primary;
+                background: $color-accent;
+            }
+        }
+    }
+}

@@ -1,17 +1,30 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <button mat-icon-button color="secondary" class="icon" (click)="sidenavService.toggle()"
-      aria-label="icon-button with menu icon">
+    <button mat-icon-button (click)="sidenavService.toggle()" aria-label="icon-button with menu icon">
       <mat-icon>bug_report</mat-icon>
     </button>
-    <span><strong class="pointer" [routerLink]="['/']">VulMan</strong></span>
+    <span><strong class="pointer" [routerLink]="['/']">TecXero - Vulnerability Management</strong></span>
 
     <span class="spacer"></span>
 
-    <button mat-mini-fab color="primary" class="ml-3"
-      matTooltip="Auswahl zwischen einem hellen oder dunklen Theme"
+    <button mat-mini-fab color="primary" class="ml-3" matTooltip="Auswahl zwischen einem hellen oder dunklen Theme"
       [matTooltipPosition]="'below'" matTooltipHideDelay="100" (click)="switchTheme(theme)">
       <mat-icon>{{theme === ThemeKey.DARK ? 'dark_mode' : 'light_mode'}}</mat-icon>
     </button>
+
+    <ng-container>
+      <div class="ml-2 d-flex justify-content-center" *ngIf="(authService.getUser$() | async) as user">
+        <button mat-icon-button [matMenuTriggerFor]="currentUserMenu">
+          <mat-icon color="accent">person</mat-icon>
+        </button>
+        <mat-menu #currentUserMenu="matMenu">
+          <button mat-menu-item (click)="authService.logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+    </ng-container>
+
   </mat-toolbar-row>
 </mat-toolbar>

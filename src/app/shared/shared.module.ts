@@ -6,27 +6,37 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { LoadingOverlayModule } from '@app/loading-overlay/loading-overlay.module';
 
 
+
+const importsExports = [
+  MatSidenavModule,
+  MatIconModule,
+  MatButtonModule,
+  MatListModule,
+  MatTooltipModule,
+  MatToolbarModule,
+  MatFormFieldModule,
+  MatCardModule,
+  MatInputModule,
+  MatMenuModule,
+  LoadingOverlayModule,
+]
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatButtonModule,
-    MatListModule,
-    MatTooltipModule,
-    MatToolbarModule,
+    ...importsExports
+
   ],
   exports: [
-    MatSidenavModule,
-    MatIconModule,
-    MatButtonModule,
-    MatListModule,
-    MatTooltipModule,
-    MatToolbarModule,
+    ...importsExports
   ]
 })
 export class SharedModule { }

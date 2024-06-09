@@ -1,0 +1,24 @@
+:host {
+    z-index: 1060;
+    background: unset;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.5);
+    overflow-x: hidden;
+    transition: 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .loading {
+        color: cornflowerblue
+    }
+}

@@ -4,19 +4,18 @@
 //@import "@angular/material/prebuilt-themes/pink-bluegrey.css";
 @import "@angular/material/theming";
 @import "material-icons/iconfont/material-icons.scss";
-@import "mat-theme-dark";
-@import "mat-theme-light";
-@import "mat-theme-customer-1";
+// @import "mat-theme-dark";
+// @import "mat-theme-light";
+// @import "mat-theme-customer-1";
 @import "custom-components-theme";
-@import "mat-typography";
-@import "variables";
-@import "sizing";
+// @import "mat-typography";
+// @import "variables";
 @import "fonts/font";
 
 
 @include mat-core();
-@include angular-material-theme($dark-theme);
-@include angular-material-typography($config);
+// @include angular-material-theme($dark-theme);
+// @include angular-material-typography($config);
 $dark: dark;
 $light: light;
 $mat-toolbar-height: 56px; //Custom Property 
@@ -43,52 +42,29 @@ $client-app-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-// $client-app-theme: mat.define-dark-theme((color: (primary: $client-app-primary,
-//                 accent: $client-app-accent,
-//                 warn: $client-app-warn,
-//             )));
+$client-app-theme: mat.define-dark-theme((color: (primary: $client-app-primary,
+                accent: $client-app-accent,
+                warn: $client-app-warn,
+            )));
 
-// $client-app-light-theme: mat.define-light-theme((color: (primary: $client-app-primary,
-//                 accent: $client-app-accent,
-//                 warn: $client-app-warn,
-//             )));
+$client-app-light-theme: mat.define-light-theme((color: (primary: $client-app-primary,
+                accent: $client-app-accent,
+                warn: $client-app-warn,
+            )));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 
 
-@include mat.all-component-themes($dark-theme);
+@include mat.all-component-themes($client-app-theme);
 
 
 .light-theme {
-    @include custom-components-theme($customer-1-theme, $light);
-    @include angular-material-color($customer-1-theme);
-    $palette-primary: map-get($customer-1-theme, primary);
-    $palette-accent: map-get($customer-1-theme, accent);
-    $palette-warn: map-get($customer-1-theme, warn);
-    $color-accent: mat-color($palette-accent);
-
-    code {
-        color: $color-accent;
-    }
-
+    @include custom-components-theme($client-app-light-theme, $light);
+    @include angular-material-color($client-app-light-theme);
 }
 
-// @include mat-core();
-// @include angular-material-theme($light-theme);
-// @include custom-components-theme($light-theme, $light);
-// @include angular-material-typography($config);
-
 .dark-theme {
-
-    // Dark theme
-
-    @include custom-components-theme($dark-theme, $dark);
-    $palette-primary: map-get($dark-theme, primary);
-    $palette-accent: map-get($dark-theme, accent);
-    $palette-warn: map-get($dark-theme, warn);
-    $color-accent: mat-color($palette-accent);
-
-
+    @include custom-components-theme($client-app-theme, $dark);
 }
