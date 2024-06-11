@@ -10,7 +10,12 @@
                     matTooltipHideDelay="100">view_in_ar</mat-icon>
                 <span [class.d-none]="collapsed">Assets</span>
             </a>
-            <mat-divider class="mb-auto"></mat-divider>
+            <a mat-list-item [routerLink]="[RouteKey.VULNERABILITIES]" queryParamsHandling="merge"
+                routerLinkActive="active">
+                <mat-icon matListItemIcon matTooltip="Vulnerabilities" [matTooltipPosition]="'below'"
+                    matTooltipHideDelay="100">view_in_ar</mat-icon>
+                <span [class.d-none]="collapsed">Vulnerabilities</span>
+            </a>
             <mat-divider class="mt-auto"></mat-divider>
             <mat-list-item class=" d-flex align-items-center" style="bottom: 0; left: 0;"
                 (click)="collapsed = !collapsed">

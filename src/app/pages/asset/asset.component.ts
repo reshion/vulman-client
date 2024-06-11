@@ -1,19 +1,17 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import * as API from '@app/api';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 
 @Component({
   selector: 'app-assets',
-  templateUrl: './assets.component.html',
-  styleUrls: ['./assets.component.scss'],
+  templateUrl: './asset.component.html',
+  styleUrls: ['./asset.component.scss'],
 })
-export class AssetsComponent implements OnInit, AfterViewInit
+export class AssetComponent implements OnInit, AfterViewInit
 {
   displayedColumns: string[] = ['id', 'fqdn', 'unique_id', 'operating_system'];
   totalItems: number = 0;
@@ -54,7 +52,7 @@ export class AssetsComponent implements OnInit, AfterViewInit
         return of([]);
       })
     ).subscribe(data => this.dataSource.data = data || []);
-    this.assetsService.listAssets()
+
   }
   applyFilter(event: Event)
   {

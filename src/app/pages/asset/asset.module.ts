@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AssetsRoutingModule } from './assets-routing.module';
-import { AssetsComponent } from './assets.component';
+import { AssetRoutingModule } from './asset-routing.module';
+import { AssetComponent } from './asset.component';
 import { SharedModule } from '@app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    AssetsComponent
+    AssetComponent
   ],
   imports: [
     CommonModule,
-    AssetsRoutingModule,
+    AssetRoutingModule,
     SharedModule,
   ]
 })
-export class AssetsModule { }
+export class AssetModule { }

@@ -4,4 +4,5 @@ export enum RouteKey
     EMPTY = '',
     LOGIN = 'login',
     ASSETS = 'assets',
+    VULNERABILITIES = 'vulnerabilities',
 }

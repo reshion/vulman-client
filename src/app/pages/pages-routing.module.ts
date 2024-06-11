@@ -11,9 +11,13 @@ const routes: Routes = [
       // Route to asset module
       {
         path: RouteKey.ASSETS,
-        loadChildren: () => import('./assets/assets.module').then(m => m.AssetsModule)
+        loadChildren: () => import('./asset/asset.module').then(m => m.AssetModule)
       },
-
+      // Route to vulnerability module
+      {
+        path: RouteKey.VULNERABILITIES,
+        loadChildren: () => import('./vulnerability/vulnerability.module').then(m => m.VulnerabilityModule)
+      },
     ],
   },
 
