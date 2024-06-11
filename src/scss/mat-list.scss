@@ -1,0 +1,71 @@
+@mixin set-mat-list-theme($theme) {
+
+    $palette-primary: map-get($theme, primary);
+    $palette-accent: map-get($theme, accent);
+    $palette-warn: map-get($theme, warn);
+    $palette-bg: map-get($theme, background);
+
+
+    $color-primary: mat-color($palette-primary);
+    $color-primary-state: mat-color($palette-primary, 900);
+    $color-accent: mat-color($palette-accent);
+    $color-bg: mat-color($palette-bg, background);
+
+    .mat-mdc-list {
+        //     border: solid 1px #ccc;
+        min-height: 60px;
+        //     border-radius: 4px;
+        display: block;
+        overflow: hidden;
+
+        .mat-mdc-list-item {
+            // padding: 20px 10px;
+            //     border-bottom: solid 1px #ccc;
+            box-sizing: border-box;
+            //     cursor: move;
+            //  font-size: 14px;
+            background: $color-bg;
+
+            &.active {
+                // @include mat-elevation-transition;
+                // @include mat-elevation(8);
+            }
+
+            &:hover {
+                cursor: pointer;
+                @include mat-elevation-transition;
+                @include mat-elevation(8);
+            }
+
+            .mat-mdc-list-item-content {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    .mat-mdc-nav-list {
+        .mat-mdc-list-item {
+
+            &.active {
+                @include mat-elevation-transition;
+                @include mat-elevation(8);
+
+                mat-icon {
+                    color: mat-color($palette-accent);
+                }
+            }
+
+            &:hover {
+                cursor: pointer;
+                @include mat-elevation-transition;
+                @include mat-elevation(8);
+
+            }
+
+        }
+    }
+
+
+}

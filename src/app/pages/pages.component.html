@@ -1,5 +1,4 @@
 <app-nav-menu></app-nav-menu>
-
 <mat-sidenav-container class="sidenav-container" autosize>
     <mat-sidenav #drawer class="sidenav" fixedInViewport="false"
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
@@ -7,20 +6,20 @@
         <mat-nav-list class="d-flex flex-column h-100">
             <a mat-list-item [routerLink]="[RouteKey.ASSETS]" queryParamsHandling="merge" routerLinkActive="active">
                 <mat-icon matListItemIcon matTooltip="Assets" [matTooltipPosition]="'below'"
-                    matTooltipHideDelay="100">view_in_ar</mat-icon>
+                    matTooltipHideDelay="100">computer</mat-icon>
                 <span [class.d-none]="collapsed">Assets</span>
             </a>
             <a mat-list-item [routerLink]="[RouteKey.VULNERABILITIES]" queryParamsHandling="merge"
                 routerLinkActive="active">
                 <mat-icon matListItemIcon matTooltip="Vulnerabilities" [matTooltipPosition]="'below'"
-                    matTooltipHideDelay="100">view_in_ar</mat-icon>
+                    matTooltipHideDelay="100">warning</mat-icon>
                 <span [class.d-none]="collapsed">Vulnerabilities</span>
             </a>
             <mat-divider class="mt-auto"></mat-divider>
-            <mat-list-item class=" d-flex align-items-center" style="bottom: 0; left: 0;"
-                (click)="collapsed = !collapsed">
-                <mat-icon *ngIf="!collapsed">chevron_left</mat-icon>
-                <mat-icon *ngIf="collapsed">chevron_right</mat-icon>
+
+            <mat-list-item class="" (click)="collapsed = !collapsed">
+                <mat-icon matListItemIcon *ngIf="!collapsed">chevron_left</mat-icon>
+                <mat-icon matListItemIcon *ngIf="collapsed">chevron_right</mat-icon>
             </mat-list-item>
         </mat-nav-list>
     </mat-sidenav>

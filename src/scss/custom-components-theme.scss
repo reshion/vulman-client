@@ -1,7 +1,7 @@
 @import "flex-window";
 // @import "mat-paginator";
 // @import "mat-snackbar";
-// @import "mat-list";
+@import "mat-list";
 // @import "mat-tree";
 @import "mat-card";
 // @import "mat-radio-button";
@@ -25,7 +25,7 @@
 
     // @include mat-tree-density($theme);   
     // @include set-snackbar-theme($theme);
-    // @include set-mat-list-theme($theme);
+    @include set-mat-list-theme($theme);
     // @include set-mat-drag-drop-theme($theme);
     // @include set-mat-paginator-theme($theme);
     // @include set-mat-tree-theme($theme);

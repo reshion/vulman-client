@@ -1,3 +1,13 @@
+:host {
+    height: 100%;
+}
+
 .sidenav-container {
     height: 100%;
+
+    mat-nav-list {
+        padding-top: 0;
+    }
+
+
 }
