@@ -10,7 +10,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+
 import { LoadingOverlayModule } from '@app/loading-overlay/loading-overlay.module';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
@@ -26,6 +30,9 @@ const importsExports = [
   MatInputModule,
   MatMenuModule,
   LoadingOverlayModule,
+  MatTableModule,
+  MatSortModule,
+  MatPaginatorModule,
 ]
 
 @NgModule({

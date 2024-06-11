@@ -5,10 +5,10 @@
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
         [opened]="(isHandset$ | async) === false">
         <mat-nav-list class="d-flex flex-column h-100">
-            <a mat-list-item [routerLink]="['scenario/grid']" queryParamsHandling="merge" routerLinkActive="active">
-                <mat-icon matListItemIcon matTooltip="Szenarios" [matTooltipPosition]="'below'"
+            <a mat-list-item [routerLink]="[RouteKey.ASSETS]" queryParamsHandling="merge" routerLinkActive="active">
+                <mat-icon matListItemIcon matTooltip="Assets" [matTooltipPosition]="'below'"
                     matTooltipHideDelay="100">view_in_ar</mat-icon>
-                <span [class.d-none]="collapsed">Tenants</span>
+                <span [class.d-none]="collapsed">Assets</span>
             </a>
             <mat-divider class="mb-auto"></mat-divider>
             <mat-divider class="mt-auto"></mat-divider>
@@ -22,7 +22,6 @@
     <mat-sidenav-content fixedInViewport="true">
         <!-- Add Content Here -->
         <div class="h-100">
-            test
             <router-outlet></router-outlet>
         </div>
     </mat-sidenav-content>

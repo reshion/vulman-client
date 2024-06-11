@@ -6,6 +6,7 @@ import { StorageKey } from '@app/shared/enums/storage-key.enum';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
+import { RouteKey } from '@app/shared/enums/route-key';
 
 @Injectable({
   providedIn: 'root'
@@ -88,7 +89,7 @@ export class AuthService
         // Token aus dem Storage entfernen
         this.storageService.removeItem(StorageKey.TOKEN);
         this.clearUser();
-        this.router.navigate(['/login']);
+        this.router.navigate([`${RouteKey.ROOT}${RouteKey.LOGIN}`]);
       }),
       catchError((error: HttpErrorResponse) =>
       {

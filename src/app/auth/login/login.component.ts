@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
+import { RouteKey } from '@app/shared/enums/route-key';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { EMPTY, catchError } from 'rxjs';
 interface LoginForm
@@ -52,7 +53,7 @@ export class LoginComponent
         x =>
         {
           this.authService.loadUser();
-          this.router.navigate(['/']);
+          this.router.navigate([RouteKey.ROOT]);
         }
       ).add(() => this.los.hide());
     }

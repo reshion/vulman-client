@@ -8,6 +8,7 @@ import { StorageService } from '../shared/services/storage/storage.service';
 import { ThemeKey } from '../shared/enums/theme-key.enum';
 import { SidenavService } from '../shared/services/sidenav/sidenav.service';
 import { AuthService } from '@app/shared/services/auth/auth.service';
+import { RouteKey } from '@app/shared/enums/route-key';
 
 @Component({
   selector: 'app-nav-menu',
@@ -21,6 +22,7 @@ export class NavMenuComponent
   ThemeKey = ThemeKey;
   currentTheme: ThemeKey = this.storageService.getItem<ThemeKey>(StorageKey.THEME);
   theme: ThemeKey = this.currentTheme == ThemeKey.DARK ? ThemeKey.LIGHT : ThemeKey.DARK;
+  RouteKey = RouteKey;
 
 
   constructor(

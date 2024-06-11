@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { RouteKey } from '@app/shared/enums/route-key';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 
 export const authGuard: CanActivateFn = (route, state) =>
@@ -10,7 +11,7 @@ export const authGuard: CanActivateFn = (route, state) =>
     return true;
   } else 
   {
-    inject(Router).navigate(['/login']);
+    inject(Router).navigate([`${RouteKey.ROOT}${RouteKey.LOGIN}`]);
     return false;
   }
 };

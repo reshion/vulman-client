@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { RouteKey } from '@app/shared/enums/route-key';
 import { Observable } from 'rxjs';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { SidenavService } from 'src/app/shared/services/sidenav/sidenav.service';
@@ -21,6 +22,8 @@ export class PagesComponent implements OnInit, AfterViewInit
       map(result => result.matches),
       shareReplay()
     );
+
+  RouteKey = RouteKey
 
   constructor(
     private breakpointObserver: BreakpointObserver,
