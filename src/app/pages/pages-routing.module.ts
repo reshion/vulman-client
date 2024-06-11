@@ -18,6 +18,12 @@ const routes: Routes = [
         path: RouteKey.VULNERABILITIES,
         loadChildren: () => import('./vulnerability/vulnerability.module').then(m => m.VulnerabilityModule)
       },
+      // Route to system group module
+      {
+        path: RouteKey.SYSTEM_GROUPS,
+        loadChildren: () => import('./system-group/system-group.module').then(m => m.SystemGroupModule)
+      },
+
     ],
   },
 

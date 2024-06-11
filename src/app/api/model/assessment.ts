@@ -14,6 +14,7 @@ import { Type, Expose } from 'class-transformer';
 
 import { AssessmentLifecycleStatus } from './assessmentLifecycleStatus';
 import { NamedBaseModel } from './namedBaseModel';
+import { RiskResponseLifecycleStatus } from './riskResponseLifecycleStatus';
 
 /**
  * model.mustache
@@ -33,6 +34,8 @@ export class Assessment extends NamedBaseModel {
     created!: string;
     @Expose()
     lifecycle_status!: AssessmentLifecycleStatus;
+    @Expose()
+    risk_response_lifecycle_status!: RiskResponseLifecycleStatus;
 
     /**
      * Description: Created date of the Assessment
@@ -45,6 +48,11 @@ export class Assessment extends NamedBaseModel {
      * datatypeWithEnum: AssessmentLifecycleStatus
      * lifecycle_status: AssessmentLifecycleStatus   
      */
+    /**
+     * datatype: RiskResponseLifecycleStatus
+     * datatypeWithEnum: RiskResponseLifecycleStatus
+     * risk_response_lifecycle_status: RiskResponseLifecycleStatus   
+     */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
@@ -53,7 +61,8 @@ export class Assessment extends NamedBaseModel {
             
                     init.created ? this.created = init.created : null,
                
-                        init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null
+                        init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null,
+                        init.risk_response_lifecycle_status ? this.risk_response_lifecycle_status = init.risk_response_lifecycle_status : null
     }
 
     static override  getForm(data?: Assessment | Assessment[] | null): FormGroup {
@@ -88,7 +97,8 @@ export class Assessment extends NamedBaseModel {
        
         return new FormGroup({           
                         created: new FormControl(data?.created, []),
-                        lifecycle_status: new FormControl(data?.lifecycle_status, [])
+                        lifecycle_status: new FormControl(data?.lifecycle_status, []),
+                        risk_response_lifecycle_status: new FormControl(data?.risk_response_lifecycle_status, [])
         });
     }
   

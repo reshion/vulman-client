@@ -17,6 +17,13 @@
             </a>
             <mat-divider class="mt-auto"></mat-divider>
 
+            <a mat-list-item [routerLink]="[RouteKey.SYSTEM_GROUPS]" queryParamsHandling="merge"
+                routerLinkActive="active">
+                <mat-icon matListItemIcon matTooltip="System Groups" [matTooltipPosition]="'below'"
+                    matTooltipHideDelay="100">group</mat-icon>
+                <span [class.d-none]="collapsed">System Groups</span>
+            </a>
+
             <mat-list-item class="" (click)="collapsed = !collapsed">
                 <mat-icon matListItemIcon *ngIf="!collapsed">chevron_left</mat-icon>
                 <mat-icon matListItemIcon *ngIf="collapsed">chevron_right</mat-icon>

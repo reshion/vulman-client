@@ -19,11 +19,10 @@ import { BaseModel } from './baseModel';
  *
  * Asset model
  */
-import { Observable } from 'rxjs';
-import { AbstractControl, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Observable }                                        from 'rxjs';
+import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
 
-export class Asset extends BaseModel
-{
+export class Asset extends BaseModel { 
 
 
     /**
@@ -63,62 +62,55 @@ export class Asset extends BaseModel
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
-    constructor(init: Partial<Asset> = {})
-    {
-        super(init)
-
-        init.fqdn ? this.fqdn = init.fqdn : null,
-
-
-            init.unique_id ? this.unique_id = init.unique_id : null,
-
-
-            init.operating_system ? this.operating_system = init.operating_system : null
-
+    constructor(init: Partial<Asset> = {}) {
+        super(init)  
+            
+                    init.fqdn ? this.fqdn = init.fqdn : null,
+               
+            
+                    init.unique_id ? this.unique_id = init.unique_id : null,
+               
+            
+                    init.operating_system ? this.operating_system = init.operating_system : null
+               
     }
 
-    static override  getForm(data?: Asset | Asset[] | null): FormGroup
-    {
+    static override  getForm(data?: Asset | Asset[] | null): FormGroup {
 
 
-        if (!data)
-        {
+        if(!data) {
             return Asset.getFormGroup(new Asset());
         }
 
-        if (Array.isArray(data))
-        {
+         if(Array.isArray(data)) {
             let arrayForm = new FormArray<any>([]);
-
-            if (data.length > 0)
-            {
-                arrayForm = new FormArray<any>(data.map(item => Asset.getFormGroup(item)));
+            
+            if(data.length > 0) {
+                arrayForm =  new FormArray<any>(data.map(item => Asset.getFormGroup(item)));                
             }
             return new FormGroup({
                 arrayForm
-            });
-        } else
-        {
-            return Asset.getFormGroup(data);
-        }
-
+            });        
+        } else {
+             return  Asset.getFormGroup(data);
+        }       
+     
     }
 
-    /**
-  * Get FormGroup
-  *
-  * @param {object} data
-  * @returns {FormGroup}
-  */
-    static override  getFormGroup(data?: Asset): FormGroup
-    {
-
-        return new FormGroup({
-            fqdn: new FormControl(data?.fqdn, []),
-            unique_id: new FormControl(data?.unique_id, []),
-            operating_system: new FormControl(data?.operating_system, [])
+     /**
+   * Get FormGroup
+   *
+   * @param {object} data
+   * @returns {FormGroup}
+   */
+  static override  getFormGroup(data?: Asset): FormGroup {
+       
+        return new FormGroup({           
+                        fqdn: new FormControl(data?.fqdn, []),
+                        unique_id: new FormControl(data?.unique_id, []),
+                        operating_system: new FormControl(data?.operating_system, [])
         });
     }
-
+  
 
 }

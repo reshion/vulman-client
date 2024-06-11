@@ -605,13 +605,13 @@
         ]
       }
     },
-    "/api/risk-responses": {
+    "/api/system-groups": {
       "get": {
         "tags": [
-          "RiskResponses"
+          "SystemGroups"
         ],
-        "summary": "Lists risk-responses",
-        "operationId": "listRiskResponses",
+        "summary": "Lists system groups",
+        "operationId": "listSystemGroups",
         "parameters": [
           {
             "name": "page",
@@ -640,7 +640,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RiskResponsePagingResource"
+                  "$ref": "#/components/schemas/SystemGroupPagingResource"
                 }
               }
             }
@@ -654,15 +654,15 @@
       },
       "post": {
         "tags": [
-          "RiskResponses"
+          "SystemGroups"
         ],
-        "summary": "Adds a new risk-response",
-        "operationId": "storeRiskResponse",
+        "summary": "Adds a new system group",
+        "operationId": "storeSystemGroup",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RiskResponseStoreRequest"
+                "$ref": "#/components/schemas/SystemGroupStoreRequest"
               }
             }
           }
@@ -673,7 +673,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RiskResponseResource"
+                  "$ref": "#/components/schemas/SystemGroupResource"
                 }
               }
             }
@@ -686,19 +686,19 @@
         ]
       }
     },
-    "/api/risk-responses/{id}": {
+    "/api/system-groups/{id}": {
       "get": {
         "tags": [
-          "RiskResponses"
+          "SystemGroups"
         ],
-        "summary": "Get RiskResponse information",
-        "description": "Returns RiskResponse data",
-        "operationId": "showRiskResponse",
+        "summary": "Get system group information",
+        "description": "Returns system group",
+        "operationId": "getSystemGroup",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "RiskResponse id",
+            "description": "System group id",
             "required": true,
             "schema": {
               "type": "integer"
@@ -711,7 +711,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RiskResponseResource"
+                  "$ref": "#/components/schemas/SystemGroupResource"
                 }
               }
             }
@@ -725,16 +725,15 @@
       },
       "put": {
         "tags": [
-          "RiskResponses"
+          "SystemGroups"
         ],
-        "summary": "Update RiskResponse information",
-        "description": "Returns updated RiskResponse data",
-        "operationId": "updateRiskResponse",
+        "summary": "Update an existing system group",
+        "operationId": "updateSystemGroup",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "RiskResponse id",
+            "description": "System group id",
             "required": true,
             "schema": {
               "type": "integer"
@@ -745,18 +744,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RiskResponseStoreRequest"
+                "$ref": "#/components/schemas/SystemGroupUpdateRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RiskResponseResource"
+                  "$ref": "#/components/schemas/SystemGroupResource"
                 }
               }
             }
@@ -770,16 +769,16 @@
       },
       "delete": {
         "tags": [
-          "RiskResponses"
+          "SystemGroups"
         ],
-        "summary": "Delete RiskResponse",
-        "description": "Deletes a single RiskResponse",
-        "operationId": "deleteRiskResponse",
+        "summary": "Delete system group",
+        "description": "Deletes a system group",
+        "operationId": "deleteSystemGroup",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "RiskResponse id",
+            "description": "System group id",
             "required": true,
             "schema": {
               "type": "integer"
@@ -792,7 +791,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RiskResponseResource"
+                  "$ref": "#/components/schemas/SystemGroupResource"
                 }
               }
             }
@@ -995,6 +994,48 @@
                   "$ref": "#/components/schemas/TenantResource"
                 }
               }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/upload": {
+      "post": {
+        "tags": [
+          "Upload"
+        ],
+        "summary": "Upload a CSV",
+        "operationId": "uploadCSV",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "allOf": [
+                  {
+                    "properties": {
+                      "file": {
+                        "description": "Item CsV",
+                        "type": "string",
+                        "format": "binary"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {}
             }
           }
         },
@@ -1322,6 +1363,9 @@
               },
               "lifecycle_status": {
                 "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+              },
+              "risk_response_lifecycle_status": {
+                "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
               }
             },
             "type": "object"
@@ -1438,9 +1482,9 @@
           }
         ]
       },
-      "RiskResponse": {
-        "title": "RiskResponse",
-        "description": "RiskResponse model",
+      "SystemGroup": {
+        "title": "SystemGroup",
+        "description": "System Group model",
         "type": "object",
         "allOf": [
           {
@@ -1448,25 +1492,15 @@
           },
           {
             "properties": {
-              "created": {
-                "title": "created",
-                "description": "Created date of the RiskResponse",
-                "type": "string",
-                "format": "date",
-                "example": "2020-01-27"
-              },
-              "lifecycle_status": {
-                "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
-              },
-              "assessment_id": {
-                "title": "Assessment ID",
-                "description": "Assessment's id of the RiskResponse",
+              "company_id": {
+                "title": "Company Id",
+                "description": "Id of the Company",
                 "type": "integer",
                 "format": "int64",
                 "example": 1
               },
-              "assessment": {
-                "$ref": "#/components/schemas/Assessment"
+              "company": {
+                "$ref": "#/components/schemas/Company"
               }
             },
             "type": "object"
@@ -1656,7 +1690,13 @@
             "title": "name",
             "description": "Name of the company",
             "type": "string",
-            "example": "A nice Tenant"
+            "example": "A nice company name"
+          },
+          "tenant_id": {
+            "title": "tenant_id",
+            "description": "The tenant id of the company",
+            "type": "integer",
+            "example": "1"
           }
         },
         "type": "object"
@@ -1679,52 +1719,32 @@
         },
         "type": "object"
       },
-      "RiskResponseStoreRequest": {
-        "title": "RiskResponseStoreRequest",
+      "SystemGroupStoreRequest": {
+        "title": "SystemGroupStoreRequest",
         "properties": {
           "name": {
             "title": "name",
-            "description": "Name of the new Assessment",
+            "description": "Name of the new system group",
             "type": "string",
-            "example": "Approve"
+            "example": "A nice company"
           },
-          "created": {
-            "title": "created",
-            "description": "The date the RiskResponse was created",
-            "type": "string",
-            "format": "date",
-            "example": "2021-10-10"
-          },
-          "lifecycle_status": {
-            "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
-          },
-          "assessment_id": {
-            "title": "assessment_id",
-            "description": "The assessment id of the risk response",
+          "company_id": {
+            "title": "company_id",
+            "description": "The company id",
             "type": "integer",
             "example": "1"
           }
         },
         "type": "object"
       },
-      "RiskResponseUpdateRequest": {
-        "title": "RiskResponseUpdateRequest",
+      "SystemGroupUpdateRequest": {
+        "title": "SystemGroupUpdateRequest",
         "properties": {
           "name": {
             "title": "name",
-            "description": "Name of the new Assessment",
+            "description": "Name of the new system group",
             "type": "string",
-            "example": "Approve"
-          },
-          "created": {
-            "title": "created",
-            "description": "The date the RiskResponse was created",
-            "type": "string",
-            "format": "date",
-            "example": "2021-10-10"
-          },
-          "lifecycle_status": {
-            "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
+            "example": "A nice company"
           }
         },
         "type": "object"
@@ -1789,6 +1809,15 @@
         },
         "type": "object"
       },
+      "AssessmentResource": {
+        "title": "AssessmentResource",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Assessment"
+          }
+        },
+        "type": "object"
+      },
       "AssessmentPagingResource": {
         "title": "AssessmentPagingResource",
         "properties": {
@@ -1806,14 +1835,18 @@
         },
         "type": "object"
       },
-      "AssessmentResource": {
-        "title": "AssessmentResource",
+      "AssetResource": {
+        "title": "AssetResource",
+        "description": "AssetResource",
         "properties": {
           "data": {
-            "$ref": "#/components/schemas/Assessment"
+            "$ref": "#/components/schemas/Asset"
           }
         },
-        "type": "object"
+        "type": "object",
+        "xml": {
+          "name": "AssetResource"
+        }
       },
       "AssetPagingResource": {
         "title": "AssetPagingResource",
@@ -1836,17 +1869,17 @@
           "name": "AssetPagingResource"
         }
       },
-      "AssetResource": {
-        "title": "AssetResource",
-        "description": "AssetResource",
+      "CompanyResource": {
+        "title": "CompanyResource",
+        "description": "CompanyResource",
         "properties": {
           "data": {
-            "$ref": "#/components/schemas/Asset"
+            "$ref": "#/components/schemas/Company"
           }
         },
         "type": "object",
         "xml": {
-          "name": "AssetResource"
+          "name": "CompanyResource"
         }
       },
       "CompanyPagingResource": {
@@ -1868,19 +1901,6 @@
         "type": "object",
         "xml": {
           "name": "CompanyPagingResource"
-        }
-      },
-      "CompanyResource": {
-        "title": "CompanyResource",
-        "description": "CompanyResource",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/Company"
-          }
-        },
-        "type": "object",
-        "xml": {
-          "name": "CompanyResource"
         }
       },
       "Meta": {
@@ -1919,31 +1939,52 @@
         },
         "type": "object"
       },
-      "RiskResponsePagingResource": {
-        "title": "RiskResponsePagingResource",
+      "SystemGroupResource": {
+        "title": "SystemGroupResource",
+        "description": "SystemGroupResource",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/SystemGroup"
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "SystemGroupResource"
+        }
+      },
+      "SystemGroupPagingResource": {
+        "title": "SystemGroupPagingResource",
+        "description": "SystemGroupPagingResource",
         "properties": {
           "data": {
             "title": "Data",
             "description": "Data wrapper",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/RiskResponse"
+              "$ref": "#/components/schemas/SystemGroup"
             }
           },
           "meta": {
             "$ref": "#/components/schemas/Meta"
           }
         },
-        "type": "object"
+        "type": "object",
+        "xml": {
+          "name": "SystemGroupPagingResource"
+        }
       },
-      "RiskResponseResource": {
-        "title": "RiskResponseResource",
+      "TenantResource": {
+        "title": "TenantResource",
+        "description": "TenantResource",
         "properties": {
           "data": {
-            "$ref": "#/components/schemas/RiskResponse"
+            "$ref": "#/components/schemas/Tenant"
           }
         },
-        "type": "object"
+        "type": "object",
+        "xml": {
+          "name": "TenantResource"
+        }
       },
       "TenantPagingResource": {
         "title": "TenantPagingResource",
@@ -1966,19 +2007,6 @@
           "name": "TenantPagingResource"
         }
       },
-      "TenantResource": {
-        "title": "TenantResource",
-        "description": "TenantResource",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/Tenant"
-          }
-        },
-        "type": "object",
-        "xml": {
-          "name": "TenantResource"
-        }
-      },
       "UserResource": {
         "title": "UserResource",
         "description": "UserResource",
@@ -1991,6 +2019,15 @@
         "xml": {
           "name": "UserResource"
         }
+      },
+      "VulnerabilityResource": {
+        "title": "VulnerabilityResource",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/Vulnerability"
+          }
+        },
+        "type": "object"
       },
       "VulnerabilityPagingResource": {
         "title": "VulnerabilityPagingResource",
@@ -2005,15 +2042,6 @@
           },
           "meta": {
             "$ref": "#/components/schemas/Meta"
-          }
-        },
-        "type": "object"
-      },
-      "VulnerabilityResource": {
-        "title": "VulnerabilityResource",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/Vulnerability"
           }
         },
         "type": "object"

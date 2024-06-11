@@ -16,63 +16,49 @@ import { Type, Expose } from 'class-transformer';
 import { Observable }                                        from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
 
-export class CompanyUpdateRequest { 
+export class ApiUploadBody { 
 
 
     /**
-     * Name of the company
+     * Item CsV
      */
     @Expose()
-    name!: string;
-    /**
-     * The tenant id of the company
-     */
-    @Expose()
-    tenant_id!: number;
+    file!: Blob;
 
     /**
-     * Description: Name of the company
-     * datatype: string
-     * datatypeWithEnum: string
-     * name: string   
-     */
-    /**
-     * Description: The tenant id of the company
-     * datatype: number
-     * datatypeWithEnum: number
-     * tenant_id: number   
+     * Description: Item CsV
+     * datatype: Blob
+     * datatypeWithEnum: Blob
+     * file: Blob   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
-    constructor(init: Partial<CompanyUpdateRequest> = {}) {
+    constructor(init: Partial<ApiUploadBody> = {}) {
          
             
-                    init.name ? this.name = init.name : null,
-               
-            
-                    init.tenant_id ? this.tenant_id = init.tenant_id : null
+                    init.file ? this.file = init.file : null
                
     }
 
-    static   getForm(data?: CompanyUpdateRequest | CompanyUpdateRequest[] | null): FormGroup {
+    static   getForm(data?: ApiUploadBody | ApiUploadBody[] | null): FormGroup {
 
 
         if(!data) {
-            return CompanyUpdateRequest.getFormGroup(new CompanyUpdateRequest());
+            return ApiUploadBody.getFormGroup(new ApiUploadBody());
         }
 
          if(Array.isArray(data)) {
             let arrayForm = new FormArray<any>([]);
             
             if(data.length > 0) {
-                arrayForm =  new FormArray<any>(data.map(item => CompanyUpdateRequest.getFormGroup(item)));                
+                arrayForm =  new FormArray<any>(data.map(item => ApiUploadBody.getFormGroup(item)));                
             }
             return new FormGroup({
                 arrayForm
             });        
         } else {
-             return  CompanyUpdateRequest.getFormGroup(data);
+             return  ApiUploadBody.getFormGroup(data);
         }       
      
     }
@@ -83,11 +69,10 @@ export class CompanyUpdateRequest {
    * @param {object} data
    * @returns {FormGroup}
    */
-  static   getFormGroup(data?: CompanyUpdateRequest): FormGroup {
+  static   getFormGroup(data?: ApiUploadBody): FormGroup {
        
         return new FormGroup({           
-                        name: new FormControl(data?.name, []),
-                        tenant_id: new FormControl(data?.tenant_id, [Validators.pattern('^[0-9]*$')])
+                        file: new FormControl(data?.file, [])
         });
     }
   
