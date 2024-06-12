@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Systemgruppe erstellen</h1>
+
+<div mat-dialog-content class="position-relative h-100">
+    <form [formGroup]="formGroup" *ngIf="formGroup">
+        <div class="tab-content">
+            <p>Systemgruppen Name</p>
+        </div>
+        <mat-form-field class="col-12">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" cdkFocusInitial>
+            <mat-error *ngIf="formGroup.get('name')?.hasError('required')">Ohne Name geht es nicht.</mat-error>
+        </mat-form-field>
+    </form>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="ok()" [disabled]="formGroup.invalid">Ok</button>
+    <button mat-button (click)="cancel()">Jetzt nicht</button>
+</div>

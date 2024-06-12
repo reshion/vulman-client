@@ -1344,6 +1344,13 @@
           "CLOSED"
         ]
       },
+      "SystemGroupType": {
+        "type": "string",
+        "enum": [
+          "DEFAULT",
+          "CUSTOM"
+        ]
+      },
       "Assessment": {
         "title": "Assessment",
         "description": "Assessment model",
@@ -1366,6 +1373,16 @@
               },
               "risk_response_lifecycle_status": {
                 "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
+              },
+              "company_id": {
+                "title": "Company Id",
+                "description": "Company's id of the Assessment",
+                "type": "integer",
+                "format": "int64",
+                "example": 1
+              },
+              "company": {
+                "$ref": "#/components/schemas/Company"
               }
             },
             "type": "object"
@@ -1492,6 +1509,9 @@
           },
           {
             "properties": {
+              "type": {
+                "$ref": "#/components/schemas/SystemGroupType"
+              },
               "company_id": {
                 "title": "Company Id",
                 "description": "Id of the Company",
@@ -1726,13 +1746,7 @@
             "title": "name",
             "description": "Name of the new system group",
             "type": "string",
-            "example": "A nice company"
-          },
-          "company_id": {
-            "title": "company_id",
-            "description": "The company id",
-            "type": "integer",
-            "example": "1"
+            "example": "A nice system group name"
           }
         },
         "type": "object"

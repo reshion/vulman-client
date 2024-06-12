@@ -14,6 +14,7 @@ import { Type, Expose } from 'class-transformer';
 
 import { Company } from './company';
 import { NamedBaseModel } from './namedBaseModel';
+import { SystemGroupType } from './systemGroupType';
 
 /**
  * model.mustache
@@ -26,6 +27,8 @@ import { AbstractControl, FormControl, FormGroup, FormArray, Validators }       
 export class SystemGroup extends NamedBaseModel { 
 
 
+    @Expose()
+    type!: SystemGroupType;
     /**
      * Id of the Company
      */
@@ -34,6 +37,11 @@ export class SystemGroup extends NamedBaseModel {
     @Expose()
     company!: Company;
 
+    /**
+     * datatype: SystemGroupType
+     * datatypeWithEnum: SystemGroupType
+     * type: SystemGroupType   
+     */
     /**
      * Description: Id of the Company
      * datatype: number
@@ -50,6 +58,7 @@ export class SystemGroup extends NamedBaseModel {
 
     constructor(init: Partial<SystemGroup> = {}) {
         super(init)  
+                        init.type ? this.type = init.type : null,
             
                     init.company_id ? this.company_id = init.company_id : null,
                
@@ -87,6 +96,7 @@ export class SystemGroup extends NamedBaseModel {
   static override  getFormGroup(data?: SystemGroup): FormGroup {
        
         return new FormGroup({           
+                        type: new FormControl(data?.type, []),
                         company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
                         company: (() => { 
                             const fg = Company.getForm(data?.company);

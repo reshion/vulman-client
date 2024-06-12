@@ -24,6 +24,7 @@ export * from './systemGroup';
 export * from './systemGroupPagingResource';
 export * from './systemGroupResource';
 export * from './systemGroupStoreRequest';
+export * from './systemGroupType';
 export * from './systemGroupUpdateRequest';
 export * from './tenant';
 export * from './tenantPagingResource';

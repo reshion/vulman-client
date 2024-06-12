@@ -15,10 +15,14 @@ import { MatTableModule } from '@angular/material/table';
 import { LoadingOverlayModule } from '@app/loading-overlay/loading-overlay.module';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MenuContainerComponent } from './components/menu-container/menu-container.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 const importsExports = [
+  ReactiveFormsModule,
   MatSidenavModule,
   MatIconModule,
   MatButtonModule,
@@ -33,17 +37,36 @@ const importsExports = [
   MatTableModule,
   MatSortModule,
   MatPaginatorModule,
+  MatDialogModule,
+]
+const declarationsExports = [
+  MenuContainerComponent
+
 ]
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ...declarationsExports
+  ],
   imports: [
     CommonModule,
     ...importsExports
 
   ],
   exports: [
-    ...importsExports
+    ...importsExports,
+    ...declarationsExports
+  ],
+  providers: [
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: {
+        ...new MatDialogConfig(),
+        hasBackdrop: true,
+        backdropClass: 'blur',
+        // panelClass: ['mw-100', 'mx-lg-5-', 'mx-md-0']
+      } as MatDialogConfig,
+    },
   ]
 })
 export class SharedModule { }

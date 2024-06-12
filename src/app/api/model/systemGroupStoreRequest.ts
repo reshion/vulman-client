@@ -24,11 +24,6 @@ export class SystemGroupStoreRequest {
      */
     @Expose()
     name!: string;
-    /**
-     * The company id
-     */
-    @Expose()
-    company_id!: number;
 
     /**
      * Description: Name of the new system group
@@ -36,22 +31,13 @@ export class SystemGroupStoreRequest {
      * datatypeWithEnum: string
      * name: string   
      */
-    /**
-     * Description: The company id
-     * datatype: number
-     * datatypeWithEnum: number
-     * company_id: number   
-     */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
     constructor(init: Partial<SystemGroupStoreRequest> = {}) {
          
             
-                    init.name ? this.name = init.name : null,
-               
-            
-                    init.company_id ? this.company_id = init.company_id : null
+                    init.name ? this.name = init.name : null
                
     }
 
@@ -86,8 +72,7 @@ export class SystemGroupStoreRequest {
   static   getFormGroup(data?: SystemGroupStoreRequest): FormGroup {
        
         return new FormGroup({           
-                        name: new FormControl(data?.name, []),
-                        company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')])
+                        name: new FormControl(data?.name, [])
         });
     }
   

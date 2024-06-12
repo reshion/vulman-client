@@ -13,6 +13,7 @@ import { Type, Expose } from 'class-transformer';
 // @dynamic
 
 import { AssessmentLifecycleStatus } from './assessmentLifecycleStatus';
+import { Company } from './company';
 import { NamedBaseModel } from './namedBaseModel';
 import { RiskResponseLifecycleStatus } from './riskResponseLifecycleStatus';
 
@@ -36,6 +37,13 @@ export class Assessment extends NamedBaseModel {
     lifecycle_status!: AssessmentLifecycleStatus;
     @Expose()
     risk_response_lifecycle_status!: RiskResponseLifecycleStatus;
+    /**
+     * Company's id of the Assessment
+     */
+    @Expose()
+    company_id!: number;
+    @Expose()
+    company!: Company;
 
     /**
      * Description: Created date of the Assessment
@@ -53,6 +61,17 @@ export class Assessment extends NamedBaseModel {
      * datatypeWithEnum: RiskResponseLifecycleStatus
      * risk_response_lifecycle_status: RiskResponseLifecycleStatus   
      */
+    /**
+     * Description: Company's id of the Assessment
+     * datatype: number
+     * datatypeWithEnum: number
+     * company_id: number   
+     */
+    /**
+     * datatype: Company
+     * datatypeWithEnum: Company
+     * company: Company   
+     */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
@@ -62,7 +81,11 @@ export class Assessment extends NamedBaseModel {
                     init.created ? this.created = init.created : null,
                
                         init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null,
-                        init.risk_response_lifecycle_status ? this.risk_response_lifecycle_status = init.risk_response_lifecycle_status : null
+                        init.risk_response_lifecycle_status ? this.risk_response_lifecycle_status = init.risk_response_lifecycle_status : null,
+            
+                    init.company_id ? this.company_id = init.company_id : null,
+               
+                        this.company = new Company(init.company || {})
     }
 
     static override  getForm(data?: Assessment | Assessment[] | null): FormGroup {
@@ -98,7 +121,13 @@ export class Assessment extends NamedBaseModel {
         return new FormGroup({           
                         created: new FormControl(data?.created, []),
                         lifecycle_status: new FormControl(data?.lifecycle_status, []),
-                        risk_response_lifecycle_status: new FormControl(data?.risk_response_lifecycle_status, [])
+                        risk_response_lifecycle_status: new FormControl(data?.risk_response_lifecycle_status, []),
+                        company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
+                        company: (() => { 
+                            const fg = Company.getForm(data?.company);
+                            fg.addValidators([]);
+                            return fg;
+                        })()
         });
     }
   
