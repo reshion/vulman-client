@@ -15,6 +15,13 @@
                     matTooltipHideDelay="100">warning</mat-icon>
                 <span [class.d-none]="collapsed">Vulnerabilities</span>
             </a>
+
+            <a mat-list-item [routerLink]="[RouteKey.SYSTEM_GROUPS_MANAGEMENT]" queryParamsHandling="merge"
+                routerLinkActive="active">
+                <mat-icon matListItemIcon matTooltip="System Groups Management" [matTooltipPosition]="'below'"
+                    matTooltipHideDelay="100">lan</mat-icon>
+                <span [class.d-none]="collapsed">System Groups Manage</span>
+            </a>
             <mat-divider class="mt-auto"></mat-divider>
 
             <a mat-list-item [routerLink]="[RouteKey.SYSTEM_GROUPS]" queryParamsHandling="merge"

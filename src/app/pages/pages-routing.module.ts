@@ -23,6 +23,10 @@ const routes: Routes = [
         path: RouteKey.SYSTEM_GROUPS,
         loadChildren: () => import('./system-group/system-group.module').then(m => m.SystemGroupModule)
       },
+      {
+        path: RouteKey.SYSTEM_GROUPS_MANAGEMENT,
+        loadChildren: () => import('./system-group-manage/system-group-manage.module').then(m => m.SystemGroupManageModule)
+      },
 
     ],
   },

@@ -605,6 +605,48 @@
         ]
       }
     },
+    "/api/import": {
+      "post": {
+        "tags": [
+          "Import"
+        ],
+        "summary": "Import a CSV",
+        "operationId": "importCSV",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "allOf": [
+                  {
+                    "properties": {
+                      "file": {
+                        "description": "Item CsV",
+                        "type": "string",
+                        "format": "binary"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
     "/api/system-groups": {
       "get": {
         "tags": [
@@ -994,48 +1036,6 @@
                   "$ref": "#/components/schemas/TenantResource"
                 }
               }
-            }
-          }
-        },
-        "security": [
-          {
-            "sanctum": []
-          }
-        ]
-      }
-    },
-    "/api/upload": {
-      "post": {
-        "tags": [
-          "Upload"
-        ],
-        "summary": "Upload a CSV",
-        "operationId": "uploadCSV",
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "allOf": [
-                  {
-                    "properties": {
-                      "file": {
-                        "description": "Item CsV",
-                        "type": "string",
-                        "format": "binary"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {}
             }
           }
         },
@@ -1521,6 +1521,14 @@
               },
               "company": {
                 "$ref": "#/components/schemas/Company"
+              },
+              "assets": {
+                "title": "Assets",
+                "description": "System group assets list",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Asset"
+                }
               }
             },
             "type": "object"

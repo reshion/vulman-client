@@ -6,9 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import { AssessmentsService } from './api/assessments.service';
 import { AssetsService } from './api/assets.service';
 import { CompaniesService } from './api/companies.service';
+import { ImportService } from './api/import.service';
 import { SystemGroupsService } from './api/systemGroups.service';
 import { TenantsService } from './api/tenants.service';
-import { UploadService } from './api/upload.service';
 import { UserService } from './api/user.service';
 import { VulnerabilitiesService } from './api/vulnerabilities.service';
 
@@ -20,9 +20,9 @@ import { VulnerabilitiesService } from './api/vulnerabilities.service';
     AssessmentsService,
     AssetsService,
     CompaniesService,
+    ImportService,
     SystemGroupsService,
     TenantsService,
-    UploadService,
     UserService,
     VulnerabilitiesService ]
 })

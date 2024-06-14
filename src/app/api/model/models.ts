@@ -1,4 +1,4 @@
-export * from './apiUploadBody';
+export * from './apiImportBody';
 export * from './assessment';
 export * from './assessmentLifecycleStatus';
 export * from './assessmentPagingResource';

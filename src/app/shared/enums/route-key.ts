@@ -6,4 +6,5 @@ export enum RouteKey
     ASSETS = 'assets',
     VULNERABILITIES = 'vulnerabilities',
     SYSTEM_GROUPS = 'system-groups',
+    SYSTEM_GROUPS_MANAGEMENT = 'system-groups-management',
 }

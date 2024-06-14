@@ -12,6 +12,7 @@
 import { Type, Expose } from 'class-transformer';
 // @dynamic
 
+import { Asset } from './asset';
 import { Company } from './company';
 import { NamedBaseModel } from './namedBaseModel';
 import { SystemGroupType } from './systemGroupType';
@@ -36,6 +37,12 @@ export class SystemGroup extends NamedBaseModel {
     company_id!: number;
     @Expose()
     company!: Company;
+    /**
+     * System group assets list
+     */
+    @Expose()
+    @Type(() => Asset)
+    assets!: Array<Asset>;
 
     /**
      * datatype: SystemGroupType
@@ -53,6 +60,13 @@ export class SystemGroup extends NamedBaseModel {
      * datatypeWithEnum: Company
      * company: Company   
      */
+    /**
+     * Description: System group assets list
+     * Complex type: Asset
+     * datatype: Array&lt;Asset&gt;
+     * datatypeWithEnum: Array&lt;Asset&gt;
+     * assets: Array<Asset>   
+     */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
@@ -62,7 +76,8 @@ export class SystemGroup extends NamedBaseModel {
             
                     init.company_id ? this.company_id = init.company_id : null,
                
-                        this.company = new Company(init.company || {})
+                        this.company = new Company(init.company || {}),
+                            this.assets = init.assets?.map(x => new Asset(x)) || [] 
     }
 
     static override  getForm(data?: SystemGroup | SystemGroup[] | null): FormGroup {
@@ -102,7 +117,7 @@ export class SystemGroup extends NamedBaseModel {
                             const fg = Company.getForm(data?.company);
                             fg.addValidators([]);
                             return fg;
-                        })()
+                        })(),
         });
     }
   
