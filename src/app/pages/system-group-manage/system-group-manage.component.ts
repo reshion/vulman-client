@@ -4,9 +4,16 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as API from '@app/api';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
-import { merge, startWith, switchMap, catchError, of, map } from 'rxjs';
+import { merge, startWith, switchMap, catchError, of, map, Observable, mergeMap, from, concatAll, toArray, forkJoin } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { plainToClass } from 'class-transformer';
 
+
+
+class ViewModel extends API.SystemGroup
+{
+  open_cve!: API.BaseSeverityCountResponse;
+}
 
 @Component({
   selector: 'app-system-group-manage',
@@ -21,15 +28,16 @@ export class SystemGroupManageComponent
    */
   constructor(
     private systemGroupService: API.SystemGroupsService,
+    private vulnerabilityService: API.VulnerabilitiesService,
     private los: LoadingOverlayService,
     private dialog: MatDialog
   )
   {
 
   }
-  displayedColumns: string[] = ['id', 'name', 'assets', 'type'];
+  displayedColumns: string[] = ['id', 'name', 'assets', 'open_cve', 'type'];
   totalItems: number = 0;
-  dataSource: MatTableDataSource<API.SystemGroup> = new MatTableDataSource<API.SystemGroup>();
+  dataSource: MatTableDataSource<ViewModel> = new MatTableDataSource<ViewModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -57,14 +65,37 @@ export class SystemGroupManageComponent
       {
         this.los.hide();
         this.totalItems = response.meta.total;
-        return response.data;
+        return response.data.map(x =>
+        {
+          return plainToClass(ViewModel, x);
+        })
       }),
-      catchError(() =>
+
+
+      mergeMap(group =>
       {
-        this.los.hide();
-        return of([]);
-      })
-    ).subscribe(data => this.dataSource.data = data || []);
+        const viewModels = group.map(x =>
+        {
+          return this.vulnerabilityService.showVulnerabilityBySystemGroup(x.id).pipe(
+            map(response =>
+            {
+              x.open_cve = response;
+              return x;
+            })
+          )
+        })
+        return forkJoin(viewModels);
+
+      }),
+      // catchError(() =>
+      // {
+      //   this.los.hide();
+      //   return of([]);
+      // })
+    ).subscribe(data => 
+    {
+      this.dataSource.data = (data || []) as ViewModel[]
+    });
 
   }
   applyFilter(event: Event)

@@ -1325,6 +1325,44 @@
           }
         ]
       }
+    },
+    "/api/vulnerabilities/system-group/find/{id}": {
+      "get": {
+        "tags": [
+          "Vulnerabilities"
+        ],
+        "summary": "Get Vulnerability information",
+        "description": "Returns Vulnerability data",
+        "operationId": "showVulnerabilityBySystemGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System group id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseSeverityCountResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -2064,6 +2102,37 @@
           },
           "meta": {
             "$ref": "#/components/schemas/Meta"
+          }
+        },
+        "type": "object"
+      },
+      "BaseSeverityCountResponse": {
+        "title": "BaseSeverityCountResponse",
+        "description": "BaseSeverityCountResponse",
+        "properties": {
+          "critical": {
+            "title": "Crtitical",
+            "description": "Crtitical severity count",
+            "type": "integer",
+            "default": 0
+          },
+          "high": {
+            "title": "High",
+            "description": "High severity count",
+            "type": "integer",
+            "default": 0
+          },
+          "medium": {
+            "title": "Medium",
+            "description": "Medium severity count",
+            "type": "integer",
+            "default": 0
+          },
+          "low": {
+            "title": "Low",
+            "description": "Low severity count",
+            "type": "integer",
+            "default": 0
           }
         },
         "type": "object"

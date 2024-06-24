@@ -11,6 +11,7 @@ export * from './assetResource';
 export * from './assetStoreRequest';
 export * from './assetUpdateRequest';
 export * from './baseModel';
+export * from './baseSeverityCountResponse';
 export * from './company';
 export * from './companyPagingResource';
 export * from './companyResource';
