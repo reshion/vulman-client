@@ -605,7 +605,7 @@
         ]
       }
     },
-    "/api/import": {
+    "/api/import/scan": {
       "post": {
         "tags": [
           "Import"
@@ -1331,14 +1331,52 @@
         "tags": [
           "Vulnerabilities"
         ],
-        "summary": "Get Vulnerability information",
-        "description": "Returns Vulnerability data",
-        "operationId": "showVulnerabilityBySystemGroup",
+        "summary": "Base severity count by system group",
+        "description": "Get summery of base severity information by system group",
+        "operationId": "findBySystemGroup",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "description": "System group id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseSeverityCountResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/vulnerabilities/asset/find/{id}": {
+      "get": {
+        "tags": [
+          "Vulnerabilities"
+        ],
+        "summary": "Base severity count by asset",
+        "description": "Get summery of base severity information by asset",
+        "operationId": "findByAsset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Asset id",
             "required": true,
             "schema": {
               "type": "integer"

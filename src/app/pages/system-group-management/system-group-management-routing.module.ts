@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AssetComponent } from './asset.component';
 import { RouteKey } from '@app/shared/enums/route-key';
+import { SystemGroupManagementComponent } from './system-group-management.component';
 
 const routes: Routes = [
   {
     path: RouteKey.EMPTY,
-    component: AssetComponent
+    component: SystemGroupManagementComponent
   },
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AssetRoutingModule { }
+export class SystemGroupManagementRoutingModule { }

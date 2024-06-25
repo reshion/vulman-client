@@ -3,17 +3,24 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import * as API from '@app/api';
-import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
+import { catchError, forkJoin, map, merge, mergeMap, of, startWith, switchMap } from 'rxjs';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
+import { plainToClass } from 'class-transformer';
+
+
+class ViewModel extends API.Asset
+{
+  open_cve!: API.BaseSeverityCountResponse;
+}
 
 @Component({
-  selector: 'app-assets',
-  templateUrl: './asset.component.html',
-  styleUrls: ['./asset.component.scss'],
+  selector: 'app-assets-management',
+  templateUrl: './assets-management.component.html',
+  styleUrls: ['./assets-management.component.scss'],
 })
-export class AssetComponent implements OnInit, AfterViewInit
+export class AssetsManagementComponent implements OnInit, AfterViewInit
 {
-  displayedColumns: string[] = ['id', 'fqdn', 'unique_id', 'operating_system'];
+  displayedColumns: string[] = ['id', 'fqdn', 'open_cve', 'unique_id', 'operating_system'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<API.Asset> = new MatTableDataSource<API.Asset>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -21,6 +28,7 @@ export class AssetComponent implements OnInit, AfterViewInit
 
   constructor(
     private assetsService: API.AssetsService,
+    private vulnerabilityService: API.VulnerabilitiesService,
     private los: LoadingOverlayService,
   )
   {
@@ -44,7 +52,27 @@ export class AssetComponent implements OnInit, AfterViewInit
       {
         this.los.hide();
         this.totalItems = response.meta.total;
-        return response.data;
+        return response.data.map(x =>
+        {
+          return plainToClass(ViewModel, x);
+        })
+      }),
+
+
+      mergeMap(group =>
+      {
+        const viewModels = group.map(x =>
+        {
+          return this.vulnerabilityService.findByAsset(x.id).pipe(
+            map(response =>
+            {
+              x.open_cve = response;
+              return x;
+            })
+          )
+        })
+        return forkJoin(viewModels);
+
       }),
       catchError(() =>
       {

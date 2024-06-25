@@ -86,7 +86,7 @@ export class ImportService {
             'multipart/form-data'
         ];
 
-        return this.httpClient.post<any>(`${this.basePath}/api/import`,
+        return this.httpClient.post<any>(`${this.basePath}/api/import/scan`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,

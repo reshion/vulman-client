@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssetComponent } from './asset.component';
+import { AssetComponent } from './assets-management.component';
 
 describe('AssetComponent', () =>
 {

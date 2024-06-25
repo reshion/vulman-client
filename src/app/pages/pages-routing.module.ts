@@ -11,7 +11,7 @@ const routes: Routes = [
       // Route to asset module
       {
         path: RouteKey.ASSETS,
-        loadChildren: () => import('./asset/asset.module').then(m => m.AssetModule)
+        loadChildren: () => import('./assets-management/assets-management.module').then(m => m.AssetsManagementModule)
       },
       // Route to vulnerability module
       {
@@ -25,7 +25,7 @@ const routes: Routes = [
       },
       {
         path: RouteKey.SYSTEM_GROUPS_MANAGEMENT,
-        loadChildren: () => import('./system-group-manage/system-group-manage.module').then(m => m.SystemGroupManageModule)
+        loadChildren: () => import('./system-group-management/system-group-management.module').then(m => m.SystemGroupManagementModule)
       },
 
     ],

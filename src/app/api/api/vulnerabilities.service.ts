@@ -105,6 +105,98 @@ export class VulnerabilitiesService {
     }
 
     /**
+     * Base severity count by asset
+     * Get summery of base severity information by asset
+     * @param id Asset id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findByAsset(id: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
+    public findByAsset(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
+    public findByAsset(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
+    public findByAsset(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling findByAsset.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<BaseSeverityCountResponse>(`${this.basePath}/api/vulnerabilities/asset/find/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Base severity count by system group
+     * Get summery of base severity information by system group
+     * @param id System group id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findBySystemGroup(id: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
+    public findBySystemGroup(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
+    public findBySystemGroup(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
+    public findBySystemGroup(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling findBySystemGroup.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<BaseSeverityCountResponse>(`${this.basePath}/api/vulnerabilities/system-group/find/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Lists vulnerabilities
      * 
      * @param page Page number
@@ -195,52 +287,6 @@ export class VulnerabilitiesService {
         ];
 
         return this.httpClient.get<VulnerabilityResource>(`${this.basePath}/api/vulnerabilities/${encodeURIComponent(String(id))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Get Vulnerability information
-     * Returns Vulnerability data
-     * @param id System group id
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public showVulnerabilityBySystemGroup(id: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
-    public showVulnerabilityBySystemGroup(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
-    public showVulnerabilityBySystemGroup(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
-    public showVulnerabilityBySystemGroup(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling showVulnerabilityBySystemGroup.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // authentication (sanctum) required
-        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
-            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            'application/json'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.get<BaseSeverityCountResponse>(`${this.basePath}/api/vulnerabilities/system-group/find/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

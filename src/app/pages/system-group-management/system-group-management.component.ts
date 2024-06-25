@@ -16,12 +16,12 @@ class ViewModel extends API.SystemGroup
 }
 
 @Component({
-  selector: 'app-system-group-manage',
-  templateUrl: './system-group-manage.component.html',
-  styleUrls: ['./system-group-manage.component.scss']
+  selector: 'app-system-group-management',
+  templateUrl: './system-group-management.component.html',
+  styleUrls: ['./system-group-management.component.scss']
 
 })
-export class SystemGroupManageComponent
+export class SystemGroupManagementComponent
 {
   /**
    *
@@ -76,7 +76,7 @@ export class SystemGroupManageComponent
       {
         const viewModels = group.map(x =>
         {
-          return this.vulnerabilityService.showVulnerabilityBySystemGroup(x.id).pipe(
+          return this.vulnerabilityService.findBySystemGroup(x.id).pipe(
             map(response =>
             {
               x.open_cve = response;

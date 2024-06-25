@@ -1,4 +1,3 @@
-export * from './apiImportBody';
 export * from './assessment';
 export * from './assessmentLifecycleStatus';
 export * from './assessmentPagingResource';
@@ -17,6 +16,7 @@ export * from './companyPagingResource';
 export * from './companyResource';
 export * from './companyStoreRequest';
 export * from './companyUpdateRequest';
+export * from './importScanBody';
 export * from './loginRequest';
 export * from './meta';
 export * from './namedBaseModel';

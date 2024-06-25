@@ -12,6 +12,12 @@
             <mat-cell *matCellDef="let row"> {{row.fqdn}} </mat-cell>
         </ng-container>
 
+        <!-- Base severity count -->
+        <ng-container matColumnDef="open_cve">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Offene CVE - C / H / M / L </mat-header-cell>
+            <mat-cell *matCellDef="let row"><span *ngIf="row.open_cve">{{row.open_cve?.critical}} / {{row.open_cve?.high}} / {{row.open_cve?.medium}} / {{row.open_cve?.low}} </span> </mat-cell>
+        </ng-container>
+
         <!-- Name Column -->
         <ng-container matColumnDef="unique_id">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Unique Id </mat-header-cell>
