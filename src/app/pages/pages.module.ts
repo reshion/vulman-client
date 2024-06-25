@@ -6,6 +6,7 @@ import { PagesComponent } from './pages.component';
 import { SharedModule } from '../shared/shared.module';
 import { NavMenuComponent } from '@app/nav-menu/nav-menu.component';
 import { SystemGroupComponent } from './system-group/system-group.component';
+import { CompanyManagementComponent } from './company-management/company-management.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { SystemGroupComponent } from './system-group/system-group.component';
     PagesComponent,
     NavMenuComponent,
     SystemGroupComponent,
+    CompanyManagementComponent,
 
   ],
   imports: [
