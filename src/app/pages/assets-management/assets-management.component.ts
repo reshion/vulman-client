@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import * as API from '@app/api';
-import { catchError, forkJoin, map, merge, mergeMap, of, startWith, switchMap } from 'rxjs';
+import { EMPTY, catchError, forkJoin, map, merge, mergeMap, of, startWith, switchMap, Observable, Subject } from 'rxjs';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 import { plainToClass } from 'class-transformer';
 
@@ -11,6 +11,8 @@ import { plainToClass } from 'class-transformer';
 class ViewModel extends API.Asset
 {
   open_cve!: API.BaseSeverityCountResponse;
+  open_cve$: Observable<API.BaseSeverityCountResponse> = new Subject<API.BaseSeverityCountResponse>();
+  test = 1;
 }
 
 @Component({
@@ -22,9 +24,10 @@ export class AssetsManagementComponent implements OnInit, AfterViewInit
 {
   displayedColumns: string[] = ['id', 'fqdn', 'open_cve', 'unique_id', 'operating_system'];
   totalItems: number = 0;
-  dataSource: MatTableDataSource<API.Asset> = new MatTableDataSource<API.Asset>();
+  dataSource: MatTableDataSource<ViewModel> = new MatTableDataSource<ViewModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  BaseSeverityCountResponse = API.BaseSeverityCountResponse;
 
   constructor(
     private assetsService: API.AssetsService,
@@ -57,29 +60,42 @@ export class AssetsManagementComponent implements OnInit, AfterViewInit
           return plainToClass(ViewModel, x);
         })
       }),
-
-
-      mergeMap(group =>
+      map(x =>
       {
-        const viewModels = group.map(x =>
+        x.map(y =>
         {
-          return this.vulnerabilityService.findByAsset(x.id).pipe(
-            map(response =>
+          y.open_cve$ = this.vulnerabilityService.getBaseSeverityByAsset(y.id).pipe(
+            catchError(err =>
             {
-              x.open_cve = response;
-              return x;
-            })
-          )
-        })
-        return forkJoin(viewModels);
 
+              return EMPTY;
+            }),
+          );
+          return y;
+        });
+        return x;
       }),
+      // mergeMap(group =>
+      // {
+      //   const viewModels = group.map(x =>
+      //   {
+      //     return this.vulnerabilityService.getByAsset(x.id).pipe(
+      //       map(response =>
+      //       {
+      //         x.open_cve = response;
+      //         return x;
+      //       })
+      //     )
+      //   })
+      //   return forkJoin(viewModels);
+      // }),
+
       catchError(() =>
       {
         this.los.hide();
-        return of([]);
+        return EMPTY
       })
-    ).subscribe(data => this.dataSource.data = data || []);
+    ).subscribe(data => this.dataSource.data = (data) as ViewModel[]);
 
   }
   applyFilter(event: Event)

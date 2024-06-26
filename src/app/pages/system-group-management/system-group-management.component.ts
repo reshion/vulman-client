@@ -76,7 +76,7 @@ export class SystemGroupManagementComponent
       {
         const viewModels = group.map(x =>
         {
-          return this.vulnerabilityService.findBySystemGroup(x.id).pipe(
+          return this.vulnerabilityService.getBaseSeverityBySystemGroup(x.id).pipe(
             map(response =>
             {
               x.open_cve = response;

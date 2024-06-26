@@ -107,17 +107,17 @@ export class VulnerabilitiesService {
     /**
      * Base severity count by asset
      * Get summery of base severity information by asset
-     * @param id Asset id
+     * @param assetId Asset id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findByAsset(id: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
-    public findByAsset(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
-    public findByAsset(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
-    public findByAsset(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getBaseSeverityByAsset(assetId: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
+    public getBaseSeverityByAsset(assetId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
+    public getBaseSeverityByAsset(assetId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
+    public getBaseSeverityByAsset(assetId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling findByAsset.');
+        if (assetId === null || assetId === undefined) {
+            throw new Error('Required parameter assetId was null or undefined when calling getBaseSeverityByAsset.');
         }
 
         let headers = this.defaultHeaders;
@@ -140,7 +140,7 @@ export class VulnerabilitiesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<BaseSeverityCountResponse>(`${this.basePath}/api/vulnerabilities/asset/find/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<BaseSeverityCountResponse>(`${this.basePath}/api/vulnerabilities/base-severity/asset/${encodeURIComponent(String(assetId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -153,17 +153,17 @@ export class VulnerabilitiesService {
     /**
      * Base severity count by system group
      * Get summery of base severity information by system group
-     * @param id System group id
+     * @param systemGroupId System group id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findBySystemGroup(id: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
-    public findBySystemGroup(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
-    public findBySystemGroup(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
-    public findBySystemGroup(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getBaseSeverityBySystemGroup(systemGroupId: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
+    public getBaseSeverityBySystemGroup(systemGroupId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
+    public getBaseSeverityBySystemGroup(systemGroupId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
+    public getBaseSeverityBySystemGroup(systemGroupId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling findBySystemGroup.');
+        if (systemGroupId === null || systemGroupId === undefined) {
+            throw new Error('Required parameter systemGroupId was null or undefined when calling getBaseSeverityBySystemGroup.');
         }
 
         let headers = this.defaultHeaders;
@@ -186,8 +186,116 @@ export class VulnerabilitiesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<BaseSeverityCountResponse>(`${this.basePath}/api/vulnerabilities/system-group/find/${encodeURIComponent(String(id))}`,
+        return this.httpClient.get<BaseSeverityCountResponse>(`${this.basePath}/api/vulnerabilities/base-severity/system-group/${encodeURIComponent(String(systemGroupId))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get vulerabilities by company
+     * Get vulerabilities by company
+     * @param page Page number
+     * @param count Number of items per page
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getByCompany(page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<VulnerabilityPagingResource>;
+    public getByCompany(page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<VulnerabilityPagingResource>>;
+    public getByCompany(page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<VulnerabilityPagingResource>>;
+    public getByCompany(page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (count !== undefined && count !== null) {
+            queryParameters = queryParameters.set('count', <any>count);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<VulnerabilityPagingResource>(`${this.basePath}/api/vulnerabilities/company`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get vulerabilities by company
+     * Get vulerabilities by company
+     * @param page Page number
+     * @param count Number of items per page
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getByCompanyWithAssetCount(page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<VulnerabilityPagingResource>;
+    public getByCompanyWithAssetCount(page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<VulnerabilityPagingResource>>;
+    public getByCompanyWithAssetCount(page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<VulnerabilityPagingResource>>;
+    public getByCompanyWithAssetCount(page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (count !== undefined && count !== null) {
+            queryParameters = queryParameters.set('count', <any>count);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<VulnerabilityPagingResource>(`${this.basePath}/api/vulnerabilities/company/asset-count/`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

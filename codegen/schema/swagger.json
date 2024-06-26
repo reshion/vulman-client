@@ -1326,17 +1326,17 @@
         ]
       }
     },
-    "/api/vulnerabilities/system-group/find/{id}": {
+    "/api/vulnerabilities/base-severity/system-group/{systemGroupId}": {
       "get": {
         "tags": [
           "Vulnerabilities"
         ],
         "summary": "Base severity count by system group",
         "description": "Get summery of base severity information by system group",
-        "operationId": "findBySystemGroup",
+        "operationId": "getBaseSeverityBySystemGroup",
         "parameters": [
           {
-            "name": "id",
+            "name": "systemGroupId",
             "in": "path",
             "description": "System group id",
             "required": true,
@@ -1364,17 +1364,17 @@
         ]
       }
     },
-    "/api/vulnerabilities/asset/find/{id}": {
+    "/api/vulnerabilities/base-severity/asset/{assetId}": {
       "get": {
         "tags": [
           "Vulnerabilities"
         ],
         "summary": "Base severity count by asset",
         "description": "Get summery of base severity information by asset",
-        "operationId": "findByAsset",
+        "operationId": "getBaseSeverityByAsset",
         "parameters": [
           {
-            "name": "id",
+            "name": "assetId",
             "in": "path",
             "description": "Asset id",
             "required": true,
@@ -1390,6 +1390,104 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BaseSeverityCountResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/vulnerabilities/company/asset-count/": {
+      "get": {
+        "tags": [
+          "Vulnerabilities"
+        ],
+        "summary": "Get vulerabilities by company",
+        "description": "Get vulerabilities by company",
+        "operationId": "getByCompanyWithAssetCount",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VulnerabilityPagingResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/vulnerabilities/company": {
+      "get": {
+        "tags": [
+          "Vulnerabilities"
+        ],
+        "summary": "Get vulerabilities by company",
+        "description": "Get vulerabilities by company",
+        "operationId": "getByCompany",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VulnerabilityPagingResource"
                 }
               }
             }
@@ -1671,6 +1769,13 @@
                 "type": "string",
                 "format": "json",
                 "example": "{'description': 'This is a vulnerability', 'severity': 'High'}"
+              },
+              "assets_count": {
+                "title": "assets_count",
+                "description": "Optional, the number of assets",
+                "type": "integer",
+                "format": "integer",
+                "example": "{'assets_count': 2}"
               }
             },
             "type": "object"

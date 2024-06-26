@@ -13,9 +13,16 @@
         </ng-container>
 
         <!-- Base severity count -->
-        <ng-container matColumnDef="open_cve">
+        <!-- <ng-container matColumnDef="open_cve">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Offene CVE - C / H / M / L </mat-header-cell>
             <mat-cell *matCellDef="let row"><span *ngIf="row.open_cve">{{row.open_cve?.critical}} / {{row.open_cve?.high}} / {{row.open_cve?.medium}} / {{row.open_cve?.low}} </span> </mat-cell>
+        </ng-container> -->
+
+        <ng-container matColumnDef="open_cve">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Offene CVE - C / H / M / L </mat-header-cell>
+            <mat-cell *matCellDef="let row"><span *ngIf="row.open_cve$ | async as open_cve ; else loading">
+                    {{open_cve?.critical}} / {{open_cve?.high}} / {{open_cve?.medium}} / {{open_cve?.low}} </span>
+            </mat-cell>
         </ng-container>
 
         <!-- Name Column -->
@@ -37,3 +44,8 @@
     <mat-paginator [length]="totalItems" [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page of assets"></mat-paginator>
 </div>
+
+<ng-template #loading>
+    <div class="spinner-border spinner-border-sm text-primary mb-2 mr-auto ml-auto" role="status">
+    </div>
+</ng-template>
