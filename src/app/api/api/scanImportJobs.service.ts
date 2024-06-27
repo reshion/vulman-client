@@ -17,13 +17,14 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { ScanImportJobPagingResource } from '../model/scanImportJobPagingResource';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
 
 @Injectable()
-export class ImportService {
+export class ScanImportJobsService {
 
     protected basePath = '/';
     public defaultHeaders = new HttpHeaders();
@@ -55,17 +56,27 @@ export class ImportService {
 
 
     /**
-     * Import a CSV
+     * Lists scan import jobs
      * 
-     * @param file 
+     * @param page Page number
+     * @param count Number of items per page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public importScanResults(file?: Blob, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public importScanResults(file?: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public importScanResults(file?: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public importScanResults(file?: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public listScanImportJobs(page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<ScanImportJobPagingResource>;
+    public listScanImportJobs(page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ScanImportJobPagingResource>>;
+    public listScanImportJobs(page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ScanImportJobPagingResource>>;
+    public listScanImportJobs(page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (count !== undefined && count !== null) {
+            queryParameters = queryParameters.set('count', <any>count);
+        }
 
         let headers = this.defaultHeaders;
 
@@ -85,30 +96,11 @@ export class ImportService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'multipart/form-data'
         ];
 
-        const canConsumeForm = this.canConsumeForm(consumes);
-
-        let formParams: { append(param: string, value: any): void | HttpParams; };
-        let useForm = false;
-        let convertFormParamsToString = false;
-        // use FormData to transmit files using content-type "multipart/form-data"
-        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
-        useForm = canConsumeForm;
-        if (useForm) {
-            formParams = new FormData();
-        } else {
-            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        }
-
-        if (file !== undefined) {
-            formParams = formParams.append('file', <any>file) || formParams;
-        }
-
-        return this.httpClient.post<any>(`${this.basePath}/api/import/scan-results`,
-            convertFormParamsToString ? formParams.toString() : formParams,
+        return this.httpClient.get<ScanImportJobPagingResource>(`${this.basePath}/api/scan-import-jobs`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

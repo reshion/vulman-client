@@ -21,6 +21,8 @@ export * from './loginRequest';
 export * from './meta';
 export * from './namedBaseModel';
 export * from './riskResponseLifecycleStatus';
+export * from './scanImportJobPagingResource';
+export * from './scanImportJobResource';
 export * from './systemGroup';
 export * from './systemGroupPagingResource';
 export * from './systemGroupResource';

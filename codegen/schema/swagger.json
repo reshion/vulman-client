@@ -616,18 +616,14 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "allOf": [
-                  {
-                    "properties": {
-                      "file": {
-                        "description": "Item CsV",
-                        "type": "string",
-                        "format": "binary"
-                      }
-                    },
-                    "type": "object"
+                "properties": {
+                  "file": {
+                    "description": "Item CsV",
+                    "type": "string",
+                    "format": "binary"
                   }
-                ]
+                },
+                "type": "object"
               }
             }
           }
@@ -637,6 +633,54 @@
             "description": "successful operation",
             "content": {
               "application/json": {}
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/scan-import-jobs": {
+      "get": {
+        "tags": [
+          "ScanImportJobs"
+        ],
+        "summary": "Lists scan import jobs",
+        "operationId": "listScanImportJobs",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScanImportJobPagingResource"
+                }
+              }
             }
           }
         },
@@ -2141,6 +2185,39 @@
           }
         },
         "type": "object"
+      },
+      "ScanImportJobResource": {
+        "title": "ScanImportJobResource",
+        "description": "ScanImportJobResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper"
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "ScanImportJobResource"
+        }
+      },
+      "ScanImportJobPagingResource": {
+        "title": "ScanImportJobPagingResource",
+        "description": "ScanImportJobPagingResource",
+        "properties": {
+          "data": {
+            "title": "Data",
+            "description": "Data wrapper",
+            "type": "array",
+            "items": {}
+          },
+          "meta": {
+            "$ref": "#/components/schemas/Meta"
+          }
+        },
+        "type": "object",
+        "xml": {
+          "name": "ScanImportJobPagingResource"
+        }
       },
       "SystemGroupResource": {
         "title": "SystemGroupResource",

@@ -8,5 +8,5 @@ export enum RouteKey
     SYSTEM_GROUPS = 'system-groups',
     SYSTEM_GROUPS_MANAGEMENT = 'system-groups-management',
     COMPANY_MANAGEMENT = 'company-management',
-    IMPORTS = 'imports',
+    SCAN_IMPORT_JOBS = 'scan-import-jobs',
 }

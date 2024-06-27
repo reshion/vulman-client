@@ -7,6 +7,7 @@ import { AssessmentsService } from './api/assessments.service';
 import { AssetsService } from './api/assets.service';
 import { CompaniesService } from './api/companies.service';
 import { ImportService } from './api/import.service';
+import { ScanImportJobsService } from './api/scanImportJobs.service';
 import { SystemGroupsService } from './api/systemGroups.service';
 import { TenantsService } from './api/tenants.service';
 import { UserService } from './api/user.service';
@@ -21,6 +22,7 @@ import { VulnerabilitiesService } from './api/vulnerabilities.service';
     AssetsService,
     CompaniesService,
     ImportService,
+    ScanImportJobsService,
     SystemGroupsService,
     TenantsService,
     UserService,

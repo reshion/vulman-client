@@ -23,10 +23,10 @@ const routes: Routes = [
         path: RouteKey.COMPANY_MANAGEMENT,
         loadChildren: () => import('./company-management/company-management.module').then(m => m.CompanyManagementModule)
       },
-      // Route to imports module
+      // Route to scan import jobs module
       {
-        path: RouteKey.IMPORTS,
-        loadChildren: () => import('./imports/imports.module').then(m => m.ImportsModule)
+        path: RouteKey.SCAN_IMPORT_JOBS,
+        loadChildren: () => import('./scan-import-job/scan-import-job.module').then(m => m.ScanImportJobModule)
       },
       // Route to vulnerability module
       {
