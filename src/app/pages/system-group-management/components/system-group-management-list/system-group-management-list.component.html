@@ -14,7 +14,11 @@
 
         <ng-container matColumnDef="open_cve">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Offene CVE - C / H / M / L </mat-header-cell>
-            <mat-cell *matCellDef="let row"><span *ngIf="row.open_cve">{{row.open_cve?.critical}} / {{row.open_cve?.high}} / {{row.open_cve?.medium}} / {{row.open_cve?.low}} </span> </mat-cell>
+            <mat-cell *matCellDef="let row">
+                <span *ngIf="row.open_cve">
+                    <app-base-severity-indicator [baseSeverity]="row.open_cve"></app-base-severity-indicator>
+                    <!-- {{row.open_cve?.critical}} / {{row.open_cve?.high}} / {{row.open_cve?.medium}} / {{row.open_cve?.low}} -->
+                </span> </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="assets">

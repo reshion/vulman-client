@@ -20,6 +20,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule } from '@a
 import { ReactiveFormsModule } from '@angular/forms';
 import { FileSelectDialogComponent } from './components/file-select-dialog/file-select-dialog.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { BaseSeverityIndicatorComponent } from './components/base-severity-indicator/base-severity-indicator.component';
 
 
 
@@ -42,7 +43,8 @@ const importsExports = [
   MatDialogModule,
 ]
 const declarationsExports = [
-  MenuContainerComponent
+  MenuContainerComponent,
+  BaseSeverityIndicatorComponent,
 
 ]
 
@@ -50,7 +52,7 @@ const declarationsExports = [
   declarations: [
     ...declarationsExports,
     FileSelectDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,27 @@
+.severity {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    margin-right: 5px;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+
+    &.critical {
+        background-color: #ff000077;
+    }
+
+    &.high {
+        background-color: #ff8c0077;
+    }
+
+    &.medium {
+        background-color: #ffff0077;
+        color: black;
+    }
+
+    &.low {
+        background-color: #32cd3277;
+    }
+}
