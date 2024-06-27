@@ -605,13 +605,13 @@
         ]
       }
     },
-    "/api/import/scan": {
+    "/api/import/scan-results": {
       "post": {
         "tags": [
           "Import"
         ],
         "summary": "Import a CSV",
-        "operationId": "importCSV",
+        "operationId": "importScanResults",
         "requestBody": {
           "content": {
             "multipart/form-data": {

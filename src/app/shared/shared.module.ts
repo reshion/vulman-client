@@ -18,6 +18,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MenuContainerComponent } from './components/menu-container/menu-container.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FileSelectDialogComponent } from './components/file-select-dialog/file-select-dialog.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 
 
@@ -46,7 +48,9 @@ const declarationsExports = [
 
 @NgModule({
   declarations: [
-    ...declarationsExports
+    ...declarationsExports,
+    FileSelectDialogComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     CommonModule,

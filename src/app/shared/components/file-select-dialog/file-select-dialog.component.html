@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content [formGroup]="formGroup">
+    <p [innerHtml]="message">{{message}}</p>
+    <div class="tab-content">
+        <p>Datei auswählen.</p>
+        <mat-form-field>
+            <div>
+                <mat-toolbar class="p-0">
+                    <!-- Display files names -->
+                    <input matInput formControlName="FileName" readonly name="name" />
+                </mat-toolbar>
+                <!-- Fetch selected filed on change -->
+                <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile" accept=".csv" />
+            </div>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button *ngIf="options.ok" [disabled]="formGroup.invalid" (click)="ok()" cdkFocusInitial>Ok</button>
+    <button mat-button *ngIf="options.cancel" (click)="cancel()">Jetzt nicht</button>
+</div>

@@ -60,10 +60,10 @@ export class ImportService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public importCSV(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public importCSV(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public importCSV(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public importCSV(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public importScanResults(observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public importScanResults(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public importScanResults(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public importScanResults(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -86,7 +86,7 @@ export class ImportService {
             'multipart/form-data'
         ];
 
-        return this.httpClient.post<any>(`${this.basePath}/api/import/scan`,
+        return this.httpClient.post<any>(`${this.basePath}/api/import/scan-results`,
             null,
             {
                 withCredentials: this.configuration.withCredentials,

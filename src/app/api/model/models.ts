@@ -16,7 +16,7 @@ export * from './companyPagingResource';
 export * from './companyResource';
 export * from './companyStoreRequest';
 export * from './companyUpdateRequest';
-export * from './importScanBody';
+export * from './importScanresultsBody';
 export * from './loginRequest';
 export * from './meta';
 export * from './namedBaseModel';
