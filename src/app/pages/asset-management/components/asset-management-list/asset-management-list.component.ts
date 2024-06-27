@@ -21,7 +21,7 @@ class ViewModel extends API.Asset
 })
 export class AssetManagementListComponent implements OnInit, AfterViewInit
 {
-  displayedColumns: string[] = ['id', 'fqdn', 'open_cve', 'unique_id', 'operating_system'];
+  displayedColumns: string[] = ['id', 'fqdn', 'open_cve', 'unique_id', 'operating_system', 'actions'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<ViewModel> = new MatTableDataSource<ViewModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -33,8 +33,11 @@ export class AssetManagementListComponent implements OnInit, AfterViewInit
     private vulnerabilityService: API.VulnerabilitiesService,
     private los: LoadingOverlayService,
   )
-  {
+  { }
 
+  edit()
+  {
+    console.log('edit');
   }
   ngAfterViewInit(): void
   {

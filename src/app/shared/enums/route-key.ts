@@ -3,6 +3,7 @@ export enum RouteKey
     ROOT = '/',
     EMPTY = '',
     LIST = 'list',
+    EDIT = 'edit',
     LOGIN = 'login',
     ASSET_MANAGEMENT = 'asset-management',
     VULNERABILITY = 'vulnerability',
