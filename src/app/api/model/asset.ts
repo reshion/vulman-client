@@ -40,6 +40,11 @@ export class Asset extends BaseModel {
      */
     @Expose()
     operating_system!: string;
+    /**
+     * Asset vulnerabilities model
+     */
+    @Expose()
+    vulnerabilities!: Array<any>;
 
     /**
      * Description: FQDN of the asset
@@ -59,6 +64,12 @@ export class Asset extends BaseModel {
      * datatypeWithEnum: string
      * operating_system: string   
      */
+    /**
+     * Description: Asset vulnerabilities model
+     * datatype: Array&lt;any&gt;
+     * datatypeWithEnum: Array&lt;any&gt;
+     * vulnerabilities: Array<any>   
+     */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
@@ -71,7 +82,10 @@ export class Asset extends BaseModel {
                     init.unique_id ? this.unique_id = init.unique_id : null,
                
             
-                    init.operating_system ? this.operating_system = init.operating_system : null
+                    init.operating_system ? this.operating_system = init.operating_system : null,
+               
+            
+                    init.vulnerabilities ? this.vulnerabilities = init.vulnerabilities : null
                
     }
 
@@ -108,7 +122,8 @@ export class Asset extends BaseModel {
         return new FormGroup({           
                         fqdn: new FormControl(data?.fqdn, []),
                         unique_id: new FormControl(data?.unique_id, []),
-                        operating_system: new FormControl(data?.operating_system, [])
+                        operating_system: new FormControl(data?.operating_system, []),
+                        vulnerabilities: new FormControl(data?.vulnerabilities, [])
         });
     }
   

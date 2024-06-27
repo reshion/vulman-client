@@ -1637,6 +1637,12 @@
                 "type": "string",
                 "format": "string",
                 "example": "Windows"
+              },
+              "vulnerabilities": {
+                "title": "Vulnerabilities",
+                "description": "Asset vulnerabilities model",
+                "type": "array",
+                "items": {}
               }
             },
             "type": "object"

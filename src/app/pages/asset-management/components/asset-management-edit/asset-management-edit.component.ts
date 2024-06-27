@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, mergeMap } from 'rxjs';
 import * as API from '@app/api';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-asset-management-edit',
@@ -11,6 +14,12 @@ import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
 })
 export class AssetManagementEditComponent implements OnInit
 {
+  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'actions'];
+  totalItems: number = 0;
+  dataSource: MatTableDataSource<API.Vulnerability> = new MatTableDataSource<API.Vulnerability>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  asset!: API.Asset;
 
   /**
    *
@@ -35,6 +44,13 @@ export class AssetManagementEditComponent implements OnInit
       {
         // get the asset
         return this.assetsService.showAsset(id);
+      }),
+      map(asset =>
+      {
+        // assign the asset
+        this.asset = asset.data;
+        this.dataSource.data = this.asset.vulnerabilities;
+
       })
     ).subscribe();
   }
