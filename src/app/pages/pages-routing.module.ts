@@ -10,12 +10,12 @@ const routes: Routes = [
     children: [
       // Route to asset module
       {
-        path: RouteKey.ASSETS_MANAGEMENT,
-        loadChildren: () => import('./assets-management/assets-management.module').then(m => m.AssetsManagementModule)
+        path: RouteKey.ASSET_MANAGEMENT,
+        loadChildren: () => import('./asset-management/asset-management.module').then(m => m.AssetManagementModule)
       },
       // Route to system group management module
       {
-        path: RouteKey.SYSTEM_GROUPS_MANAGEMENT,
+        path: RouteKey.SYSTEM_GROUP_MANAGEMENT,
         loadChildren: () => import('./system-group-management/system-group-management.module').then(m => m.SystemGroupManagementModule)
       },
       // Route to company management module
@@ -25,17 +25,17 @@ const routes: Routes = [
       },
       // Route to scan import jobs module
       {
-        path: RouteKey.SCAN_IMPORT_JOBS,
+        path: RouteKey.SCAN_IMPORT_JOB,
         loadChildren: () => import('./scan-import-job/scan-import-job.module').then(m => m.ScanImportJobModule)
       },
       // Route to vulnerability module
       {
-        path: RouteKey.VULNERABILITIES,
+        path: RouteKey.VULNERABILITY,
         loadChildren: () => import('./vulnerability/vulnerability.module').then(m => m.VulnerabilityModule)
       },
       // Route to system group module
       {
-        path: RouteKey.SYSTEM_GROUPS,
+        path: RouteKey.SYSTEM_GROUP,
         loadChildren: () => import('./system-group/system-group.module').then(m => m.SystemGroupModule)
       },
 

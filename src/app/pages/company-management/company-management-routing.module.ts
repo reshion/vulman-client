@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteKey } from '@app/shared/enums/route-key';
-import { CompanyManagementComponent } from './company-management.component';
+import { CompanyManagementListComponent } from './components/company-management-list/company-management-list.component';
 
 const routes: Routes = [
   {
     path: RouteKey.EMPTY,
-    component: CompanyManagementComponent
+    redirectTo: RouteKey.LIST,
+    pathMatch: 'full'
+  },
+  {
+    path: RouteKey.LIST,
+    component: CompanyManagementListComponent,
   },
 ];
 

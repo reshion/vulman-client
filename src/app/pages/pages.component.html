@@ -6,18 +6,18 @@
         <mat-nav-list class="d-flex flex-column h-100">
 
             <!-- Assets management -->
-            <a mat-list-item [routerLink]="[RouteKey.ASSETS_MANAGEMENT]" queryParamsHandling="merge" routerLinkActive="active">
-                <mat-icon matListItemIcon matTooltip="Assets Management" [matTooltipPosition]="'below'"
+            <a mat-list-item [routerLink]="[RouteKey.ASSET_MANAGEMENT]" queryParamsHandling="merge" routerLinkActive="active">
+                <mat-icon matListItemIcon matTooltip="Asset Management" [matTooltipPosition]="'below'"
                     matTooltipHideDelay="100">computer</mat-icon>
-                <span [class.d-none]="collapsed">Assets Management</span>
+                <span [class.d-none]="collapsed">Asset Management</span>
             </a>
 
             <!-- System Groups Management -->
-            <a mat-list-item [routerLink]="[RouteKey.SYSTEM_GROUPS_MANAGEMENT]" queryParamsHandling="merge"
+            <a mat-list-item [routerLink]="[RouteKey.SYSTEM_GROUP_MANAGEMENT]" queryParamsHandling="merge"
                 routerLinkActive="active">
-                <mat-icon matListItemIcon matTooltip="System Groups Management" [matTooltipPosition]="'below'"
+                <mat-icon matListItemIcon matTooltip="System Group Management" [matTooltipPosition]="'below'"
                     matTooltipHideDelay="100">lan</mat-icon>
-                <span [class.d-none]="collapsed">System Groups Management</span>
+                <span [class.d-none]="collapsed">System Group Management</span>
             </a>
 
             <!-- Company management -->
@@ -30,27 +30,27 @@
 
             <mat-divider class="mt-auto"></mat-divider>
             <!-- Imports -->
-            <a mat-list-item [routerLink]="[RouteKey.SCAN_IMPORT_JOBS]" queryParamsHandling="merge"
+            <a mat-list-item [routerLink]="[RouteKey.SCAN_IMPORT_JOB]" queryParamsHandling="merge"
                 routerLinkActive="active">
-                <mat-icon matListItemIcon matTooltip="Scan import jobs" [matTooltipPosition]="'below'"
+                <mat-icon matListItemIcon matTooltip="Scan import job" [matTooltipPosition]="'below'"
                     matTooltipHideDelay="100">upload</mat-icon>
-                <span [class.d-none]="collapsed">Scan Import Jobs</span>
+                <span [class.d-none]="collapsed">Scan Import Job</span>
             </a>
 
             <!-- Vulnerabilities -->
-            <a mat-list-item [routerLink]="[RouteKey.VULNERABILITIES]" queryParamsHandling="merge"
+            <a mat-list-item [routerLink]="[RouteKey.VULNERABILITY]" queryParamsHandling="merge"
                 routerLinkActive="active">
-                <mat-icon matListItemIcon matTooltip="Vulnerabilities" [matTooltipPosition]="'below'"
+                <mat-icon matListItemIcon matTooltip="Vulnerability" [matTooltipPosition]="'below'"
                     matTooltipHideDelay="100">warning</mat-icon>
-                <span [class.d-none]="collapsed">Vulnerabilities</span>
+                <span [class.d-none]="collapsed">Vulnerability</span>
             </a>
 
             <!-- System Groups -->
-            <a mat-list-item [routerLink]="[RouteKey.SYSTEM_GROUPS]" queryParamsHandling="merge"
+            <a mat-list-item [routerLink]="[RouteKey.SYSTEM_GROUP]" queryParamsHandling="merge"
                 routerLinkActive="active">
-                <mat-icon matListItemIcon matTooltip="System Groups" [matTooltipPosition]="'below'"
+                <mat-icon matListItemIcon matTooltip="System Group" [matTooltipPosition]="'below'"
                     matTooltipHideDelay="100">lan</mat-icon>
-                <span [class.d-none]="collapsed">System Groups</span>
+                <span [class.d-none]="collapsed">System Group</span>
             </a>
 
             <mat-list-item class="" (click)="collapsed = !collapsed">

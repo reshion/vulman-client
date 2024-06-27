@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssetComponent } from './assets-management.component';
+import { AssetManagementComponent } from './asset-management.component';
 
 describe('AssetComponent', () =>
 {
-  let component: AssetsComponent;
-  let fixture: ComponentFixture<AssetComponent>;
+  let component: AssetManagementComponent;
+  let fixture: ComponentFixture<AssetManagementComponent>;
 
   beforeEach(() =>
   {
     TestBed.configureTestingModule({
-      declarations: [AssetComponent]
+      declarations: [AssetManagementComponent]
     });
-    fixture = TestBed.createComponent(AssetComponent);
+    fixture = TestBed.createComponent(AssetManagementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

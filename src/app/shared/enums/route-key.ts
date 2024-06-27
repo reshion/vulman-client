@@ -2,11 +2,12 @@ export enum RouteKey
 {
     ROOT = '/',
     EMPTY = '',
+    LIST = 'list',
     LOGIN = 'login',
-    ASSETS_MANAGEMENT = 'assets-management',
-    VULNERABILITIES = 'vulnerabilities',
-    SYSTEM_GROUPS = 'system-groups',
-    SYSTEM_GROUPS_MANAGEMENT = 'system-groups-management',
+    ASSET_MANAGEMENT = 'asset-management',
+    VULNERABILITY = 'vulnerability',
+    SYSTEM_GROUP = 'system-group',
+    SYSTEM_GROUP_MANAGEMENT = 'system-group-management',
     COMPANY_MANAGEMENT = 'company-management',
-    SCAN_IMPORT_JOBS = 'scan-import-jobs',
+    SCAN_IMPORT_JOB = 'scan-import-job',
 }

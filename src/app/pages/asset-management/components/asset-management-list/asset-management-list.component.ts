@@ -3,10 +3,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import * as API from '@app/api';
-import { EMPTY, catchError, forkJoin, map, merge, mergeMap, of, startWith, switchMap, Observable, Subject } from 'rxjs';
+import { EMPTY, catchError, map, merge, of, startWith, switchMap, Observable, Subject } from 'rxjs';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 import { plainToClass } from 'class-transformer';
-
 
 class ViewModel extends API.Asset
 {
@@ -16,11 +15,11 @@ class ViewModel extends API.Asset
 }
 
 @Component({
-  selector: 'app-assets-management',
-  templateUrl: './assets-management.component.html',
-  styleUrls: ['./assets-management.component.scss'],
+  selector: 'app-asset-management-list',
+  templateUrl: './asset-management-list.component.html',
+  styleUrls: ['./asset-management-list.component.scss']
 })
-export class AssetsManagementComponent implements OnInit, AfterViewInit
+export class AssetManagementListComponent implements OnInit, AfterViewInit
 {
   displayedColumns: string[] = ['id', 'fqdn', 'open_cve', 'unique_id', 'operating_system'];
   totalItems: number = 0;

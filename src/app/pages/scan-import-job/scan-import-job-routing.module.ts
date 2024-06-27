@@ -5,13 +5,17 @@ import { ScanImportJobComponent } from './scan-import-job.component';
 import { ScanImportJobListComponent } from './components/scan-import-job-list/scan-import-job-list.component';
 
 const routes: Routes = [
-  { path: RouteKey.EMPTY, redirectTo: 'list', pathMatch: 'full' },
+  {
+    path: RouteKey.EMPTY,
+    redirectTo: RouteKey.LIST,
+    pathMatch: 'full'
+  },
   {
     path: RouteKey.EMPTY,
     component: ScanImportJobComponent,
   },
   {
-    path: 'list',
+    path: RouteKey.LIST,
     component: ScanImportJobListComponent
   },
 

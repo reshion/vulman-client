@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RouteKey } from '@app/shared/enums/route-key';
-import { SystemGroupManagementComponent } from './system-group-management.component';
+import { SystemGroupManagementListComponent } from './components/system-group-management-list/system-group-management-list.component';
 
 const routes: Routes = [
   {
     path: RouteKey.EMPTY,
-    component: SystemGroupManagementComponent
+    redirectTo: RouteKey.LIST,
+    pathMatch: 'full'
+  },
+  {
+    path: RouteKey.EMPTY,
+    component: SystemGroupManagementListComponent,
   },
 ];
 
