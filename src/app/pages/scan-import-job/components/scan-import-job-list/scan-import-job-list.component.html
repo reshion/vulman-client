@@ -32,7 +32,7 @@
             <mat-header-row sticky *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </mat-table>
-        <mat-paginator [length]="totalItems" [pageSizeOptions]="[5, 10, 25, 100]"
+        <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
             aria-label="Select page of vulnerabilities"></mat-paginator>
 
     </div>
