@@ -1601,6 +1601,36 @@
               },
               "company": {
                 "$ref": "#/components/schemas/Company"
+              },
+              "vulnerability_id": {
+                "title": "Vulnerability Id",
+                "description": "Vulnerability's id of the Assessment",
+                "type": "integer",
+                "format": "int64",
+                "example": 1
+              },
+              "vulnerability": {
+                "$ref": "#/components/schemas/Vulnerability"
+              },
+              "asset_id": {
+                "title": "Asset Id",
+                "description": "Asset's id of the Assessment",
+                "type": "integer",
+                "format": "int64",
+                "example": 1
+              },
+              "asset": {
+                "$ref": "#/components/schemas/Asset"
+              },
+              "system_group_id": {
+                "title": "System Group Id",
+                "description": "System Group's id of the Assessment",
+                "type": "integer",
+                "format": "int64",
+                "example": 1
+              },
+              "system_group": {
+                "$ref": "#/components/schemas/SystemGroup"
               }
             },
             "type": "object"
@@ -1850,6 +1880,24 @@
           },
           "lifecycle_status": {
             "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+          },
+          "company_id": {
+            "title": "company_id",
+            "description": "The company id of the Assessment",
+            "type": "integer",
+            "example": "1"
+          },
+          "system_group_id": {
+            "title": "system_group_id",
+            "description": "The system group id of the Assessment",
+            "type": "integer",
+            "example": "1"
+          },
+          "asset_id": {
+            "title": "asset_id",
+            "description": "The asset id of the Assessment",
+            "type": "integer",
+            "example": "1"
           }
         },
         "type": "object"
@@ -1872,6 +1920,24 @@
           },
           "lifecycle_status": {
             "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+          },
+          "company_id": {
+            "title": "company_id",
+            "description": "The company id of the Assessment",
+            "type": "integer",
+            "example": "1"
+          },
+          "system_group_id": {
+            "title": "system_group_id",
+            "description": "The system group id of the Assessment",
+            "type": "integer",
+            "example": "1"
+          },
+          "asset_id": {
+            "title": "asset_id",
+            "description": "The asset id of the Assessment",
+            "type": "integer",
+            "example": "1"
           }
         },
         "type": "object"

@@ -13,9 +13,12 @@ import { Type, Expose } from 'class-transformer';
 // @dynamic
 
 import { AssessmentLifecycleStatus } from './assessmentLifecycleStatus';
+import { Asset } from './asset';
 import { Company } from './company';
 import { NamedBaseModel } from './namedBaseModel';
 import { RiskResponseLifecycleStatus } from './riskResponseLifecycleStatus';
+import { SystemGroup } from './systemGroup';
+import { Vulnerability } from './vulnerability';
 
 /**
  * model.mustache
@@ -44,6 +47,27 @@ export class Assessment extends NamedBaseModel {
     company_id!: number;
     @Expose()
     company!: Company;
+    /**
+     * Vulnerability's id of the Assessment
+     */
+    @Expose()
+    vulnerability_id!: number;
+    @Expose()
+    vulnerability!: Vulnerability;
+    /**
+     * Asset's id of the Assessment
+     */
+    @Expose()
+    asset_id!: number;
+    @Expose()
+    asset!: Asset;
+    /**
+     * System Group's id of the Assessment
+     */
+    @Expose()
+    system_group_id!: number;
+    @Expose()
+    system_group!: SystemGroup;
 
     /**
      * Description: Created date of the Assessment
@@ -72,6 +96,39 @@ export class Assessment extends NamedBaseModel {
      * datatypeWithEnum: Company
      * company: Company   
      */
+    /**
+     * Description: Vulnerability's id of the Assessment
+     * datatype: number
+     * datatypeWithEnum: number
+     * vulnerability_id: number   
+     */
+    /**
+     * datatype: Vulnerability
+     * datatypeWithEnum: Vulnerability
+     * vulnerability: Vulnerability   
+     */
+    /**
+     * Description: Asset's id of the Assessment
+     * datatype: number
+     * datatypeWithEnum: number
+     * asset_id: number   
+     */
+    /**
+     * datatype: Asset
+     * datatypeWithEnum: Asset
+     * asset: Asset   
+     */
+    /**
+     * Description: System Group's id of the Assessment
+     * datatype: number
+     * datatypeWithEnum: number
+     * system_group_id: number   
+     */
+    /**
+     * datatype: SystemGroup
+     * datatypeWithEnum: SystemGroup
+     * system_group: SystemGroup   
+     */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
@@ -85,7 +142,19 @@ export class Assessment extends NamedBaseModel {
             
                     init.company_id ? this.company_id = init.company_id : null,
                
-                        this.company = new Company(init.company || {})
+                        this.company = new Company(init.company || {}),
+            
+                    init.vulnerability_id ? this.vulnerability_id = init.vulnerability_id : null,
+               
+                        this.vulnerability = new Vulnerability(init.vulnerability || {}),
+            
+                    init.asset_id ? this.asset_id = init.asset_id : null,
+               
+                        this.asset = new Asset(init.asset || {}),
+            
+                    init.system_group_id ? this.system_group_id = init.system_group_id : null,
+               
+                        this.system_group = new SystemGroup(init.system_group || {})
     }
 
     static override  getForm(data?: Assessment | Assessment[] | null): FormGroup {
@@ -125,6 +194,24 @@ export class Assessment extends NamedBaseModel {
                         company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
                         company: (() => { 
                             const fg = Company.getForm(data?.company);
+                            fg.addValidators([]);
+                            return fg;
+                        })(),
+                        vulnerability_id: new FormControl(data?.vulnerability_id, [Validators.pattern('^[0-9]*$')]),
+                        vulnerability: (() => { 
+                            const fg = Vulnerability.getForm(data?.vulnerability);
+                            fg.addValidators([]);
+                            return fg;
+                        })(),
+                        asset_id: new FormControl(data?.asset_id, [Validators.pattern('^[0-9]*$')]),
+                        asset: (() => { 
+                            const fg = Asset.getForm(data?.asset);
+                            fg.addValidators([]);
+                            return fg;
+                        })(),
+                        system_group_id: new FormControl(data?.system_group_id, [Validators.pattern('^[0-9]*$')]),
+                        system_group: (() => { 
+                            const fg = SystemGroup.getForm(data?.system_group);
                             fg.addValidators([]);
                             return fg;
                         })()

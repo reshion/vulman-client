@@ -27,10 +27,13 @@ export class AssetManagementEditComponent implements OnInit
   constructor(
     private activatedRoute: ActivatedRoute,
     private assetsService: API.AssetsService,
+    private assessmentService: API.AssessmentsService,
   )
   {
 
   }
+
+
   ngOnInit(): void
   {
     this.activatedRoute.paramMap.pipe(
@@ -53,5 +56,11 @@ export class AssetManagementEditComponent implements OnInit
 
       })
     ).subscribe();
+  }
+
+  approve(vulnerabilityId: number)
+  {
+
+    this.assessmentService.storeAssessment().subscribe();
   }
 }

@@ -32,6 +32,21 @@ export class AssessmentStoreRequest {
     created!: string;
     @Expose()
     lifecycle_status!: AssessmentLifecycleStatus;
+    /**
+     * The company id of the Assessment
+     */
+    @Expose()
+    company_id!: number;
+    /**
+     * The system group id of the Assessment
+     */
+    @Expose()
+    system_group_id!: number;
+    /**
+     * The asset id of the Assessment
+     */
+    @Expose()
+    asset_id!: number;
 
     /**
      * Description: Name of the new Assessment
@@ -50,6 +65,24 @@ export class AssessmentStoreRequest {
      * datatypeWithEnum: AssessmentLifecycleStatus
      * lifecycle_status: AssessmentLifecycleStatus   
      */
+    /**
+     * Description: The company id of the Assessment
+     * datatype: number
+     * datatypeWithEnum: number
+     * company_id: number   
+     */
+    /**
+     * Description: The system group id of the Assessment
+     * datatype: number
+     * datatypeWithEnum: number
+     * system_group_id: number   
+     */
+    /**
+     * Description: The asset id of the Assessment
+     * datatype: number
+     * datatypeWithEnum: number
+     * asset_id: number   
+     */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
@@ -61,7 +94,16 @@ export class AssessmentStoreRequest {
             
                     init.created ? this.created = init.created : null,
                
-                        init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null
+                        init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null,
+            
+                    init.company_id ? this.company_id = init.company_id : null,
+               
+            
+                    init.system_group_id ? this.system_group_id = init.system_group_id : null,
+               
+            
+                    init.asset_id ? this.asset_id = init.asset_id : null
+               
     }
 
     static   getForm(data?: AssessmentStoreRequest | AssessmentStoreRequest[] | null): FormGroup {
@@ -97,7 +139,10 @@ export class AssessmentStoreRequest {
         return new FormGroup({           
                         name: new FormControl(data?.name, []),
                         created: new FormControl(data?.created, []),
-                        lifecycle_status: new FormControl(data?.lifecycle_status, [])
+                        lifecycle_status: new FormControl(data?.lifecycle_status, []),
+                        company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
+                        system_group_id: new FormControl(data?.system_group_id, [Validators.pattern('^[0-9]*$')]),
+                        asset_id: new FormControl(data?.asset_id, [Validators.pattern('^[0-9]*$')])
         });
     }
   
