@@ -1544,6 +1544,64 @@
         ]
       }
     },
+    "/api/vulnerabilities/system-group/{systemGroupId}": {
+      "get": {
+        "tags": [
+          "Vulnerabilities"
+        ],
+        "summary": "Vulnerabilities by system group",
+        "description": "Get vulnerabilities by system group",
+        "operationId": "getVulnerabilitiesBySystemGroup",
+        "parameters": [
+          {
+            "name": "systemGroupId",
+            "in": "path",
+            "description": "System group id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VulnerabilityPagingResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
     "/api/vulnerabilities/base-severity/asset/{assetId}": {
       "get": {
         "tags": [

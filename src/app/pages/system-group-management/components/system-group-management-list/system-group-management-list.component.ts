@@ -33,7 +33,7 @@ export class SystemGroupManagementListComponent
   {
 
   }
-  displayedColumns: string[] = ['id', 'name', 'assets', 'open_cve', 'type'];
+  displayedColumns: string[] = ['id', 'name', 'assets', 'open_cve', 'type', 'actions'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<ViewModel> = new MatTableDataSource<ViewModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;

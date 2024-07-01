@@ -1,0 +1,78 @@
+<div class="mat-elevation-z8 page-container">
+    <app-menu-container>
+        <ng-container class="toolbar-items">
+            <button mat-icon-button [routerLink]="['/system-group-management']">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </ng-container>
+    </app-menu-container>
+    <mat-card *ngIf="systemGroup" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>System Group # {{systemGroup.id}}</mat-card-title>
+            <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>
+                <strong>Name:</strong> {{systemGroup.name}}
+            </p>
+            <p>
+                <strong>Created:</strong> {{systemGroup.created_at | date}}
+            </p>
+            <p>
+                <strong>Updated:</strong> {{systemGroup.updated_at | date}}
+            </p>
+        </mat-card-content>
+    </mat-card>
+    <mat-table [dataSource]="dataSource" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="cve_id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> CVE Id </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.cve_id}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="cve_details" class="cve-details">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> CVE Description </mat-header-cell>
+            <mat-cell *matCellDef="let row"> <span class="text-truncate-">{{row | cve:'description'}}</span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="base_severity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Severity </mat-header-cell>
+            <mat-cell *matCellDef="let row"><span [appBaseSeverityHighlight]="row | cve:'baseSeverity'">{{row | cve:'baseSeverity'}}</span>
+
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef i18n></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+
+                <button mat-icon-button [matMenuTriggerFor]="actions">
+                    <mat-icon color="accent">more_vert</mat-icon>
+                </button>
+                <mat-menu #actions="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>verified</mat-icon>
+                        <span>Approve</span>
+                    </button>
+                </mat-menu>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row sticky *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page of vulnerabilities">
+    </mat-paginator>
+
+
+
+</div>
