@@ -25,28 +25,23 @@ export class AssessmentStoreRequest {
      */
     @Expose()
     name!: string;
-    /**
-     * The date the Assessment was created
-     */
-    @Expose()
-    created!: string;
     @Expose()
     lifecycle_status!: AssessmentLifecycleStatus;
     /**
      * The company id of the Assessment
      */
     @Expose()
-    company_id!: number;
+    company_id: number | undefined;
     /**
      * The system group id of the Assessment
      */
     @Expose()
-    system_group_id!: number;
+    system_group_id: number | undefined;
     /**
      * The asset id of the Assessment
      */
     @Expose()
-    asset_id!: number;
+    asset_id: number | undefined;
 
     /**
      * Description: Name of the new Assessment
@@ -55,30 +50,27 @@ export class AssessmentStoreRequest {
      * name: string   
      */
     /**
-     * Description: The date the Assessment was created
-     * datatype: string
-     * datatypeWithEnum: string
-     * created: string   
-     */
-    /**
      * datatype: AssessmentLifecycleStatus
      * datatypeWithEnum: AssessmentLifecycleStatus
      * lifecycle_status: AssessmentLifecycleStatus   
      */
     /**
      * Description: The company id of the Assessment
+     * Nullable property
      * datatype: number
      * datatypeWithEnum: number
      * company_id: number   
      */
     /**
      * Description: The system group id of the Assessment
+     * Nullable property
      * datatype: number
      * datatypeWithEnum: number
      * system_group_id: number   
      */
     /**
      * Description: The asset id of the Assessment
+     * Nullable property
      * datatype: number
      * datatypeWithEnum: number
      * asset_id: number   
@@ -90,9 +82,6 @@ export class AssessmentStoreRequest {
          
             
                     init.name ? this.name = init.name : null,
-               
-            
-                    init.created ? this.created = init.created : null,
                
                         init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null,
             
@@ -138,7 +127,6 @@ export class AssessmentStoreRequest {
        
         return new FormGroup({           
                         name: new FormControl(data?.name, []),
-                        created: new FormControl(data?.created, []),
                         lifecycle_status: new FormControl(data?.lifecycle_status, []),
                         company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
                         system_group_id: new FormControl(data?.system_group_id, [Validators.pattern('^[0-9]*$')]),

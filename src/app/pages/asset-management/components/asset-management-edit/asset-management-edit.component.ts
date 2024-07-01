@@ -82,9 +82,13 @@ export class AssetManagementEditComponent implements OnInit
     });
   }
 
-  approve(vulnerabilityId: number)
+  approve(vulnerabilityId: number, assetId: number): void
   {
+    const body = new API.AssessmentStoreRequest();
+    body.asset_id = assetId;
+    body.name = 'test';
+    body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
 
-    this.assessmentService.storeAssessment().subscribe();
+    this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).subscribe();
   }
 }

@@ -103,38 +103,17 @@
               "type": "integer",
               "default": 10
             }
-          },
-          {
-            "name": "asset_id",
-            "in": "query",
-            "description": "Asset id",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 1
-            }
-          },
-          {
-            "name": "system_group_id",
-            "in": "query",
-            "description": "System group id",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10
-            }
-          },
-          {
-            "name": "company_id",
-            "in": "query",
-            "description": "Company id",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10
-            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentStoreRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -2123,13 +2102,6 @@
             "type": "string",
             "example": "Approve"
           },
-          "created": {
-            "title": "created",
-            "description": "The date the Assessment was created",
-            "type": "string",
-            "format": "date",
-            "example": "2021-10-10"
-          },
           "lifecycle_status": {
             "$ref": "#/components/schemas/AssessmentLifecycleStatus"
           },
@@ -2137,19 +2109,22 @@
             "title": "company_id",
             "description": "The company id of the Assessment",
             "type": "integer",
-            "example": "1"
+            "example": "1",
+            "nullable": true
           },
           "system_group_id": {
             "title": "system_group_id",
             "description": "The system group id of the Assessment",
             "type": "integer",
-            "example": "1"
+            "example": "1",
+            "nullable": true
           },
           "asset_id": {
             "title": "asset_id",
             "description": "The asset id of the Assessment",
             "type": "integer",
-            "example": "1"
+            "example": "1",
+            "nullable": true
           }
         },
         "type": "object"
@@ -2162,13 +2137,6 @@
             "description": "Name of the new Assessment",
             "type": "string",
             "example": "Approve"
-          },
-          "created": {
-            "title": "created",
-            "description": "The date the Assessment was created",
-            "type": "string",
-            "format": "date",
-            "example": "2021-10-10"
           },
           "lifecycle_status": {
             "$ref": "#/components/schemas/AssessmentLifecycleStatus"

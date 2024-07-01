@@ -25,11 +25,6 @@ export class AssessmentUpdateRequest {
      */
     @Expose()
     name!: string;
-    /**
-     * The date the Assessment was created
-     */
-    @Expose()
-    created!: string;
     @Expose()
     lifecycle_status!: AssessmentLifecycleStatus;
     /**
@@ -53,12 +48,6 @@ export class AssessmentUpdateRequest {
      * datatype: string
      * datatypeWithEnum: string
      * name: string   
-     */
-    /**
-     * Description: The date the Assessment was created
-     * datatype: string
-     * datatypeWithEnum: string
-     * created: string   
      */
     /**
      * datatype: AssessmentLifecycleStatus
@@ -90,9 +79,6 @@ export class AssessmentUpdateRequest {
          
             
                     init.name ? this.name = init.name : null,
-               
-            
-                    init.created ? this.created = init.created : null,
                
                         init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null,
             
@@ -138,7 +124,6 @@ export class AssessmentUpdateRequest {
        
         return new FormGroup({           
                         name: new FormControl(data?.name, []),
-                        created: new FormControl(data?.created, []),
                         lifecycle_status: new FormControl(data?.lifecycle_status, []),
                         company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
                         system_group_id: new FormControl(data?.system_group_id, [Validators.pattern('^[0-9]*$')]),

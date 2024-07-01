@@ -61,7 +61,7 @@
                     <mat-icon color="accent">more_vert</mat-icon>
                 </button>
                 <mat-menu #actions="matMenu">
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="approve(row.id, asset.id)">
                         <mat-icon>verified</mat-icon>
                         <span>Approve</span>
                     </button>
