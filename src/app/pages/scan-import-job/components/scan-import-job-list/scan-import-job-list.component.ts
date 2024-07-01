@@ -18,7 +18,7 @@ import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.serv
 export class ScanImportJobListComponent
 {
 
-  displayedColumns: string[] = ['id', 'created_at', 'updated_at'];
+  displayedColumns: string[] = ['id', 'created_at'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<API.Vulnerability> = new MatTableDataSource<API.Vulnerability>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -78,7 +78,7 @@ export class ScanImportJobListComponent
 
     const dialogRef = this.dialog.open(FileSelectDialogComponent, {
       width: '800px',
-      data: new DialogMessage(`Scan Reesult Import`, 'Wählen Sie eine Datei aus mit den Ergebnissen aus dem Scan.', new DialogOptions({ cancel: true }))
+      data: new DialogMessage(`Scan Result Import`, 'Wählen Sie eine Datei aus mit den Ergebnissen aus dem Scan.', new DialogOptions({ cancel: true }))
     });
 
     const s1 = dialogRef.afterClosed().pipe(
