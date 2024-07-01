@@ -21,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FileSelectDialogComponent } from './components/file-select-dialog/file-select-dialog.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { BaseSeverityIndicatorComponent } from './components/base-severity-indicator/base-severity-indicator.component';
+import { CvePipe } from './pipes/cve/cve.pipe';
 
 
 
@@ -45,7 +46,7 @@ const importsExports = [
 const declarationsExports = [
   MenuContainerComponent,
   BaseSeverityIndicatorComponent,
-
+  CvePipe,
 ]
 
 @NgModule({

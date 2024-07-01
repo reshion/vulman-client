@@ -74,11 +74,6 @@ export class AssetManagementEditComponent implements OnInit
       map(vulnerabilities =>
       {
         this.totalItems = vulnerabilities.meta.total;
-        vulnerabilities.data.map(x =>
-        {
-          x.cve_details = JSON.parse(x.cve_details);
-          return x;
-        })
         this.dataSource.data = vulnerabilities.data;
       })
     ).subscribe(() =>
