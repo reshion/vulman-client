@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, mergeMap } from 'rxjs';
+import { catchError, map, merge, mergeMap, of, startWith, switchMap } from 'rxjs';
 import * as API from '@app/api';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 
 @Component({
   selector: 'app-asset-management-edit',
@@ -14,7 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class AssetManagementEditComponent implements OnInit
 {
-  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'actions'];
+  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'base_severity', 'actions'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<API.Vulnerability> = new MatTableDataSource<API.Vulnerability>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -28,6 +29,8 @@ export class AssetManagementEditComponent implements OnInit
     private activatedRoute: ActivatedRoute,
     private assetsService: API.AssetsService,
     private assessmentService: API.AssessmentsService,
+    private vulnerabilitiesService: API.VulnerabilitiesService,
+    private los: LoadingOverlayService,
   )
   {
 
@@ -36,6 +39,7 @@ export class AssetManagementEditComponent implements OnInit
 
   ngOnInit(): void
   {
+    this.los.show();
     this.activatedRoute.paramMap.pipe(
       map(params =>
       {
@@ -48,14 +52,39 @@ export class AssetManagementEditComponent implements OnInit
         // get the asset
         return this.assetsService.showAsset(id);
       }),
-      map(asset =>
+      mergeMap((asset) =>
       {
-        // assign the asset
         this.asset = asset.data;
-        this.dataSource.data = this.asset.vulnerabilities;
+        return merge(this.paginator.page, this.sort.sortChange).pipe(
+          startWith({}),
+          switchMap(() =>
+          {
+            this.los.show();
+            return this.vulnerabilitiesService.getVulnerabilitiesByAsset(
+              asset.data.id,
+              this.paginator.pageIndex + 1,
+              this.paginator.pageSize
+            ).pipe(
+              catchError(() => of({ data: [], meta: { total: 0 } }))
+            );
+          }),
+        )
 
+      }),
+      map(vulnerabilities =>
+      {
+        this.totalItems = vulnerabilities.meta.total;
+        vulnerabilities.data.map(x =>
+        {
+          x.cve_details = JSON.parse(x.cve_details);
+          return x;
+        })
+        this.dataSource.data = vulnerabilities.data;
       })
-    ).subscribe();
+    ).subscribe(() =>
+    {
+      this.los.hide();
+    });
   }
 
   approve(vulnerabilityId: number)

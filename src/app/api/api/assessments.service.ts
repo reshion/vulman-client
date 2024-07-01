@@ -104,6 +104,74 @@ export class AssessmentsService {
     }
 
     /**
+     * Find assessments by vulnerability id, asset id, system group id, company id
+     * 
+     * @param vulnerability_id Vulnerability id
+     * @param asset_id Asset id
+     * @param system_group_id System group id
+     * @param company_id Company id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public findAssessments(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe?: 'body', reportProgress?: boolean): Observable<AssessmentResource>;
+    public findAssessments(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssessmentResource>>;
+    public findAssessments(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssessmentResource>>;
+    public findAssessments(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (vulnerability_id === null || vulnerability_id === undefined) {
+            throw new Error('Required parameter vulnerability_id was null or undefined when calling findAssessments.');
+        }
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (vulnerability_id !== undefined && vulnerability_id !== null) {
+            queryParameters = queryParameters.set('vulnerability_id', <any>vulnerability_id);
+        }
+        if (asset_id !== undefined && asset_id !== null) {
+            queryParameters = queryParameters.set('asset_id', <any>asset_id);
+        }
+        if (system_group_id !== undefined && system_group_id !== null) {
+            queryParameters = queryParameters.set('system_group_id', <any>system_group_id);
+        }
+        if (company_id !== undefined && company_id !== null) {
+            queryParameters = queryParameters.set('company_id', <any>company_id);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.post<AssessmentResource>(`${this.basePath}/api/assessments/find`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Lists assessments
      * 
      * @param page Page number
@@ -244,6 +312,74 @@ export class AssessmentsService {
         return this.httpClient.post<AssessmentResource>(`${this.basePath}/api/assessments`,
             body,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Adds a new assessment
+     * 
+     * @param vulnerability_id Vulnerability id
+     * @param asset_id Asset id
+     * @param system_group_id System group id
+     * @param company_id Company id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public storeAssessmentVulnerability(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe?: 'body', reportProgress?: boolean): Observable<AssessmentResource>;
+    public storeAssessmentVulnerability(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssessmentResource>>;
+    public storeAssessmentVulnerability(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssessmentResource>>;
+    public storeAssessmentVulnerability(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (vulnerability_id === null || vulnerability_id === undefined) {
+            throw new Error('Required parameter vulnerability_id was null or undefined when calling storeAssessmentVulnerability.');
+        }
+
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (vulnerability_id !== undefined && vulnerability_id !== null) {
+            queryParameters = queryParameters.set('vulnerability_id', <any>vulnerability_id);
+        }
+        if (asset_id !== undefined && asset_id !== null) {
+            queryParameters = queryParameters.set('asset_id', <any>asset_id);
+        }
+        if (system_group_id !== undefined && system_group_id !== null) {
+            queryParameters = queryParameters.set('system_group_id', <any>system_group_id);
+        }
+        if (company_id !== undefined && company_id !== null) {
+            queryParameters = queryParameters.set('company_id', <any>company_id);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.post<AssessmentResource>(`${this.basePath}/api/assessments/store-assessment/vulnerability`,
+            null,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

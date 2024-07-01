@@ -41,8 +41,14 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="cve_details">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> CVE Details </mat-header-cell>
-            <mat-cell *matCellDef="let row"> <span class="text-truncate">{{row.cve_details}}</span>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> CVE Description </mat-header-cell>
+            <mat-cell *matCellDef="let row"> <span class="text-truncate">{{row.cve_details?.containers?.cna?.descriptions?.[0].value}}</span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="base_severity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Severity </mat-header-cell>
+            <mat-cell *matCellDef="let row"> <span class="text-truncate">{{row.cve_details?.containers?.cna?.metrics?.[0].cvssV3_1?.baseSeverity}}</span>
             </mat-cell>
         </ng-container>
 
@@ -65,9 +71,9 @@
         <mat-header-row sticky *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <!-- <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+    <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page of vulnerabilities">
-    </mat-paginator> -->
+    </mat-paginator>
 
 
 
