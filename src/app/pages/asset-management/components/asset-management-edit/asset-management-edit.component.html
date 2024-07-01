@@ -40,7 +40,7 @@
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="cve_details">
+        <ng-container matColumnDef="cve_details" class="cve-details">
             <mat-header-cell *matHeaderCellDef mat-sort-header> CVE Description </mat-header-cell>
             <mat-cell *matCellDef="let row"> <span class="text-truncate-">{{row | cve:'description'}}</span>
             </mat-cell>
@@ -48,7 +48,8 @@
 
         <ng-container matColumnDef="base_severity">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Severity </mat-header-cell>
-            <mat-cell *matCellDef="let row"> <span class="text-truncate">{{row | cve:'baseSeverity'}}</span>
+            <mat-cell *matCellDef="let row"><span [appBaseSeverityHighlight]="row | cve:'baseSeverity'">{{row | cve:'baseSeverity'}}</span>
+
             </mat-cell>
         </ng-container>
 

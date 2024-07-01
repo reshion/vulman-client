@@ -22,6 +22,7 @@ import { FileSelectDialogComponent } from './components/file-select-dialog/file-
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { BaseSeverityIndicatorComponent } from './components/base-severity-indicator/base-severity-indicator.component';
 import { CvePipe } from './pipes/cve/cve.pipe';
+import { BaseSeverityHighlightDirective } from './directives/base-severity-highlight/base-severity-highlight.directive';
 
 
 
@@ -47,6 +48,7 @@ const declarationsExports = [
   MenuContainerComponent,
   BaseSeverityIndicatorComponent,
   CvePipe,
+  BaseSeverityHighlightDirective,
 ]
 
 @NgModule({
