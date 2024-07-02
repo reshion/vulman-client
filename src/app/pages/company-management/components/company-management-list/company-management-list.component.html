@@ -19,7 +19,7 @@
         </ng-container>
 
         <ng-container matColumnDef="assets_count">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> assets_count </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Assets </mat-header-cell>
             <mat-cell *matCellDef="let row"> <span class="text-truncate">{{row.assets_count}}</span>
             </mat-cell>
         </ng-container>
@@ -43,7 +43,12 @@
                         <mat-icon>verified</mat-icon>
                         <span>Approve</span>
                     </button>
+                    <button mat-menu-item [routerLink]="['../',RouteKey.VULNERABILITY, row.id, RouteKey.ASSET, RouteKey.LIST]">
+                        <mat-icon>computer</mat-icon>
+                        <span>Assets</span>
+                    </button>
                 </mat-menu>
+
             </mat-cell>
         </ng-container>
 

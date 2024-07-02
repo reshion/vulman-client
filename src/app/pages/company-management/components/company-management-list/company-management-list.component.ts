@@ -6,6 +6,7 @@ import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.serv
 import { merge, startWith, switchMap, catchError, of, map, Subscription } from 'rxjs';
 import * as API from '@app/api';
 import { AuthService } from '@app/shared/services/auth/auth.service';
+import { RouteKey } from '@app/shared/enums/route-key';
 
 @Component({
   selector: 'app-company-management-list',
@@ -21,7 +22,7 @@ export class CompanyManagementListComponent
   @ViewChild(MatSort) sort!: MatSort;
   subscriptions = new Subscription();
   user: API.UserResource | null = null;
-
+  RouteKey = RouteKey;
 
 
 

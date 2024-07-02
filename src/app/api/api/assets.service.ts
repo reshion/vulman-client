@@ -104,6 +104,68 @@ export class AssetsService {
     }
 
     /**
+     * Lists assets by vulnerability id
+     * 
+     * @param vulnerability_id Vulnerability id
+     * @param page Page number
+     * @param count Number of items per page
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAssetsByVulnerabilityId(vulnerability_id: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<AssetPagingResource>;
+    public getAssetsByVulnerabilityId(vulnerability_id: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssetPagingResource>>;
+    public getAssetsByVulnerabilityId(vulnerability_id: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssetPagingResource>>;
+    public getAssetsByVulnerabilityId(vulnerability_id: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (vulnerability_id === null || vulnerability_id === undefined) {
+            throw new Error('Required parameter vulnerability_id was null or undefined when calling getAssetsByVulnerabilityId.');
+        }
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (vulnerability_id !== undefined && vulnerability_id !== null) {
+            queryParameters = queryParameters.set('vulnerability_id', <any>vulnerability_id);
+        }
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (count !== undefined && count !== null) {
+            queryParameters = queryParameters.set('count', <any>count);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<AssetPagingResource>(`${this.basePath}/api/assets/vulnerability/${encodeURIComponent(String(vulnerability_id))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Lists assets
      * 
      * @param page Page number
