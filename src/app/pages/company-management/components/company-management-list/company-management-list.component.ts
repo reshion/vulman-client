@@ -3,8 +3,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
-import { merge, startWith, switchMap, catchError, of, map } from 'rxjs';
+import { merge, startWith, switchMap, catchError, of, map, Subscription } from 'rxjs';
 import * as API from '@app/api';
+import { AuthService } from '@app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-company-management-list',
@@ -13,23 +14,39 @@ import * as API from '@app/api';
 })
 export class CompanyManagementListComponent
 {
-  displayedColumns: string[] = ['id', 'cve_id', 'assets_count'];
+  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'assets_count', 'base_severity', 'actions'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<API.Vulnerability> = new MatTableDataSource<API.Vulnerability>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  subscriptions = new Subscription();
+  user: API.UserResource | null = null;
+
+
 
 
   constructor(
     private vulnerabilitService: API.VulnerabilitiesService,
     private los: LoadingOverlayService,
+    private authService: AuthService,
+    private assessmentService: API.AssessmentsService
   )
   {
 
   }
+
+  ngOnInit()
+  {
+    this.authService.getUser$().subscribe(user =>
+    {
+      this.user = user;
+    })
+  }
+
+
   ngAfterViewInit(): void
   {
-    merge(this.paginator.page, this.sort.sortChange).pipe(
+    this.subscriptions.add(merge(this.paginator.page, this.sort.sortChange).pipe(
       startWith({}),
       switchMap(() =>
       {
@@ -56,7 +73,7 @@ export class CompanyManagementListComponent
         this.los.hide();
         return of([]);
       })
-    ).subscribe(data => this.dataSource.data = data || []);
+    ).subscribe(data => this.dataSource.data = data || []));
 
   }
   applyFilter(event: Event)
@@ -70,8 +87,21 @@ export class CompanyManagementListComponent
     }
   }
 
-  ngOnInit()
+  approve(vulnerabilityId: number): void
   {
+
+    this.los.show();
+    const body = new API.AssessmentStoreRequest();
+    body.company_id = this.user?.data?.company.id;
+    body.name = 'test';
+    body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
+
+    this.subscriptions.add(this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).subscribe(() =>
+    {
+      this.los.hide();
+    }));
   }
+
+
 }
 

@@ -7,16 +7,43 @@
             <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
         </ng-container>
 
-        <!-- Progress Column -->
         <ng-container matColumnDef="cve_id">
             <mat-header-cell *matHeaderCellDef mat-sort-header> CVE Id </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.cve_id}} </mat-cell>
         </ng-container>
 
-        <!-- Name Column -->
+        <ng-container matColumnDef="cve_details" class="cve-details">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> CVE Description </mat-header-cell>
+            <mat-cell *matCellDef="let row"> <span class="text-truncate-">{{row | cve:'description'}}</span>
+            </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="assets_count">
             <mat-header-cell *matHeaderCellDef mat-sort-header> assets_count </mat-header-cell>
             <mat-cell *matCellDef="let row"> <span class="text-truncate">{{row.assets_count}}</span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="base_severity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Severity </mat-header-cell>
+            <mat-cell *matCellDef="let row"><span [appBaseSeverityHighlight]="row | cve:'baseSeverity'">{{row | cve:'baseSeverity'}}</span>
+
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef i18n></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+
+                <button mat-icon-button [matMenuTriggerFor]="actions">
+                    <mat-icon color="accent">more_vert</mat-icon>
+                </button>
+                <mat-menu #actions="matMenu">
+                    <button mat-menu-item (click)="approve(row.id)">
+                        <mat-icon>verified</mat-icon>
+                        <span>Approve</span>
+                    </button>
+                </mat-menu>
             </mat-cell>
         </ng-container>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, map, merge, mergeMap, of, startWith, switchMap } from 'rxjs';
+import { Subscription, catchError, map, merge, mergeMap, of, startWith, switchMap } from 'rxjs';
 import * as API from '@app/api';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
 import { MatPaginator } from '@angular/material/paginator';
@@ -21,6 +21,7 @@ export class AssetManagementEditComponent implements OnInit
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   asset!: API.Asset;
+  subscriptions = new Subscription();
 
   /**
    *
@@ -40,7 +41,7 @@ export class AssetManagementEditComponent implements OnInit
   ngOnInit(): void
   {
     this.los.show();
-    this.activatedRoute.paramMap.pipe(
+    this.subscriptions.add(this.activatedRoute.paramMap.pipe(
       map(params =>
       {
         // get and parse int
@@ -79,7 +80,7 @@ export class AssetManagementEditComponent implements OnInit
     ).subscribe(() =>
     {
       this.los.hide();
-    });
+    }));
   }
 
   approve(vulnerabilityId: number, assetId: number): void
@@ -89,6 +90,9 @@ export class AssetManagementEditComponent implements OnInit
     body.name = 'test';
     body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
 
-    this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).subscribe();
+    this.subscriptions.add(this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).subscribe(() =>
+    {
+      this.los.hide();
+    }));
   }
 }

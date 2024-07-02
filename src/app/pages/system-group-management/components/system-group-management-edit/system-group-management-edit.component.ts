@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as API from '@app/api';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
-import { map, mergeMap, merge, startWith, switchMap, catchError, of } from 'rxjs';
+import { map, mergeMap, merge, startWith, switchMap, catchError, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-system-group-management-edit',
@@ -22,6 +22,7 @@ export class SystemGroupManagementEditComponent
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   systemGroup!: API.SystemGroup;
+  subscriptions = new Subscription();
 
   /**
    *
@@ -29,7 +30,6 @@ export class SystemGroupManagementEditComponent
   constructor(
     private activatedRoute: ActivatedRoute,
     private systemGroupService: API.SystemGroupsService,
-    private assetsService: API.AssetsService,
     private assessmentService: API.AssessmentsService,
     private vulnerabilitiesService: API.VulnerabilitiesService,
     private los: LoadingOverlayService,
@@ -40,7 +40,7 @@ export class SystemGroupManagementEditComponent
   ngOnInit(): void
   {
     this.los.show();
-    this.activatedRoute.paramMap.pipe(
+    this.subscriptions.add(this.activatedRoute.paramMap.pipe(
       map(params =>
       {
         // get and parse int
@@ -79,12 +79,20 @@ export class SystemGroupManagementEditComponent
     ).subscribe(() =>
     {
       this.los.hide();
-    });
+    }));
   }
 
-  approve(vulnerabilityId: number)
+  approve(vulnerabilityId: number, systemGroupId: number): void 
   {
+    this.los.show();
+    const body = new API.AssessmentStoreRequest();
+    body.system_group_id = systemGroupId;
+    body.name = 'test';
+    body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
 
-    this.assessmentService.storeAssessment().subscribe();
+    this.subscriptions.add(this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).subscribe(() =>
+    {
+      this.los.hide();
+    }));
   }
 }
