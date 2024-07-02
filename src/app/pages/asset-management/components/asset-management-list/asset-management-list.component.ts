@@ -77,29 +77,15 @@ export class AssetManagementListComponent implements OnInit, AfterViewInit
         });
         return x;
       }),
-      // mergeMap(group =>
-      // {
-      //   const viewModels = group.map(x =>
-      //   {
-      //     return this.vulnerabilityService.getByAsset(x.id).pipe(
-      //       map(response =>
-      //       {
-      //         x.open_cve = response;
-      //         return x;
-      //       })
-      //     )
-      //   })
-      //   return forkJoin(viewModels);
-      // }),
-
       catchError(() =>
       {
         this.los.hide();
         return EMPTY
       })
     ).subscribe(data => this.dataSource.data = (data) as ViewModel[]);
-
   }
+
+
   applyFilter(event: Event)
   {
     const filterValue = (event.target as HTMLInputElement).value;

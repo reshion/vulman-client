@@ -1,0 +1,84 @@
+<div class="mat-elevation-z8 page-container">
+    <mat-table [dataSource]="dataSource" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> name </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+
+
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="lifecycle_status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> lifecycle_status </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.lifecycle_status}} </mat-cell>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="vulnerability_id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> vulnerability </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span *ngIf="row.vulnerability$ | async as x ; else loading">
+                    {{x.cve_id}}
+                </span>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="company_id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> company_id </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span *ngIf="row.company$ | async as x ; else loading">
+                    {{x === -1 ? ' - ' : x?.name }}
+                </span>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="system_group_id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> system_group </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span *ngIf="row.system_group$ | async as x ; else loading">
+                    {{x === -1 ? ' - ' : x?.name }}
+                </span>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="asset_id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> asset </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span *ngIf="row.asset$ | async as x ; else loading">
+                    {{x === -1 ? ' - ' : x?.fqdn }}
+                </span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef i18n></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+
+                <button mat-icon-button [matMenuTriggerFor]="actions">
+                    <mat-icon color="accent">more_vert</mat-icon>
+                </button>
+                <mat-menu #actions="matMenu">
+                    <button mat-menu-item [routerLink]="['../edit', row.id]">
+                        <mat-icon>settings</mat-icon>
+                        <span>Edit</span>
+                    </button>
+                </mat-menu>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row sticky *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page of assets"></mat-paginator>
+</div>
+
+<ng-template #loading>
+    <div class="spinner-border spinner-border-sm text-primary mb-2 mr-auto ml-auto" role="status">
+    </div>
+</ng-template>

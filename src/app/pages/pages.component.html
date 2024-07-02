@@ -28,13 +28,21 @@
                 <span [class.d-none]="collapsed">Company management</span>
             </a>
 
+            <!-- Assessment management -->
+            <a mat-list-item [routerLink]="[RouteKey.ASSESSMENT_MANAGEMENT]" queryParamsHandling="merge"
+                routerLinkActive="active">
+                <mat-icon matListItemIcon matTooltip="Assessment management" [matTooltipPosition]="'below'"
+                    matTooltipHideDelay="100">analytics</mat-icon>
+                <span [class.d-none]="collapsed">Assessment management</span>
+            </a>
+
             <mat-divider class="mt-auto"></mat-divider>
             <!-- Imports -->
             <a mat-list-item [routerLink]="[RouteKey.SCAN_IMPORT_JOB]" queryParamsHandling="merge"
                 routerLinkActive="active">
                 <mat-icon matListItemIcon matTooltip="Scan import job" [matTooltipPosition]="'below'"
                     matTooltipHideDelay="100">upload</mat-icon>
-                <span [class.d-none]="collapsed">Scan Import Job</span>
+                <span [class.d-none]="collapsed">Scan Import Jobs</span>
             </a>
 
             <!-- Vulnerabilities -->
@@ -42,7 +50,7 @@
                 routerLinkActive="active">
                 <mat-icon matListItemIcon matTooltip="Vulnerability" [matTooltipPosition]="'below'"
                     matTooltipHideDelay="100">warning</mat-icon>
-                <span [class.d-none]="collapsed">Vulnerability</span>
+                <span [class.d-none]="collapsed">Vulnerabilities</span>
             </a>
 
             <!-- System Groups -->
@@ -50,7 +58,7 @@
                 routerLinkActive="active">
                 <mat-icon matListItemIcon matTooltip="System Group" [matTooltipPosition]="'below'"
                     matTooltipHideDelay="100">lan</mat-icon>
-                <span [class.d-none]="collapsed">System Group</span>
+                <span [class.d-none]="collapsed">System Groups</span>
             </a>
 
             <mat-list-item class="" (click)="collapsed = !collapsed">
