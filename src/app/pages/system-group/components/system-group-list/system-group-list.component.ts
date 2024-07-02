@@ -7,6 +7,7 @@ import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.serv
 import { merge, startWith, switchMap, catchError, of, map } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SystemGroupCreateDialogComponent } from '../system-group-create-dialog/system-group-create-dialog.component';
+import { RouteKey } from '@app/shared/enums/route-key';
 
 @Component({
   selector: 'app-system-group-list',
@@ -15,9 +16,16 @@ import { SystemGroupCreateDialogComponent } from '../system-group-create-dialog/
 })
 export class SystemGroupListComponent
 {
+  displayedColumns: string[] = ['id', 'name', 'type', 'actions'];
+  totalItems: number = 0;
+  dataSource: MatTableDataSource<API.SystemGroup> = new MatTableDataSource<API.SystemGroup>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  RouteKey = RouteKey;
+
   /**
-     *
-     */
+   *
+   */
   constructor(
     private systemGroupService: API.SystemGroupsService,
     private los: LoadingOverlayService,
@@ -26,11 +34,6 @@ export class SystemGroupListComponent
   {
 
   }
-  displayedColumns: string[] = ['id', 'name', 'type'];
-  totalItems: number = 0;
-  dataSource: MatTableDataSource<API.SystemGroup> = new MatTableDataSource<API.SystemGroup>();
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit()
   {

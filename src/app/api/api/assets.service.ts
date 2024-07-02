@@ -104,6 +104,68 @@ export class AssetsService {
     }
 
     /**
+     * Lists assets by system group id
+     * 
+     * @param system_group_id System group id
+     * @param page Page number
+     * @param count Number of items per page
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAssetsBySystemGroup(system_group_id: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<AssetPagingResource>;
+    public getAssetsBySystemGroup(system_group_id: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssetPagingResource>>;
+    public getAssetsBySystemGroup(system_group_id: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssetPagingResource>>;
+    public getAssetsBySystemGroup(system_group_id: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (system_group_id === null || system_group_id === undefined) {
+            throw new Error('Required parameter system_group_id was null or undefined when calling getAssetsBySystemGroup.');
+        }
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (system_group_id !== undefined && system_group_id !== null) {
+            queryParameters = queryParameters.set('system_group_id', <any>system_group_id);
+        }
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (count !== undefined && count !== null) {
+            queryParameters = queryParameters.set('count', <any>count);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<AssetPagingResource>(`${this.basePath}/api/assets/system-group/${encodeURIComponent(String(system_group_id))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Lists assets by vulnerability id
      * 
      * @param vulnerability_id Vulnerability id
@@ -112,13 +174,13 @@ export class AssetsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAssetsByVulnerabilityId(vulnerability_id: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<AssetPagingResource>;
-    public getAssetsByVulnerabilityId(vulnerability_id: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssetPagingResource>>;
-    public getAssetsByVulnerabilityId(vulnerability_id: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssetPagingResource>>;
-    public getAssetsByVulnerabilityId(vulnerability_id: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAssetsByVulnerability(vulnerability_id: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<AssetPagingResource>;
+    public getAssetsByVulnerability(vulnerability_id: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssetPagingResource>>;
+    public getAssetsByVulnerability(vulnerability_id: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssetPagingResource>>;
+    public getAssetsByVulnerability(vulnerability_id: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (vulnerability_id === null || vulnerability_id === undefined) {
-            throw new Error('Required parameter vulnerability_id was null or undefined when calling getAssetsByVulnerabilityId.');
+            throw new Error('Required parameter vulnerability_id was null or undefined when calling getAssetsByVulnerability.');
         }
 
 

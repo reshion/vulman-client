@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { AssetPagingResource } from '../model/assetPagingResource';
 import { SystemGroupPagingResource } from '../model/systemGroupPagingResource';
 import { SystemGroupResource } from '../model/systemGroupResource';
 import { SystemGroupStoreRequest } from '../model/systemGroupStoreRequest';
@@ -57,6 +58,58 @@ export class SystemGroupsService {
         return false;
     }
 
+
+    /**
+     * Add an asset to a system group
+     * 
+     * @param id System group id
+     * @param assetId Asset id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addAsset(id: number, assetId: number, observe?: 'body', reportProgress?: boolean): Observable<SystemGroupResource>;
+    public addAsset(id: number, assetId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SystemGroupResource>>;
+    public addAsset(id: number, assetId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SystemGroupResource>>;
+    public addAsset(id: number, assetId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling addAsset.');
+        }
+
+        if (assetId === null || assetId === undefined) {
+            throw new Error('Required parameter assetId was null or undefined when calling addAsset.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.post<SystemGroupResource>(`${this.basePath}/api/system-groups/${encodeURIComponent(String(id))}/asset/${encodeURIComponent(String(assetId))}`,
+            null,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * Delete system group
@@ -151,6 +204,65 @@ export class SystemGroupsService {
     }
 
     /**
+     * Get all assets that are not in the system group
+     * 
+     * @param id System group id
+     * @param page Page number
+     * @param count Number of items per page
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getUnassignedAssets(id: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<AssetPagingResource>;
+    public getUnassignedAssets(id: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssetPagingResource>>;
+    public getUnassignedAssets(id: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssetPagingResource>>;
+    public getUnassignedAssets(id: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getUnassignedAssets.');
+        }
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (count !== undefined && count !== null) {
+            queryParameters = queryParameters.set('count', <any>count);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<AssetPagingResource>(`${this.basePath}/api/system-groups/${encodeURIComponent(String(id))}/assets/unassigned`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Lists system groups
      * 
      * @param page Page number
@@ -196,6 +308,57 @@ export class SystemGroupsService {
         return this.httpClient.get<SystemGroupPagingResource>(`${this.basePath}/api/system-groups`,
             {
                 params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Add an asset to a system group
+     * 
+     * @param id System group id
+     * @param assetId Asset id
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public removeAsset(id: number, assetId: number, observe?: 'body', reportProgress?: boolean): Observable<SystemGroupResource>;
+    public removeAsset(id: number, assetId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SystemGroupResource>>;
+    public removeAsset(id: number, assetId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SystemGroupResource>>;
+    public removeAsset(id: number, assetId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling removeAsset.');
+        }
+
+        if (assetId === null || assetId === undefined) {
+            throw new Error('Required parameter assetId was null or undefined when calling removeAsset.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.delete<SystemGroupResource>(`${this.basePath}/api/system-groups/${encodeURIComponent(String(id))}/asset/${encodeURIComponent(String(assetId))}`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

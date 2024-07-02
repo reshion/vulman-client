@@ -23,7 +23,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { BaseSeverityIndicatorComponent } from './components/base-severity-indicator/base-severity-indicator.component';
 import { CvePipe } from './pipes/cve/cve.pipe';
 import { BaseSeverityHighlightDirective } from './directives/base-severity-highlight/base-severity-highlight.directive';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 const importsExports = [
@@ -43,6 +44,8 @@ const importsExports = [
   MatSortModule,
   MatPaginatorModule,
   MatDialogModule,
+  MatSelectModule,
+  MatCheckboxModule
 ]
 const declarationsExports = [
   MenuContainerComponent,

@@ -24,6 +24,22 @@
             <mat-cell *matCellDef="let row"> {{row.type}} </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef i18n></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+
+                <button mat-icon-button [matMenuTriggerFor]="actions">
+                    <mat-icon color="accent">more_vert</mat-icon>
+                </button>
+                <mat-menu #actions="matMenu">
+                    <button mat-menu-item [routerLink]="['../', RouteKey.EDIT, row.id]">
+                        <mat-icon>settings</mat-icon>
+                        <span>Edit</span>
+                    </button>
+                </mat-menu>
+            </mat-cell>
+        </ng-container>
+
 
         <mat-header-row sticky *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

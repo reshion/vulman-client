@@ -407,12 +407,69 @@
           "Assets"
         ],
         "summary": "Lists assets by vulnerability id",
-        "operationId": "getAssetsByVulnerabilityId",
+        "operationId": "getAssetsByVulnerability",
         "parameters": [
           {
             "name": "vulnerability_id",
             "in": "query",
             "description": "Vulnerability id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetPagingResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/assets/system-group/{system_group_id}": {
+      "get": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Lists assets by system group id",
+        "operationId": "getAssetsBySystemGroup",
+        "parameters": [
+          {
+            "name": "system_group_id",
+            "in": "query",
+            "description": "System group id",
             "required": true,
             "schema": {
               "type": "integer"
@@ -1050,6 +1107,153 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SystemGroupResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/system-groups/{id}/asset/{assetId}": {
+      "post": {
+        "tags": [
+          "SystemGroups"
+        ],
+        "summary": "Add an asset to a system group",
+        "operationId": "addAsset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System group id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "assetId",
+            "in": "path",
+            "description": "Asset id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemGroupResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "SystemGroups"
+        ],
+        "summary": "Add an asset to a system group",
+        "operationId": "removeAsset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System group id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "assetId",
+            "in": "path",
+            "description": "Asset id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemGroupResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
+    "/api/system-groups/{id}/assets/unassigned": {
+      "get": {
+        "tags": [
+          "SystemGroups"
+        ],
+        "summary": "Get all assets that are not in the system group",
+        "operationId": "getUnassignedAssets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System group id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetPagingResource"
                 }
               }
             }
