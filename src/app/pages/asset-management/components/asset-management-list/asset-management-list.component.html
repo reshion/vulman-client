@@ -1,4 +1,13 @@
 <div class="mat-elevation-z8 page-container">
+    <app-menu-container>
+        <ng-container class="toolbar-items">
+            <button mat-icon-button [routerLink]="['']">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="spacer"></div>
+            <app-scan-import-job-date-select (onScanImportJobSelected)="scanImportJobSelected($event)"></app-scan-import-job-date-select>
+        </ng-container>
+    </app-menu-container>
     <mat-table [dataSource]="dataSource" matSort>
         <!-- ID Column -->
         <ng-container matColumnDef="id">

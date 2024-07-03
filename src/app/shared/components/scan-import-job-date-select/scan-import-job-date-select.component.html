@@ -1,0 +1,8 @@
+<form [formGroup]="formGroup" *ngIf="formGroup" class="w-100">
+    <mat-form-field *ngIf="scanImportJobs" appearance="outline" class="w-100">
+        <mat-label>Select Scan Import Job</mat-label>
+        <mat-select formControlName="id">
+            <mat-option *ngFor="let scanImportJob of scanImportJobs" [value]="scanImportJob.id">{{scanImportJob.created_at | date}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

@@ -11,20 +11,25 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
-
-import { LoadingOverlayModule } from '@app/loading-overlay/loading-overlay.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MenuContainerComponent } from './components/menu-container/menu-container.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig, MatDialogModule } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+import { LoadingOverlayModule } from '@app/loading-overlay/loading-overlay.module';
+import { MenuContainerComponent } from './components/menu-container/menu-container.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileSelectDialogComponent } from './components/file-select-dialog/file-select-dialog.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { BaseSeverityIndicatorComponent } from './components/base-severity-indicator/base-severity-indicator.component';
 import { CvePipe } from './pipes/cve/cve.pipe';
 import { BaseSeverityHighlightDirective } from './directives/base-severity-highlight/base-severity-highlight.directive';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatNativeDateModule } from '@angular/material/core';
+import { ScanImportJobDateSelectComponent } from './components/scan-import-job-date-select/scan-import-job-date-select.component';
 
 
 const importsExports = [
@@ -45,13 +50,18 @@ const importsExports = [
   MatPaginatorModule,
   MatDialogModule,
   MatSelectModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatSliderModule,
+  MatSlideToggleModule,
 ]
 const declarationsExports = [
   MenuContainerComponent,
   BaseSeverityIndicatorComponent,
   CvePipe,
   BaseSeverityHighlightDirective,
+  ScanImportJobDateSelectComponent,
 ]
 
 @NgModule({
@@ -62,7 +72,7 @@ const declarationsExports = [
   ],
   imports: [
     CommonModule,
-    ...importsExports
+    ...importsExports,
 
   ],
   exports: [

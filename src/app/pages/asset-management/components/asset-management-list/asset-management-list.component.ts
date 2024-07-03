@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import * as API from '@app/api';
-import { EMPTY, catchError, map, merge, of, startWith, switchMap, Observable, Subject } from 'rxjs';
+import { EMPTY, catchError, map, merge, of, startWith, switchMap, Observable, Subject, BehaviorSubject } from 'rxjs';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 import { plainToClass } from 'class-transformer';
 
@@ -27,6 +27,7 @@ export class AssetManagementListComponent implements OnInit, AfterViewInit
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   BaseSeverityCountResponse = API.BaseSeverityCountResponse;
+  private scanImportJobSelected$: Subject<API.ScanImportJob | null> = new BehaviorSubject<API.ScanImportJob | null>(null);
 
   constructor(
     private assetsService: API.AssetsService,
@@ -34,14 +35,17 @@ export class AssetManagementListComponent implements OnInit, AfterViewInit
     private los: LoadingOverlayService,
   )
   { }
-
+  scanImportJobSelected(event: any)
+  {
+    this.scanImportJobSelected$.next(event);
+  }
   edit()
   {
     console.log('edit');
   }
   ngAfterViewInit(): void
   {
-    merge(this.paginator.page, this.sort.sortChange).pipe(
+    merge(this.paginator.page, this.sort.sortChange, this.scanImportJobSelected$).pipe(
       startWith({}),
       switchMap(() =>
       {

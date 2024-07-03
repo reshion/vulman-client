@@ -13,6 +13,7 @@ import { Type, Expose } from 'class-transformer';
 // @dynamic
 
 import { Meta } from './meta';
+import { ScanImportJob } from './scanImportJob';
 
 /**
  * model.mustache
@@ -29,15 +30,17 @@ export class ScanImportJobPagingResource {
      * Data wrapper
      */
     @Expose()
-    data!: Array<any>;
+    @Type(() => ScanImportJob)
+    data!: Array<ScanImportJob>;
     @Expose()
     meta!: Meta;
 
     /**
      * Description: Data wrapper
-     * datatype: Array&lt;any&gt;
-     * datatypeWithEnum: Array&lt;any&gt;
-     * data: Array<any>   
+     * Complex type: ScanImportJob
+     * datatype: Array&lt;ScanImportJob&gt;
+     * datatypeWithEnum: Array&lt;ScanImportJob&gt;
+     * data: Array<ScanImportJob>   
      */
     /**
      * datatype: Meta
@@ -49,9 +52,7 @@ export class ScanImportJobPagingResource {
 
     constructor(init: Partial<ScanImportJobPagingResource> = {}) {
          
-            
-                    init.data ? this.data = init.data : null,
-               
+                            this.data = init.data?.map(x => new ScanImportJob(x)) || [] ,
                         this.meta = new Meta(init.meta || {})
     }
 
@@ -86,7 +87,6 @@ export class ScanImportJobPagingResource {
   static   getFormGroup(data?: ScanImportJobPagingResource): FormGroup {
        
         return new FormGroup({           
-                        data: new FormControl(data?.data, []),
                         meta: (() => { 
                             const fg = Meta.getForm(data?.meta);
                             fg.addValidators([]);

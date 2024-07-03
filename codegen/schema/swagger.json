@@ -2245,6 +2245,24 @@
           }
         ]
       },
+      "ScanImportJob": {
+        "title": "ScanImportJob",
+        "description": "ScanImportJob model",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseModel"
+          },
+          {
+            "properties": {
+              "company": {
+                "$ref": "#/components/schemas/Company"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
       "SystemGroup": {
         "title": "SystemGroup",
         "description": "System Group model",
@@ -2744,8 +2762,7 @@
         "description": "ScanImportJobResource",
         "properties": {
           "data": {
-            "title": "Data",
-            "description": "Data wrapper"
+            "$ref": "#/components/schemas/ScanImportJob"
           }
         },
         "type": "object",
@@ -2761,7 +2778,9 @@
             "title": "Data",
             "description": "Data wrapper",
             "type": "array",
-            "items": {}
+            "items": {
+              "$ref": "#/components/schemas/ScanImportJob"
+            }
           },
           "meta": {
             "$ref": "#/components/schemas/Meta"

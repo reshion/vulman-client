@@ -20,7 +20,7 @@ export class ScanImportJobListComponent
 
   displayedColumns: string[] = ['id', 'created_at'];
   totalItems: number = 0;
-  dataSource: MatTableDataSource<API.Vulnerability> = new MatTableDataSource<API.Vulnerability>();
+  dataSource: MatTableDataSource<API.ScanImportJob> = new MatTableDataSource<API.ScanImportJob>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   reload$ = new BehaviorSubject<boolean>(true);

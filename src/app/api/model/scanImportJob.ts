@@ -12,53 +12,54 @@
 import { Type, Expose } from 'class-transformer';
 // @dynamic
 
-import { ScanImportJob } from './scanImportJob';
+import { BaseModel } from './baseModel';
+import { Company } from './company';
 
 /**
  * model.mustache
  *
- * ScanImportJobResource
+ * ScanImportJob model
  */
 import { Observable }                                        from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
 
-export class ScanImportJobResource { 
+export class ScanImportJob extends BaseModel { 
 
 
     @Expose()
-    data!: ScanImportJob;
+    company!: Company;
 
     /**
-     * datatype: ScanImportJob
-     * datatypeWithEnum: ScanImportJob
-     * data: ScanImportJob   
+     * datatype: Company
+     * datatypeWithEnum: Company
+     * company: Company   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
-    constructor(init: Partial<ScanImportJobResource> = {}) {
-         
-                        this.data = new ScanImportJob(init.data || {})
+    constructor(init: Partial<ScanImportJob> = {}) {
+        super(init)  
+                        this.company = new Company(init.company || {})
     }
 
-    static   getForm(data?: ScanImportJobResource | ScanImportJobResource[] | null): FormGroup {
+    static override  getForm(data?: ScanImportJob | ScanImportJob[] | null): FormGroup {
 
 
         if(!data) {
-            return ScanImportJobResource.getFormGroup(new ScanImportJobResource());
+            return ScanImportJob.getFormGroup(new ScanImportJob());
         }
 
          if(Array.isArray(data)) {
             let arrayForm = new FormArray<any>([]);
             
             if(data.length > 0) {
-                arrayForm =  new FormArray<any>(data.map(item => ScanImportJobResource.getFormGroup(item)));                
+                arrayForm =  new FormArray<any>(data.map(item => ScanImportJob.getFormGroup(item)));                
             }
             return new FormGroup({
                 arrayForm
             });        
         } else {
-             return  ScanImportJobResource.getFormGroup(data);
+             return  ScanImportJob.getFormGroup(data);
         }       
      
     }
@@ -69,11 +70,11 @@ export class ScanImportJobResource {
    * @param {object} data
    * @returns {FormGroup}
    */
-  static   getFormGroup(data?: ScanImportJobResource): FormGroup {
+  static override  getFormGroup(data?: ScanImportJob): FormGroup {
        
         return new FormGroup({           
-                        data: (() => { 
-                            const fg = ScanImportJob.getForm(data?.data);
+                        company: (() => { 
+                            const fg = Company.getForm(data?.company);
                             fg.addValidators([]);
                             return fg;
                         })()
