@@ -29,6 +29,13 @@ const routes: Routes = [
         path: RouteKey.ASSESSMENT_MANAGEMENT,
         loadChildren: () => import('./assessment-management/assessment-management.module').then(m => m.AssessmentManagementModule)
       },
+
+      // Asset module
+      {
+        path: RouteKey.ASSET,
+        loadChildren: () => import('./asset/asset.module').then(m => m.AssetModule)
+      },
+
       // Route to scan import jobs module
       {
         path: RouteKey.SCAN_IMPORT_JOB,

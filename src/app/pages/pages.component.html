@@ -37,6 +37,14 @@
             </a>
 
             <mat-divider class="mt-auto"></mat-divider>
+
+            <!-- Assets -->
+            <a mat-list-item [routerLink]="[RouteKey.ASSET]" queryParamsHandling="merge" routerLinkActive="active">
+                <mat-icon matListItemIcon matTooltip="Assets" [matTooltipPosition]="'below'" matTooltipHideDelay="100">devices</mat-icon>
+                <span [class.d-none]="collapsed">Assets</span>
+            </a>
+
+
             <!-- Imports -->
             <a mat-list-item [routerLink]="[RouteKey.SCAN_IMPORT_JOB]" queryParamsHandling="merge"
                 routerLinkActive="active">

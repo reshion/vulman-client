@@ -1,0 +1,80 @@
+<div class="mat-elevation-z8 page-container">
+    <app-menu-container>
+        <ng-container class="toolbar-items">
+            <button mat-icon-button [routerLink]="['']">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+            <div class="spacer"></div>
+        </ng-container>
+    </app-menu-container>
+    <mat-table [dataSource]="dataSource" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="fqdn">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> FQDN </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.fqdn}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="first_occurrance">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> First Occurrance </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span *ngIf="row.first_occurrance$ | async as first_occurrance ; else loading">
+                    {{first_occurrance | date: 'dd.MM.yyyy'}}
+                </span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="last_occurrance">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Last Occurrance </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span *ngIf="row.last_occurrance$ | async as last_occurrance ; else loading">
+                    {{last_occurrance | date: 'dd.MM.yyyy'}}
+                </span>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="unique_id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Unique Id </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.unique_id}} </mat-cell>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="operating_system">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> OS </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.operating_system}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef i18n></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+
+                <button mat-icon-button [matMenuTriggerFor]="actions">
+                    <mat-icon color="accent">more_vert</mat-icon>
+                </button>
+                <mat-menu #actions="matMenu">
+                    <button mat-menu-item [routerLink]="['../edit', row.id]">
+                        <mat-icon>settings</mat-icon>
+                        <span>Edit</span>
+                    </button>
+                </mat-menu>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row sticky *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page of assets"></mat-paginator>
+</div>
+
+<ng-template #loading>
+    <div class="spinner-border spinner-border-sm text-primary mb-2 mr-auto ml-auto" role="status">
+    </div>
+</ng-template>

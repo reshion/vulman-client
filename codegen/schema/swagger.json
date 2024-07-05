@@ -390,6 +390,54 @@
         ]
       }
     },
+    "/api/assets/list-all": {
+      "post": {
+        "tags": [
+          "Assets"
+        ],
+        "summary": "Lists all assets",
+        "operationId": "listAllAssets",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetPagingResource"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sanctum": []
+          }
+        ]
+      }
+    },
     "/api/assets/vulnerability/{vulnerability_id}": {
       "get": {
         "tags": [

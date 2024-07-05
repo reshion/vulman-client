@@ -228,6 +228,61 @@ export class AssetsService {
     }
 
     /**
+     * Lists all assets
+     * 
+     * @param page Page number
+     * @param count Number of items per page
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public listAllAssets(page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<AssetPagingResource>;
+    public listAllAssets(page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssetPagingResource>>;
+    public listAllAssets(page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssetPagingResource>>;
+    public listAllAssets(page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (page !== undefined && page !== null) {
+            queryParameters = queryParameters.set('page', <any>page);
+        }
+        if (count !== undefined && count !== null) {
+            queryParameters = queryParameters.set('count', <any>count);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (sanctum) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["Authorization"]) {
+            headers = headers.set('Authorization', this.configuration.apiKeys["Authorization"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.post<AssetPagingResource>(`${this.basePath}/api/assets/list-all`,
+            null,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Lists assets
      * 
      * @param scan_import_job_id Scan import job id
