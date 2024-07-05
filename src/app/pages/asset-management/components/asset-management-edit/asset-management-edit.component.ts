@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, catchError, map, merge, mergeMap, of, startWith, switchMap } from 'rxjs';
+import { EMPTY, Subscription, catchError, map, merge, mergeMap, of, startWith, switchMap } from 'rxjs';
 import * as API from '@app/api';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
 import { MatPaginator } from '@angular/material/paginator';
@@ -88,38 +88,38 @@ export class AssetManagementEditComponent implements OnInit
     }));
   }
 
-  /**
-   *
-   */
+
   openAssessmentDialog(vulnerabilityId: number, assetId: number): void
   {
     const request = new API.AssessmentFindRequest();
     request.asset_id = assetId;
 
-    this.dialog.open(AssessmentDialogComponent, {
+    this.subscriptions.add(this.dialog.open(AssessmentDialogComponent, {
       width: '800px',
       data: {
         request: request,
         vulnerability_id: vulnerabilityId
       }
-    }).afterClosed().subscribe(result =>
-    {
-      if (result)
+    }).afterClosed().pipe(
+      mergeMap(result =>
       {
-        let body;
-
-        body = plainToClass(API.AssessmentStoreRequest, result as Object);
-        body.asset_id = assetId;
-        this.subscriptions.add(this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).subscribe(() =>
+        if (result)
         {
+          this.los.show();
+          let body;
 
-        }));
-      }
-    });
-  }
-
-  approve(vulnerabilityId: number, assetId: number): void
-  {
-
+          body = plainToClass(API.AssessmentStoreRequest, result as Object);
+          body.asset_id = assetId;
+          return this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).pipe(
+            catchError(() =>
+            {
+              this.los.hide();
+              return EMPTY;
+            })
+          )
+        }
+        return EMPTY;
+      })
+    ).subscribe(() => this.los.hide()));
   }
 }

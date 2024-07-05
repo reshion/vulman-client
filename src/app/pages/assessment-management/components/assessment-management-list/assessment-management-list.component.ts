@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import * as API from '@app/api';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 import { plainToClass } from 'class-transformer';
-import { merge, startWith, switchMap, catchError, of, map, EMPTY, Observable } from 'rxjs';
+import { merge, startWith, switchMap, catchError, of, map, EMPTY, Observable, Subscription } from 'rxjs';
 
 class ViewModel extends API.Assessment
 {
@@ -13,6 +13,7 @@ class ViewModel extends API.Assessment
   company$!: Observable<API.Company | null | -1>;
   system_group$!: Observable<API.SystemGroup | null | -1>;
   asset$!: Observable<API.Asset | null | -1>;
+
 }
 
 @Component({
@@ -27,6 +28,7 @@ export class AssessmentManagementListComponent
   dataSource: MatTableDataSource<API.Assessment> = new MatTableDataSource<API.Assessment>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  subscriptions = new Subscription();
 
   /**
    *
@@ -44,7 +46,7 @@ export class AssessmentManagementListComponent
 
   ngAfterViewInit(): void
   {
-    merge(this.paginator.page, this.sort.sortChange).pipe(
+    this.subscriptions.add(merge(this.paginator.page, this.sort.sortChange).pipe(
       startWith({}),
       switchMap(() =>
       {
@@ -116,6 +118,6 @@ export class AssessmentManagementListComponent
         this.los.hide();
         return EMPTY
       })
-    ).subscribe(data => this.dataSource.data = (data) as ViewModel[]);
+    ).subscribe(data => this.dataSource.data = (data) as ViewModel[]));
   }
 }

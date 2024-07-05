@@ -39,9 +39,9 @@
                     <mat-icon color="accent">more_vert</mat-icon>
                 </button>
                 <mat-menu #actions="matMenu">
-                    <button mat-menu-item (click)="approve(row.id)">
+                    <button mat-menu-item (click)="openAssessmentDialog(row.id)">
                         <mat-icon>verified</mat-icon>
-                        <span>Approve</span>
+                        <span>Assessment</span>
                     </button>
                     <button mat-menu-item [routerLink]="['../',RouteKey.VULNERABILITY, row.id, RouteKey.ASSET, RouteKey.LIST]">
                         <mat-icon>computer</mat-icon>

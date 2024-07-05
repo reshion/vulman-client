@@ -3,10 +3,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
-import { merge, startWith, switchMap, catchError, of, map, Subscription } from 'rxjs';
+import { merge, startWith, switchMap, catchError, of, map, Subscription, EMPTY, mergeMap } from 'rxjs';
 import * as API from '@app/api';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { RouteKey } from '@app/shared/enums/route-key';
+import { AssessmentDialogComponent } from '@app/shared/components/assessment-dialog/assessment-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { plainToClass } from 'class-transformer';
 
 @Component({
   selector: 'app-company-management-list',
@@ -30,7 +33,8 @@ export class CompanyManagementListComponent
     private vulnerabilitService: API.VulnerabilitiesService,
     private los: LoadingOverlayService,
     private authService: AuthService,
-    private assessmentService: API.AssessmentsService
+    private assessmentService: API.AssessmentsService,
+    private dialog: MatDialog
   )
   {
 
@@ -89,21 +93,39 @@ export class CompanyManagementListComponent
     }
   }
 
-  approve(vulnerabilityId: number): void
+
+  openAssessmentDialog(vulnerabilityId: number): void
   {
+    const request = new API.AssessmentFindRequest();
+    request.company_id = this.user?.data?.company.id;
 
-    this.los.show();
-    const body = new API.AssessmentStoreRequest();
-    body.company_id = this.user?.data?.company.id;
-    body.name = 'test';
-    body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
+    this.subscriptions.add(this.dialog.open(AssessmentDialogComponent, {
+      width: '800px',
+      data: {
+        request: request,
+        vulnerability_id: vulnerabilityId
+      }
+    }).afterClosed().pipe(
+      mergeMap(result =>
+      {
+        if (result)
+        {
+          this.los.show();
+          let body;
 
-    this.subscriptions.add(this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).subscribe(() =>
-    {
-      this.los.hide();
-    }));
+          body = plainToClass(API.AssessmentStoreRequest, result as Object);
+          body.company_id = this.user?.data?.company.id;
+          return this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).pipe(
+            catchError(() =>
+            {
+              this.los.hide();
+              return EMPTY;
+            })
+          )
+        }
+        return EMPTY;
+      })
+    ).subscribe(() => this.los.hide()));
   }
-
-
 }
 
