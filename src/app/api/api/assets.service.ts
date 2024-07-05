@@ -230,19 +230,24 @@ export class AssetsService {
     /**
      * Lists assets
      * 
+     * @param scan_import_job_id Scan import job id
      * @param page Page number
      * @param count Number of items per page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listAssets(page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<AssetPagingResource>;
-    public listAssets(page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssetPagingResource>>;
-    public listAssets(page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssetPagingResource>>;
-    public listAssets(page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public listAssets(scan_import_job_id?: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<AssetPagingResource>;
+    public listAssets(scan_import_job_id?: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssetPagingResource>>;
+    public listAssets(scan_import_job_id?: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssetPagingResource>>;
+    public listAssets(scan_import_job_id?: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (scan_import_job_id !== undefined && scan_import_job_id !== null) {
+            queryParameters = queryParameters.set('scan_import_job_id', <any>scan_import_job_id);
+        }
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
         }

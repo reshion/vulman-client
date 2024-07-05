@@ -269,38 +269,17 @@
               "type": "integer",
               "default": 10
             }
-          },
-          {
-            "name": "asset_id",
-            "in": "query",
-            "description": "Asset id",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 1
-            }
-          },
-          {
-            "name": "system_group_id",
-            "in": "query",
-            "description": "System group id",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10
-            }
-          },
-          {
-            "name": "company_id",
-            "in": "query",
-            "description": "Company id",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10
-            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentFindRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -328,6 +307,16 @@
         "summary": "Lists assets",
         "operationId": "listAssets",
         "parameters": [
+          {
+            "name": "scan_import_job_id",
+            "in": "query",
+            "description": "Scan import job id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
           {
             "name": "page",
             "in": "query",
@@ -1763,6 +1752,16 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "scan_import_job_id",
+            "in": "query",
+            "description": "Scan import job id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
           }
         ],
         "responses": {
@@ -1800,6 +1799,16 @@
             "required": true,
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "scan_import_job_id",
+            "in": "query",
+            "description": "Scan import job id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
             }
           },
           {
@@ -1859,6 +1868,16 @@
             "schema": {
               "type": "integer"
             }
+          },
+          {
+            "name": "scan_import_job_id",
+            "in": "query",
+            "description": "Scan import job id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
           }
         ],
         "responses": {
@@ -1896,6 +1915,16 @@
             "required": true,
             "schema": {
               "type": "integer"
+            }
+          },
+          {
+            "name": "scan_import_job_id",
+            "in": "query",
+            "description": "Scan import job id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
             }
           },
           {
@@ -1947,6 +1976,16 @@
         "description": "Get vulerabilities by company",
         "operationId": "getByCompanyWithAssetCount",
         "parameters": [
+          {
+            "name": "scan_import_job_id",
+            "in": "query",
+            "description": "Scan import job id",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
           {
             "name": "page",
             "in": "query",
@@ -2123,6 +2162,13 @@
               },
               "system_group": {
                 "$ref": "#/components/schemas/SystemGroup"
+              },
+              "risk_response_name": {
+                "title": "Risk Response name",
+                "description": "Risk Response name of the Assessment",
+                "type": "string",
+                "format": "string",
+                "example": "Approve"
               }
             },
             "type": "object"
@@ -2372,6 +2418,33 @@
           }
         ]
       },
+      "AssessmentFindRequest": {
+        "title": "AssessmentFindRequest",
+        "properties": {
+          "company_id": {
+            "title": "company_id",
+            "description": "The company id of the Assessment",
+            "type": "integer",
+            "example": "1",
+            "nullable": true
+          },
+          "system_group_id": {
+            "title": "system_group_id",
+            "description": "The system group id of the Assessment",
+            "type": "integer",
+            "example": "1",
+            "nullable": true
+          },
+          "asset_id": {
+            "title": "asset_id",
+            "description": "The asset id of the Assessment",
+            "type": "integer",
+            "example": "1",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      },
       "AssessmentStoreRequest": {
         "title": "AssessmentStoreRequest",
         "properties": {
@@ -2404,6 +2477,15 @@
             "type": "integer",
             "example": "1",
             "nullable": true
+          },
+          "risk_response_name": {
+            "title": "risk_response_name",
+            "description": "Risk Response name of the Assessment",
+            "type": "string",
+            "example": "Approve"
+          },
+          "risk_response_lifecycle_status": {
+            "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
           }
         },
         "type": "object"

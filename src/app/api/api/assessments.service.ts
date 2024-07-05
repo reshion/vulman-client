@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { AssessmentFindRequest } from '../model/assessmentFindRequest';
 import { AssessmentPagingResource } from '../model/assessmentPagingResource';
 import { AssessmentResource } from '../model/assessmentResource';
 import { AssessmentStoreRequest } from '../model/assessmentStoreRequest';
@@ -107,36 +108,23 @@ export class AssessmentsService {
      * Find assessments by vulnerability id, asset id, system group id, company id
      * 
      * @param vulnerability_id Vulnerability id
-     * @param asset_id Asset id
-     * @param system_group_id System group id
-     * @param company_id Company id
+     * @param body 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAssessments(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe?: 'body', reportProgress?: boolean): Observable<AssessmentResource>;
-    public findAssessments(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssessmentResource>>;
-    public findAssessments(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssessmentResource>>;
-    public findAssessments(vulnerability_id: number, asset_id?: number, system_group_id?: number, company_id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe?: 'body', reportProgress?: boolean): Observable<AssessmentResource>;
+    public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssessmentResource>>;
+    public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssessmentResource>>;
+    public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (vulnerability_id === null || vulnerability_id === undefined) {
             throw new Error('Required parameter vulnerability_id was null or undefined when calling findAssessments.');
         }
 
 
-
-
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (vulnerability_id !== undefined && vulnerability_id !== null) {
             queryParameters = queryParameters.set('vulnerability_id', <any>vulnerability_id);
-        }
-        if (asset_id !== undefined && asset_id !== null) {
-            queryParameters = queryParameters.set('asset_id', <any>asset_id);
-        }
-        if (system_group_id !== undefined && system_group_id !== null) {
-            queryParameters = queryParameters.set('system_group_id', <any>system_group_id);
-        }
-        if (company_id !== undefined && company_id !== null) {
-            queryParameters = queryParameters.set('company_id', <any>company_id);
         }
 
         let headers = this.defaultHeaders;
@@ -157,10 +145,15 @@ export class AssessmentsService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
         return this.httpClient.post<AssessmentResource>(`${this.basePath}/api/assessments/find`,
-            null,
+            body,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

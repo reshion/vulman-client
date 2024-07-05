@@ -30,6 +30,7 @@ import { CvePipe } from './pipes/cve/cve.pipe';
 import { BaseSeverityHighlightDirective } from './directives/base-severity-highlight/base-severity-highlight.directive';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ScanImportJobDateSelectComponent } from './components/scan-import-job-date-select/scan-import-job-date-select.component';
+import { AssessmentDialogComponent } from './components/assessment-dialog/assessment-dialog.component';
 
 
 const importsExports = [
@@ -62,6 +63,7 @@ const declarationsExports = [
   CvePipe,
   BaseSeverityHighlightDirective,
   ScanImportJobDateSelectComponent,
+  AssessmentDialogComponent,
 ]
 
 @NgModule({

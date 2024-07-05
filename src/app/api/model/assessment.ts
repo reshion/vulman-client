@@ -68,6 +68,11 @@ export class Assessment extends NamedBaseModel {
     system_group_id!: number;
     @Expose()
     system_group!: SystemGroup;
+    /**
+     * Risk Response name of the Assessment
+     */
+    @Expose()
+    risk_response_name!: string;
 
     /**
      * Description: Created date of the Assessment
@@ -129,6 +134,12 @@ export class Assessment extends NamedBaseModel {
      * datatypeWithEnum: SystemGroup
      * system_group: SystemGroup   
      */
+    /**
+     * Description: Risk Response name of the Assessment
+     * datatype: string
+     * datatypeWithEnum: string
+     * risk_response_name: string   
+     */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
@@ -154,7 +165,10 @@ export class Assessment extends NamedBaseModel {
             
                     init.system_group_id ? this.system_group_id = init.system_group_id : null,
                
-                        this.system_group = new SystemGroup(init.system_group || {})
+                        this.system_group = new SystemGroup(init.system_group || {}),
+            
+                    init.risk_response_name ? this.risk_response_name = init.risk_response_name : null
+               
     }
 
     static override  getForm(data?: Assessment | Assessment[] | null): FormGroup {
@@ -214,7 +228,8 @@ export class Assessment extends NamedBaseModel {
                             const fg = SystemGroup.getForm(data?.system_group);
                             fg.addValidators([]);
                             return fg;
-                        })()
+                        })(),
+                        risk_response_name: new FormControl(data?.risk_response_name, [])
         });
     }
   

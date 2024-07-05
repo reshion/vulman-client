@@ -108,16 +108,23 @@ export class VulnerabilitiesService {
      * Base severity count by asset
      * Get summery of base severity information by asset
      * @param assetId Asset id
+     * @param scan_import_job_id Scan import job id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBaseSeverityByAsset(assetId: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
-    public getBaseSeverityByAsset(assetId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
-    public getBaseSeverityByAsset(assetId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
-    public getBaseSeverityByAsset(assetId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getBaseSeverityByAsset(assetId: number, scan_import_job_id?: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
+    public getBaseSeverityByAsset(assetId: number, scan_import_job_id?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
+    public getBaseSeverityByAsset(assetId: number, scan_import_job_id?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
+    public getBaseSeverityByAsset(assetId: number, scan_import_job_id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (assetId === null || assetId === undefined) {
             throw new Error('Required parameter assetId was null or undefined when calling getBaseSeverityByAsset.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (scan_import_job_id !== undefined && scan_import_job_id !== null) {
+            queryParameters = queryParameters.set('scan_import_job_id', <any>scan_import_job_id);
         }
 
         let headers = this.defaultHeaders;
@@ -142,6 +149,7 @@ export class VulnerabilitiesService {
 
         return this.httpClient.get<BaseSeverityCountResponse>(`${this.basePath}/api/vulnerabilities/base-severity/asset/${encodeURIComponent(String(assetId))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -154,16 +162,23 @@ export class VulnerabilitiesService {
      * Base severity count by system group
      * Get summery of base severity information by system group
      * @param systemGroupId System group id
+     * @param scan_import_job_id Scan import job id
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBaseSeverityBySystemGroup(systemGroupId: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
-    public getBaseSeverityBySystemGroup(systemGroupId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
-    public getBaseSeverityBySystemGroup(systemGroupId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
-    public getBaseSeverityBySystemGroup(systemGroupId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
+    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
+    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
+    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (systemGroupId === null || systemGroupId === undefined) {
             throw new Error('Required parameter systemGroupId was null or undefined when calling getBaseSeverityBySystemGroup.');
+        }
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (scan_import_job_id !== undefined && scan_import_job_id !== null) {
+            queryParameters = queryParameters.set('scan_import_job_id', <any>scan_import_job_id);
         }
 
         let headers = this.defaultHeaders;
@@ -188,6 +203,7 @@ export class VulnerabilitiesService {
 
         return this.httpClient.get<BaseSeverityCountResponse>(`${this.basePath}/api/vulnerabilities/base-severity/system-group/${encodeURIComponent(String(systemGroupId))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -253,19 +269,24 @@ export class VulnerabilitiesService {
     /**
      * Get vulerabilities by company
      * Get vulerabilities by company
+     * @param scan_import_job_id Scan import job id
      * @param page Page number
      * @param count Number of items per page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getByCompanyWithAssetCount(page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<VulnerabilityPagingResource>;
-    public getByCompanyWithAssetCount(page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<VulnerabilityPagingResource>>;
-    public getByCompanyWithAssetCount(page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<VulnerabilityPagingResource>>;
-    public getByCompanyWithAssetCount(page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getByCompanyWithAssetCount(scan_import_job_id?: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<VulnerabilityPagingResource>;
+    public getByCompanyWithAssetCount(scan_import_job_id?: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<VulnerabilityPagingResource>>;
+    public getByCompanyWithAssetCount(scan_import_job_id?: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<VulnerabilityPagingResource>>;
+    public getByCompanyWithAssetCount(scan_import_job_id?: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
 
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (scan_import_job_id !== undefined && scan_import_job_id !== null) {
+            queryParameters = queryParameters.set('scan_import_job_id', <any>scan_import_job_id);
+        }
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
         }
@@ -308,15 +329,16 @@ export class VulnerabilitiesService {
      * Vulnerabilities by asset
      * Get vulnerabilities by asset
      * @param assetId Asset id
+     * @param scan_import_job_id Scan import job id
      * @param page Page number
      * @param count Number of items per page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getVulnerabilitiesByAsset(assetId: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<VulnerabilityPagingResource>;
-    public getVulnerabilitiesByAsset(assetId: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<VulnerabilityPagingResource>>;
-    public getVulnerabilitiesByAsset(assetId: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<VulnerabilityPagingResource>>;
-    public getVulnerabilitiesByAsset(assetId: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getVulnerabilitiesByAsset(assetId: number, scan_import_job_id?: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<VulnerabilityPagingResource>;
+    public getVulnerabilitiesByAsset(assetId: number, scan_import_job_id?: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<VulnerabilityPagingResource>>;
+    public getVulnerabilitiesByAsset(assetId: number, scan_import_job_id?: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<VulnerabilityPagingResource>>;
+    public getVulnerabilitiesByAsset(assetId: number, scan_import_job_id?: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (assetId === null || assetId === undefined) {
             throw new Error('Required parameter assetId was null or undefined when calling getVulnerabilitiesByAsset.');
@@ -324,7 +346,11 @@ export class VulnerabilitiesService {
 
 
 
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (scan_import_job_id !== undefined && scan_import_job_id !== null) {
+            queryParameters = queryParameters.set('scan_import_job_id', <any>scan_import_job_id);
+        }
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
         }
@@ -367,15 +393,16 @@ export class VulnerabilitiesService {
      * Vulnerabilities by system group
      * Get vulnerabilities by system group
      * @param systemGroupId System group id
+     * @param scan_import_job_id Scan import job id
      * @param page Page number
      * @param count Number of items per page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getVulnerabilitiesBySystemGroup(systemGroupId: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<VulnerabilityPagingResource>;
-    public getVulnerabilitiesBySystemGroup(systemGroupId: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<VulnerabilityPagingResource>>;
-    public getVulnerabilitiesBySystemGroup(systemGroupId: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<VulnerabilityPagingResource>>;
-    public getVulnerabilitiesBySystemGroup(systemGroupId: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getVulnerabilitiesBySystemGroup(systemGroupId: number, scan_import_job_id?: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<VulnerabilityPagingResource>;
+    public getVulnerabilitiesBySystemGroup(systemGroupId: number, scan_import_job_id?: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<VulnerabilityPagingResource>>;
+    public getVulnerabilitiesBySystemGroup(systemGroupId: number, scan_import_job_id?: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<VulnerabilityPagingResource>>;
+    public getVulnerabilitiesBySystemGroup(systemGroupId: number, scan_import_job_id?: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (systemGroupId === null || systemGroupId === undefined) {
             throw new Error('Required parameter systemGroupId was null or undefined when calling getVulnerabilitiesBySystemGroup.');
@@ -383,7 +410,11 @@ export class VulnerabilitiesService {
 
 
 
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (scan_import_job_id !== undefined && scan_import_job_id !== null) {
+            queryParameters = queryParameters.set('scan_import_job_id', <any>scan_import_job_id);
+        }
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
         }

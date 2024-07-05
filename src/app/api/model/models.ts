@@ -1,4 +1,5 @@
 export * from './assessment';
+export * from './assessmentFindRequest';
 export * from './assessmentLifecycleStatus';
 export * from './assessmentPagingResource';
 export * from './assessmentResource';

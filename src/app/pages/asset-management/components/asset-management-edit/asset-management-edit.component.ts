@@ -7,6 +7,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AssessmentDialogComponent } from '@app/shared/components/assessment-dialog/assessment-dialog.component';
+import { plainToClass, plainToInstance } from 'class-transformer';
 
 @Component({
   selector: 'app-asset-management-edit',
@@ -32,6 +35,7 @@ export class AssetManagementEditComponent implements OnInit
     private assessmentService: API.AssessmentsService,
     private vulnerabilitiesService: API.VulnerabilitiesService,
     private los: LoadingOverlayService,
+    private dialog: MatDialog
   )
   {
 
@@ -63,6 +67,7 @@ export class AssetManagementEditComponent implements OnInit
             this.los.show();
             return this.vulnerabilitiesService.getVulnerabilitiesByAsset(
               asset.data.id,
+              undefined,
               this.paginator.pageIndex + 1,
               this.paginator.pageSize
             ).pipe(
@@ -83,16 +88,38 @@ export class AssetManagementEditComponent implements OnInit
     }));
   }
 
+  /**
+   *
+   */
+  openAssessmentDialog(vulnerabilityId: number, assetId: number): void
+  {
+    const request = new API.AssessmentFindRequest();
+    request.asset_id = assetId;
+
+    this.dialog.open(AssessmentDialogComponent, {
+      width: '800px',
+      data: {
+        request: request,
+        vulnerability_id: vulnerabilityId
+      }
+    }).afterClosed().subscribe(result =>
+    {
+      if (result)
+      {
+        let body;
+
+        body = plainToClass(API.AssessmentStoreRequest, result as Object);
+        body.asset_id = assetId;
+        this.subscriptions.add(this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).subscribe(() =>
+        {
+
+        }));
+      }
+    });
+  }
+
   approve(vulnerabilityId: number, assetId: number): void
   {
-    const body = new API.AssessmentStoreRequest();
-    body.asset_id = assetId;
-    body.name = 'test';
-    body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
 
-    this.subscriptions.add(this.assessmentService.storeAssessmentVulnerability(vulnerabilityId, body).subscribe(() =>
-    {
-      this.los.hide();
-    }));
   }
 }

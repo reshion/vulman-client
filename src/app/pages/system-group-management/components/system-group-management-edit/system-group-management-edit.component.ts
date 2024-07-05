@@ -62,6 +62,7 @@ export class SystemGroupManagementEditComponent
             this.los.show();
             return this.vulnerabilitiesService.getVulnerabilitiesBySystemGroup(
               systemGroup.data.id,
+              undefined,
               this.paginator.pageIndex + 1,
               this.paginator.pageSize
             ).pipe(

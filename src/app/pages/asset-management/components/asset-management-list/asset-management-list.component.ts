@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import * as API from '@app/api';
-import { EMPTY, catchError, map, merge, of, startWith, switchMap, Observable, Subject, BehaviorSubject } from 'rxjs';
+import { EMPTY, catchError, map, merge, of, startWith, switchMap, Observable, Subject, BehaviorSubject, mergeMap } from 'rxjs';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 import { plainToClass } from 'class-transformer';
 
@@ -47,10 +47,15 @@ export class AssetManagementListComponent implements OnInit, AfterViewInit
   {
     merge(this.paginator.page, this.sort.sortChange, this.scanImportJobSelected$).pipe(
       startWith({}),
-      switchMap(() =>
+      mergeMap(() =>
+      {
+        return this.scanImportJobSelected$
+      }),
+      switchMap((scanImportJobSelected) =>
       {
         this.los.show();
         return this.assetsService.listAssets(
+          scanImportJobSelected?.id || undefined,
           this.paginator.pageIndex + 1,
           this.paginator.pageSize
         ).pipe(

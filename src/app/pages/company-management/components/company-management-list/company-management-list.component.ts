@@ -53,6 +53,7 @@ export class CompanyManagementListComponent
       {
         this.los.show();
         return this.vulnerabilitService.getByCompanyWithAssetCount(
+          undefined,
           this.paginator.pageIndex + 1,
           this.paginator.pageSize
         ).pipe(
