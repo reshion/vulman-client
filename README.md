@@ -1,3 +1,29 @@
+# About Angular ClientApp for vulnerability management system
+
+- Clone the repository and run the following commands to install all dependencies and libraries.
+
+```console
+npm install
+```
+
+- Generate the Swagger client using the following command.
+
+```console
+npm run generate-api
+```
+
+- After the API has been changed, copy the l5-swagger.json file from the backend to the client app. The file should be placed in the following folder.
+
+```console
+  codegen/schema/swagger.json
+```
+
+- Run client app using the following command.
+
+```console
+npm run start
+```
+
 # ClientApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.6.
