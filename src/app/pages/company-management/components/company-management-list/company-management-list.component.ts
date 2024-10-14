@@ -7,9 +7,9 @@ import { merge, startWith, switchMap, catchError, of, map, Subscription, EMPTY, 
 import * as API from '@app/api';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { RouteKey } from '@app/shared/enums/route-key';
-import { AssessmentDialogComponent } from '@app/shared/components/assessment-dialog/assessment-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { plainToClass } from 'class-transformer';
+import { AssessmentCreateDialogComponent } from '@app/shared/components/assessment-create-dialog/assessment-create-dialog.component';
 
 @Component({
   selector: 'app-company-management-list',
@@ -99,7 +99,7 @@ export class CompanyManagementListComponent
     const request = new API.AssessmentFindRequest();
     request.company_id = this.user?.data?.company.id;
 
-    this.subscriptions.add(this.dialog.open(AssessmentDialogComponent, {
+    this.subscriptions.add(this.dialog.open(AssessmentCreateDialogComponent, {
       width: '800px',
       data: {
         request: request,

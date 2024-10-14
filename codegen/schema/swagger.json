@@ -2133,6 +2133,15 @@
           "CLOSED"
         ]
       },
+      "AssessmentTreatment": {
+        "type": "string",
+        "enum": [
+          "ACCEPT",
+          "MITIGATE",
+          "TRANSFER",
+          "AVOID"
+        ]
+      },
       "RiskResponseLifecycleStatus": {
         "type": "string",
         "enum": [
@@ -2154,10 +2163,16 @@
         "type": "object",
         "allOf": [
           {
-            "$ref": "#/components/schemas/NamedBaseModel"
+            "$ref": "#/components/schemas/BaseModel"
           },
           {
             "properties": {
+              "note": {
+                "title": "Note",
+                "description": "Some notes of the Assessment",
+                "type": "string",
+                "example": "This is a note"
+              },
               "created": {
                 "title": "created",
                 "description": "Created date of the Assessment",
@@ -2170,6 +2185,9 @@
               },
               "risk_response_lifecycle_status": {
                 "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
+              },
+              "treatment": {
+                "$ref": "#/components/schemas/AssessmentTreatment"
               },
               "company_id": {
                 "title": "Company Id",
@@ -2496,14 +2514,17 @@
       "AssessmentStoreRequest": {
         "title": "AssessmentStoreRequest",
         "properties": {
-          "name": {
-            "title": "name",
-            "description": "Name of the new Assessment",
+          "note": {
+            "title": "Note",
+            "description": "Note of the Assessment",
             "type": "string",
-            "example": "Approve"
+            "example": "This is a note"
           },
           "lifecycle_status": {
             "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+          },
+          "treatment": {
+            "$ref": "#/components/schemas/AssessmentTreatment"
           },
           "company_id": {
             "title": "company_id",
@@ -2541,11 +2562,14 @@
       "AssessmentUpdateRequest": {
         "title": "AssessmentUpdateRequest",
         "properties": {
-          "name": {
-            "title": "name",
-            "description": "Name of the new Assessment",
+          "note": {
+            "title": "Note",
+            "description": "Note of the Assessment",
             "type": "string",
-            "example": "Approve"
+            "example": "This is a note"
+          },
+          "treatment": {
+            "$ref": "#/components/schemas/AssessmentTreatment"
           },
           "lifecycle_status": {
             "$ref": "#/components/schemas/AssessmentLifecycleStatus"

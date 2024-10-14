@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import * as API from '@app/api';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
-import { AssessmentDialogComponent } from '@app/shared/components/assessment-dialog/assessment-dialog.component';
+import { AssessmentCreateDialogComponent } from '@app/shared/components/assessment-create-dialog/assessment-create-dialog.component';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
 import { plainToClass } from 'class-transformer';
 import { map, mergeMap, merge, startWith, switchMap, catchError, of, Subscription, EMPTY } from 'rxjs';
@@ -92,7 +92,7 @@ export class SystemGroupManagementEditComponent
     const request = new API.AssessmentFindRequest();
     request.system_group_id = systemGroupId;
 
-    this.subscriptions.add(this.dialog.open(AssessmentDialogComponent, {
+    this.subscriptions.add(this.dialog.open(AssessmentCreateDialogComponent, {
       width: '800px',
       data: {
         request: request,

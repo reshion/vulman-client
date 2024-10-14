@@ -7,22 +7,26 @@
         </ng-container>
 
         <!-- Progress Column -->
-        <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> name </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        <ng-container matColumnDef="note">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Note </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.note}} </mat-cell>
         </ng-container>
 
+        <!-- Status Column -->
+        <ng-container matColumnDef="treatment">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Treatment </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.treatment}} </mat-cell>
+        </ng-container>
 
-
-        <!-- Name Column -->
+        <!-- Life cycle status Column -->
         <ng-container matColumnDef="lifecycle_status">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> lifecycle_status </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Lifecycle Status </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.lifecycle_status}} </mat-cell>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="vulnerability_id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> vulnerability </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Vulnerability </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <span *ngIf="row.vulnerability$ | async as x ; else loading">
                     {{x.cve_id}}
@@ -32,7 +36,7 @@
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="company_id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> company_id </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <span *ngIf="row.company$ | async as x ; else loading">
                     {{x === -1 ? ' - ' : x?.name }}
@@ -40,7 +44,7 @@
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="system_group_id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> system_group </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> System Group </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <span *ngIf="row.system_group$ | async as x ; else loading">
                     {{x === -1 ? ' - ' : x?.name }}
@@ -48,7 +52,7 @@
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="asset_id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> asset </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Asset </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <span *ngIf="row.asset$ | async as x ; else loading">
                     {{x === -1 ? ' - ' : x?.fqdn }}

@@ -13,6 +13,7 @@ import { Type, Expose } from 'class-transformer';
 // @dynamic
 
 import { AssessmentLifecycleStatus } from './assessmentLifecycleStatus';
+import { AssessmentTreatment } from './assessmentTreatment';
 
 import { Observable }                                        from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
@@ -21,10 +22,12 @@ export class AssessmentUpdateRequest {
 
 
     /**
-     * Name of the new Assessment
+     * Note of the Assessment
      */
     @Expose()
-    name!: string;
+    note!: string;
+    @Expose()
+    treatment!: AssessmentTreatment;
     @Expose()
     lifecycle_status!: AssessmentLifecycleStatus;
     /**
@@ -44,10 +47,15 @@ export class AssessmentUpdateRequest {
     asset_id!: number;
 
     /**
-     * Description: Name of the new Assessment
+     * Description: Note of the Assessment
      * datatype: string
      * datatypeWithEnum: string
-     * name: string   
+     * note: string   
+     */
+    /**
+     * datatype: AssessmentTreatment
+     * datatypeWithEnum: AssessmentTreatment
+     * treatment: AssessmentTreatment   
      */
     /**
      * datatype: AssessmentLifecycleStatus
@@ -78,8 +86,9 @@ export class AssessmentUpdateRequest {
     constructor(init: Partial<AssessmentUpdateRequest> = {}) {
          
             
-                    init.name ? this.name = init.name : null,
+                    init.note ? this.note = init.note : null,
                
+                        init.treatment ? this.treatment = init.treatment : null,
                         init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null,
             
                     init.company_id ? this.company_id = init.company_id : null,
@@ -123,7 +132,8 @@ export class AssessmentUpdateRequest {
   static   getFormGroup(data?: AssessmentUpdateRequest): FormGroup {
        
         return new FormGroup({           
-                        name: new FormControl(data?.name, []),
+                        note: new FormControl(data?.note, []),
+                        treatment: new FormControl(data?.treatment, []),
                         lifecycle_status: new FormControl(data?.lifecycle_status, []),
                         company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
                         system_group_id: new FormControl(data?.system_group_id, [Validators.pattern('^[0-9]*$')]),

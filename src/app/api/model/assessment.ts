@@ -13,9 +13,10 @@ import { Type, Expose } from 'class-transformer';
 // @dynamic
 
 import { AssessmentLifecycleStatus } from './assessmentLifecycleStatus';
+import { AssessmentTreatment } from './assessmentTreatment';
 import { Asset } from './asset';
+import { BaseModel } from './baseModel';
 import { Company } from './company';
-import { NamedBaseModel } from './namedBaseModel';
 import { RiskResponseLifecycleStatus } from './riskResponseLifecycleStatus';
 import { SystemGroup } from './systemGroup';
 import { Vulnerability } from './vulnerability';
@@ -28,9 +29,14 @@ import { Vulnerability } from './vulnerability';
 import { Observable }                                        from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
 
-export class Assessment extends NamedBaseModel { 
+export class Assessment extends BaseModel { 
 
 
+    /**
+     * Some notes of the Assessment
+     */
+    @Expose()
+    note!: string;
     /**
      * Created date of the Assessment
      */
@@ -40,6 +46,8 @@ export class Assessment extends NamedBaseModel {
     lifecycle_status!: AssessmentLifecycleStatus;
     @Expose()
     risk_response_lifecycle_status!: RiskResponseLifecycleStatus;
+    @Expose()
+    treatment!: AssessmentTreatment;
     /**
      * Company's id of the Assessment
      */
@@ -75,6 +83,12 @@ export class Assessment extends NamedBaseModel {
     risk_response_name!: string;
 
     /**
+     * Description: Some notes of the Assessment
+     * datatype: string
+     * datatypeWithEnum: string
+     * note: string   
+     */
+    /**
      * Description: Created date of the Assessment
      * datatype: string
      * datatypeWithEnum: string
@@ -89,6 +103,11 @@ export class Assessment extends NamedBaseModel {
      * datatype: RiskResponseLifecycleStatus
      * datatypeWithEnum: RiskResponseLifecycleStatus
      * risk_response_lifecycle_status: RiskResponseLifecycleStatus   
+     */
+    /**
+     * datatype: AssessmentTreatment
+     * datatypeWithEnum: AssessmentTreatment
+     * treatment: AssessmentTreatment   
      */
     /**
      * Description: Company's id of the Assessment
@@ -146,10 +165,14 @@ export class Assessment extends NamedBaseModel {
     constructor(init: Partial<Assessment> = {}) {
         super(init)  
             
+                    init.note ? this.note = init.note : null,
+               
+            
                     init.created ? this.created = init.created : null,
                
                         init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null,
                         init.risk_response_lifecycle_status ? this.risk_response_lifecycle_status = init.risk_response_lifecycle_status : null,
+                        init.treatment ? this.treatment = init.treatment : null,
             
                     init.company_id ? this.company_id = init.company_id : null,
                
@@ -202,9 +225,11 @@ export class Assessment extends NamedBaseModel {
   static override  getFormGroup(data?: Assessment): FormGroup {
        
         return new FormGroup({           
+                        note: new FormControl(data?.note, []),
                         created: new FormControl(data?.created, []),
                         lifecycle_status: new FormControl(data?.lifecycle_status, []),
                         risk_response_lifecycle_status: new FormControl(data?.risk_response_lifecycle_status, []),
+                        treatment: new FormControl(data?.treatment, []),
                         company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
                         company: (() => { 
                             const fg = Company.getForm(data?.company);

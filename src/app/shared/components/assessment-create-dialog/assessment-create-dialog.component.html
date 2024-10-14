@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Assessment Dialog</h1>
+<div mat-dialog-content [formGroup]="formGroup">
+    <p>Assessment Create</p>
+    <div class="tab-content row">
+        <mat-form-field class="col-6">
+            <mat-label>Enter assessment note</mat-label>
+            <input matInput formControlName="note">
+        </mat-form-field>
+        <mat-form-field class="col-6">
+            <mat-label>Treatment</mat-label>
+            <mat-select formControlName="treatment">
+                <mat-option [value]="item.value" *ngFor="let item of AssessmentTreatment | keyvalue">{{item.key}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button cdkFocusInitial (click)="ok()">Ok</button>
+    <button mat-button (click)="cancel()">Jetzt nicht</button>
+</div>

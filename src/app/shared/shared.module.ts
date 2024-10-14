@@ -31,6 +31,7 @@ import { BaseSeverityHighlightDirective } from './directives/base-severity-highl
 import { MatNativeDateModule } from '@angular/material/core';
 import { ScanImportJobDateSelectComponent } from './components/scan-import-job-date-select/scan-import-job-date-select.component';
 import { AssessmentDialogComponent } from './components/assessment-dialog/assessment-dialog.component';
+import { AssessmentCreateDialogComponent } from './components/assessment-create-dialog/assessment-create-dialog.component';
 
 
 const importsExports = [
@@ -71,6 +72,7 @@ const declarationsExports = [
     ...declarationsExports,
     FileSelectDialogComponent,
     ConfirmDialogComponent,
+    AssessmentCreateDialogComponent,
   ],
   imports: [
     CommonModule,

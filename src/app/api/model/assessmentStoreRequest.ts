@@ -13,6 +13,7 @@ import { Type, Expose } from 'class-transformer';
 // @dynamic
 
 import { AssessmentLifecycleStatus } from './assessmentLifecycleStatus';
+import { AssessmentTreatment } from './assessmentTreatment';
 import { RiskResponseLifecycleStatus } from './riskResponseLifecycleStatus';
 
 import { Observable }                                        from 'rxjs';
@@ -22,12 +23,14 @@ export class AssessmentStoreRequest {
 
 
     /**
-     * Name of the new Assessment
+     * Note of the Assessment
      */
     @Expose()
-    name!: string;
+    note!: string;
     @Expose()
     lifecycle_status!: AssessmentLifecycleStatus;
+    @Expose()
+    treatment!: AssessmentTreatment;
     /**
      * The company id of the Assessment
      */
@@ -52,15 +55,20 @@ export class AssessmentStoreRequest {
     risk_response_lifecycle_status!: RiskResponseLifecycleStatus;
 
     /**
-     * Description: Name of the new Assessment
+     * Description: Note of the Assessment
      * datatype: string
      * datatypeWithEnum: string
-     * name: string   
+     * note: string   
      */
     /**
      * datatype: AssessmentLifecycleStatus
      * datatypeWithEnum: AssessmentLifecycleStatus
      * lifecycle_status: AssessmentLifecycleStatus   
+     */
+    /**
+     * datatype: AssessmentTreatment
+     * datatypeWithEnum: AssessmentTreatment
+     * treatment: AssessmentTreatment   
      */
     /**
      * Description: The company id of the Assessment
@@ -100,9 +108,10 @@ export class AssessmentStoreRequest {
     constructor(init: Partial<AssessmentStoreRequest> = {}) {
          
             
-                    init.name ? this.name = init.name : null,
+                    init.note ? this.note = init.note : null,
                
                         init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null,
+                        init.treatment ? this.treatment = init.treatment : null,
             
                     init.company_id ? this.company_id = init.company_id : null,
                
@@ -149,8 +158,9 @@ export class AssessmentStoreRequest {
   static   getFormGroup(data?: AssessmentStoreRequest): FormGroup {
        
         return new FormGroup({           
-                        name: new FormControl(data?.name, []),
+                        note: new FormControl(data?.note, []),
                         lifecycle_status: new FormControl(data?.lifecycle_status, []),
+                        treatment: new FormControl(data?.treatment, []),
                         company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
                         system_group_id: new FormControl(data?.system_group_id, [Validators.pattern('^[0-9]*$')]),
                         asset_id: new FormControl(data?.asset_id, [Validators.pattern('^[0-9]*$')]),

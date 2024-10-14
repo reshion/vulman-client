@@ -23,7 +23,18 @@ class ViewModel extends API.Assessment
 })
 export class AssessmentManagementListComponent
 {
-  displayedColumns: string[] = ['id', 'name', 'lifecycle_status', 'vulnerability_id', 'company_id', 'system_group_id', 'asset_id', 'actions'];
+  displayedColumns: string[] =
+    [
+      'id',
+      'note',
+      'treatment',
+      'lifecycle_status',
+      'vulnerability_id',
+      'company_id',
+      'system_group_id',
+      'asset_id',
+      'actions'
+    ];
   totalItems: number = 0;
   dataSource: MatTableDataSource<API.Assessment> = new MatTableDataSource<API.Assessment>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -4,6 +4,7 @@ export * from './assessmentLifecycleStatus';
 export * from './assessmentPagingResource';
 export * from './assessmentResource';
 export * from './assessmentStoreRequest';
+export * from './assessmentTreatment';
 export * from './assessmentUpdateRequest';
 export * from './asset';
 export * from './assetPagingResource';

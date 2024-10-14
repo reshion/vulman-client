@@ -8,8 +8,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AssessmentDialogComponent } from '@app/shared/components/assessment-dialog/assessment-dialog.component';
-import { plainToClass, plainToInstance } from 'class-transformer';
+import { plainToClass } from 'class-transformer';
+import { AssessmentCreateDialogComponent } from '@app/shared/components/assessment-create-dialog/assessment-create-dialog.component';
 
 @Component({
   selector: 'app-asset-management-edit',
@@ -94,7 +94,7 @@ export class AssetManagementEditComponent implements OnInit
     const request = new API.AssessmentFindRequest();
     request.asset_id = assetId;
 
-    this.subscriptions.add(this.dialog.open(AssessmentDialogComponent, {
+    this.subscriptions.add(this.dialog.open(AssessmentCreateDialogComponent, {
       width: '800px',
       data: {
         request: request,
