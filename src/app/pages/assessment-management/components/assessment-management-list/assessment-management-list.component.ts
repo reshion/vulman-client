@@ -1,11 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as API from '@app/api';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
+import { DialogMessage } from '@app/shared/classes/dialog-message';
+import { DialogOptions } from '@app/shared/classes/dialog-options';
+import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
 import { plainToClass } from 'class-transformer';
-import { merge, startWith, switchMap, catchError, of, map, EMPTY, Observable, Subscription } from 'rxjs';
+import { merge, startWith, switchMap, catchError, of, map, EMPTY, Observable, Subscription, BehaviorSubject } from 'rxjs';
 
 class ViewModel extends API.Assessment
 {
@@ -36,10 +40,11 @@ export class AssessmentManagementListComponent
       'actions'
     ];
   totalItems: number = 0;
-  dataSource: MatTableDataSource<API.Assessment> = new MatTableDataSource<API.Assessment>();
+  dataSource: MatTableDataSource<ViewModel> = new MatTableDataSource<ViewModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   subscriptions = new Subscription();
+  reload$ = new BehaviorSubject<boolean>(true);
 
   /**
    *
@@ -51,13 +56,14 @@ export class AssessmentManagementListComponent
     private systemGroupService: API.SystemGroupsService,
     private assetService: API.AssetsService,
     private los: LoadingOverlayService,
+    private dialog: MatDialog,
   )
   {
   }
 
   ngAfterViewInit(): void
   {
-    this.subscriptions.add(merge(this.paginator.page, this.sort.sortChange).pipe(
+    this.subscriptions.add(merge(this.paginator.page, this.sort.sortChange, this.reload$).pipe(
       startWith({}),
       switchMap(() =>
       {
@@ -98,7 +104,6 @@ export class AssessmentManagementListComponent
             }),
             catchError(err =>
             {
-
               return EMPTY
             }),
           ) : of(-1);
@@ -129,6 +134,31 @@ export class AssessmentManagementListComponent
         this.los.hide();
         return EMPTY
       })
-    ).subscribe(data => this.dataSource.data = (data) as ViewModel[]));
+    ).subscribe(data => this.dataSource.data = data));
   }
+
+  openDeleteDialog(id: number): void
+  {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      data: new DialogMessage(`Remove Assessment`, 'Would you like to remove the assessment?', new DialogOptions({ cancel: true }))
+    });
+    this.subscriptions.add(dialogRef.afterClosed().subscribe(ok =>
+    {
+      if (ok)
+      {
+        this.los.show();
+        this.assessmentService.deleteAssessment(id).subscribe(() =>
+        {
+          this.reload$.next(true);
+        });
+      }
+    }));
+  }
+
+  ngOnDestroy(): void
+  {
+    this.subscriptions.unsubscribe();
+  }
+
 }

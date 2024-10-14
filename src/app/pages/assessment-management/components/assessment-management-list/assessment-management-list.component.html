@@ -72,6 +72,10 @@
                         <mat-icon>settings</mat-icon>
                         <span>Edit</span>
                     </button>
+                    <button mat-menu-item (click)="openDeleteDialog(row.id)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete</span>
+                    </button>
                 </mat-menu>
             </mat-cell>
         </ng-container>

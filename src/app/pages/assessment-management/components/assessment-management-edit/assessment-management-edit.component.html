@@ -1,0 +1,93 @@
+<div class="mat-elevation-z8 page-container">
+    <app-menu-container>
+        <ng-container class="toolbar-items">
+            <button mat-icon-button [routerLink]="['/assessment-management']">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </ng-container>
+    </app-menu-container>
+    <mat-card *ngIf="assessment" appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>
+                <div class="d-flex">
+                    <span>Assessment #{{assessment.id}}</span>
+                </div>
+            </mat-card-title>
+            <mat-card-subtitle>Note {{assessment.note}}</mat-card-subtitle>
+            <span class="ms-auto">
+                <button mat-menu-item (click)="openDeleteDialog(assessment.id)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </button>
+            </span>
+        </mat-card-header>
+        <mat-card-content>
+            <p *ngIf="assessment.vulnerability$ | async as x ; else loading">
+                <strong>Vulnerability:</strong>
+                <span>
+                    {{x.cve_id}}
+                    <span [appBaseSeverityHighlight]="x | cve:'baseSeverity'">{{x | cve:'baseSeverity'}}</span>
+                </span>
+            </p>
+            <ng-container *ngIf="assessment.company$ | async as x ; else loading">
+                <p *ngIf="x !== -1">
+                    <strong>Company:</strong>
+                    <span>
+                        {{x?.name }}
+                    </span>
+                </p>
+            </ng-container>
+
+            <ng-container *ngIf="assessment.system_group$ | async as x ; else loading">
+                <p *ngIf="x !== -1">
+                    <strong>System Group:</strong>
+                    <span>
+                        {{x?.name }}
+                    </span>
+                </p>
+            </ng-container>
+            <ng-container *ngIf="assessment.asset$ | async as x ; else loading">
+                <p *ngIf="x !== -1">
+                    <strong>Asset:</strong>
+                    <span>
+                        {{x?.fqdn }}
+                    </span>
+                </p>
+            </ng-container>
+            <p>
+                <strong>Treatment:</strong> {{assessment.treatment}}
+                <button mat-icon-button [matMenuTriggerFor]="actions">
+                    <mat-icon color="accent">edit</mat-icon>
+                </button>
+                <mat-menu #actions="matMenu">
+                    <button mat-menu-item (click)="setTreatment(item.key)" *ngFor="let item of AssessmentTreatment | keyvalue">{{item.key}}</button>
+
+                </mat-menu>
+            </p>
+            <p>
+                <strong>Lifecycle Status:</strong> {{assessment.lifecycle_status}}
+            </p>
+
+
+            <p>
+                <strong>Created:</strong> {{assessment.created_at | date}}
+            </p>
+            <p>
+                <strong>Updated:</strong> {{assessment.updated_at | date}}
+            </p>
+        </mat-card-content>
+        <mat-card-actions>
+            <!-- <mat-form-field class="col-6">
+                <mat-label>Treatment</mat-label>
+                <mat-select formControlName="treatment">
+                    <mat-option [value]="item.value" *ngFor="let item of AssessmentTreatment | keyvalue">{{item.key}}</mat-option>
+                </mat-select>
+            </mat-form-field> -->
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+<ng-template #loading>
+    <div class="spinner-border spinner-border-sm text-primary mb-2 mr-auto ml-auto" role="status">
+    </div>
+</ng-template>
