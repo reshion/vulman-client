@@ -29,6 +29,7 @@ export class AssessmentManagementEditComponent implements OnInit
   assessment!: ViewModel;
   subscriptions = new Subscription();
   AssessmentTreatment = API.AssessmentTreatment;
+  AssessmentLifecycleStatus = API.AssessmentLifecycleStatus;
 
   constructor(
     private los: LoadingOverlayService,
@@ -113,6 +114,12 @@ export class AssessmentManagementEditComponent implements OnInit
   setTreatment(treatment: API.AssessmentTreatment): void
   {
     this.assessment.treatment = treatment;
+    this.updateAssessment(this.assessment);
+  }
+
+  setAssessmentLifecycleStatus(status: API.AssessmentLifecycleStatus): void
+  {
+    this.assessment.lifecycle_status = status;
     this.updateAssessment(this.assessment);
   }
 

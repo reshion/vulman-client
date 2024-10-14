@@ -56,16 +56,21 @@
             </ng-container>
             <p>
                 <strong>Treatment:</strong> {{assessment.treatment}}
-                <button mat-icon-button [matMenuTriggerFor]="actions">
+                <button mat-icon-button [matMenuTriggerFor]="treatment">
                     <mat-icon color="accent">edit</mat-icon>
                 </button>
-                <mat-menu #actions="matMenu">
+                <mat-menu #treatment="matMenu">
                     <button mat-menu-item (click)="setTreatment(item.key)" *ngFor="let item of AssessmentTreatment | keyvalue">{{item.key}}</button>
-
                 </mat-menu>
             </p>
             <p>
                 <strong>Lifecycle Status:</strong> {{assessment.lifecycle_status}}
+                <button mat-icon-button [matMenuTriggerFor]="lifecycle_status">
+                    <mat-icon color="accent">edit</mat-icon>
+                </button>
+                <mat-menu #lifecycle_status="matMenu">
+                    <button mat-menu-item (click)="setAssessmentLifecycleStatus(item.key)" *ngFor="let item of AssessmentLifecycleStatus | keyvalue">{{item.key}}</button>
+                </mat-menu>
             </p>
 
 
