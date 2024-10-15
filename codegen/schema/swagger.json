@@ -2229,9 +2229,9 @@
               "system_group": {
                 "$ref": "#/components/schemas/SystemGroup"
               },
-              "risk_response_name": {
-                "title": "Risk Response name",
-                "description": "Risk Response name of the Assessment",
+              "risk_response": {
+                "title": "Risk Response",
+                "description": "Risk Response of the Assessment",
                 "type": "string",
                 "format": "string",
                 "example": "Approve"
@@ -2547,9 +2547,9 @@
             "example": "1",
             "nullable": true
           },
-          "risk_response_name": {
-            "title": "risk_response_name",
-            "description": "Risk Response name of the Assessment",
+          "risk_response": {
+            "title": "risk_response",
+            "description": "Risk Response of the Assessment",
             "type": "string",
             "example": "Approve"
           },

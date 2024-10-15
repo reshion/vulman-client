@@ -77,10 +77,10 @@ export class Assessment extends BaseModel {
     @Expose()
     system_group!: SystemGroup;
     /**
-     * Risk Response name of the Assessment
+     * Risk Response of the Assessment
      */
     @Expose()
-    risk_response_name!: string;
+    risk_response!: string;
 
     /**
      * Description: Some notes of the Assessment
@@ -154,10 +154,10 @@ export class Assessment extends BaseModel {
      * system_group: SystemGroup   
      */
     /**
-     * Description: Risk Response name of the Assessment
+     * Description: Risk Response of the Assessment
      * datatype: string
      * datatypeWithEnum: string
-     * risk_response_name: string   
+     * risk_response: string   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
@@ -190,7 +190,7 @@ export class Assessment extends BaseModel {
                
                         this.system_group = new SystemGroup(init.system_group || {}),
             
-                    init.risk_response_name ? this.risk_response_name = init.risk_response_name : null
+                    init.risk_response ? this.risk_response = init.risk_response : null
                
     }
 
@@ -254,7 +254,7 @@ export class Assessment extends BaseModel {
                             fg.addValidators([]);
                             return fg;
                         })(),
-                        risk_response_name: new FormControl(data?.risk_response_name, [])
+                        risk_response: new FormControl(data?.risk_response, [])
         });
     }
   

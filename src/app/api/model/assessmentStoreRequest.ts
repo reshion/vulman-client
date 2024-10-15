@@ -47,10 +47,10 @@ export class AssessmentStoreRequest {
     @Expose()
     asset_id: number | undefined;
     /**
-     * Risk Response name of the Assessment
+     * Risk Response of the Assessment
      */
     @Expose()
-    risk_response_name!: string;
+    risk_response!: string;
     @Expose()
     risk_response_lifecycle_status!: RiskResponseLifecycleStatus;
 
@@ -92,10 +92,10 @@ export class AssessmentStoreRequest {
      * asset_id: number   
      */
     /**
-     * Description: Risk Response name of the Assessment
+     * Description: Risk Response of the Assessment
      * datatype: string
      * datatypeWithEnum: string
-     * risk_response_name: string   
+     * risk_response: string   
      */
     /**
      * datatype: RiskResponseLifecycleStatus
@@ -122,7 +122,7 @@ export class AssessmentStoreRequest {
                     init.asset_id ? this.asset_id = init.asset_id : null,
                
             
-                    init.risk_response_name ? this.risk_response_name = init.risk_response_name : null,
+                    init.risk_response ? this.risk_response = init.risk_response : null,
                
                         init.risk_response_lifecycle_status ? this.risk_response_lifecycle_status = init.risk_response_lifecycle_status : null
     }
@@ -164,7 +164,7 @@ export class AssessmentStoreRequest {
                         company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
                         system_group_id: new FormControl(data?.system_group_id, [Validators.pattern('^[0-9]*$')]),
                         asset_id: new FormControl(data?.asset_id, [Validators.pattern('^[0-9]*$')]),
-                        risk_response_name: new FormControl(data?.risk_response_name, []),
+                        risk_response: new FormControl(data?.risk_response, []),
                         risk_response_lifecycle_status: new FormControl(data?.risk_response_lifecycle_status, [])
         });
     }

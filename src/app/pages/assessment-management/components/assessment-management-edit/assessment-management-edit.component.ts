@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as API from '@app/api';
@@ -30,6 +31,9 @@ export class AssessmentManagementEditComponent implements OnInit
   subscriptions = new Subscription();
   AssessmentTreatment = API.AssessmentTreatment;
   AssessmentLifecycleStatus = API.AssessmentLifecycleStatus;
+  RiskResponseLifecycleStatus = API.RiskResponseLifecycleStatus;
+  formGroup!: FormGroup;
+  showRiskResponseEdit = false;
 
   constructor(
     private los: LoadingOverlayService,
@@ -40,11 +44,20 @@ export class AssessmentManagementEditComponent implements OnInit
     private assetService: API.AssetsService,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void
   {
+    this.formGroup = this.fb.group({
+      id: [null],
+      note: [null],
+      treatment: [null],
+      lifecycle_status: [API.AssessmentLifecycleStatus.OPEN],
+      risk_response: [],
+      risk_response_lifecycle_status: [],
+    })
     this.los.show();
     this.subscriptions.add(this.activatedRoute.paramMap.pipe(
       map(params =>
@@ -67,6 +80,8 @@ export class AssessmentManagementEditComponent implements OnInit
       .subscribe(assessment =>
       {
         this.assessment = assessment;
+        this.formGroup.patchValue(assessment);
+        this.formGroup.updateValueAndValidity();
         this.los.hide();
       }))
   }
@@ -111,21 +126,12 @@ export class AssessmentManagementEditComponent implements OnInit
     return viewModel;
   }
 
-
-  setTreatment(treatment: API.AssessmentTreatment): void
-  {
-    this.assessment.treatment = treatment;
-    this.updateAssessment(this.assessment);
-  }
-
-  setAssessmentLifecycleStatus(status: API.AssessmentLifecycleStatus): void
-  {
-    this.assessment.lifecycle_status = status;
-    this.updateAssessment(this.assessment);
-  }
-
   updateAssessment(assessment: ViewModel): void
   {
+    assessment.risk_response = this.formGroup.controls['risk_response'].value;
+    assessment.risk_response_lifecycle_status = this.formGroup.controls['risk_response_lifecycle_status'].value;
+    assessment.treatment = this.formGroup.controls['treatment'].value;
+    assessment.lifecycle_status = this.formGroup.controls['lifecycle_status'].value;
     this.los.show();
     const body = plainToClass(API.AssessmentStoreRequest, assessment as Object, { excludeExtraneousValues: true });
     this.subscriptions.add(this.assessmentService.storeAssessmentVulnerability(assessment.vulnerability_id, body).subscribe(

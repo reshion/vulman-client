@@ -9,9 +9,9 @@
     <mat-card *ngIf="assessment" appearance="outlined">
         <mat-card-header>
             <mat-card-title>
-                <div class="d-flex">
+                <h1 class="d-flex">
                     <span>Assessment #{{assessment.id}}</span>
-                </div>
+                </h1>
             </mat-card-title>
             <mat-card-subtitle>
                 <p>
@@ -31,8 +31,9 @@
                 </button>
             </span>
         </mat-card-header>
-        <mat-divider class="my-3"></mat-divider>
+
         <mat-card-content>
+            <mat-divider class="my-3"></mat-divider>
             <ng-container *ngIf="assessment.vulnerability$ | async as x ; else loading">
                 <p>
                     <strong>Vulnerability:</strong>
@@ -57,7 +58,6 @@
                     </span>
                 </p>
             </ng-container>
-
             <ng-container *ngIf="assessment.system_group$ | async as x ; else loading">
                 <p *ngIf="x !== -1">
                     <strong>System Group:</strong>
@@ -74,41 +74,53 @@
                     </span>
                 </p>
             </ng-container>
-            <p>
-                <strong>Treatment:</strong> {{assessment.treatment}}
-                <button mat-button [matMenuTriggerFor]="treatment">
-                    <mat-icon color="accent">edit</mat-icon>
-                </button>
-                <mat-menu #treatment="matMenu">
-                    <button mat-menu-item (click)="setTreatment(item.key)" *ngFor="let item of AssessmentTreatment | keyvalue">{{item.key}}</button>
-                </mat-menu>
-            </p>
-            <p>
-                <strong>Lifecycle Status:</strong> {{assessment.lifecycle_status}}
-                <button mat-button [matMenuTriggerFor]="lifecycle_status">
-                    <mat-icon color="accent">edit</mat-icon>
-                </button>
-                <mat-menu #lifecycle_status="matMenu">
-                    <button mat-menu-item (click)="setAssessmentLifecycleStatus(item.key)" *ngFor="let item of AssessmentLifecycleStatus | keyvalue">{{item.key}}</button>
-                </mat-menu>
-            </p>
-
-
             <mat-divider class="my-3"></mat-divider>
-            <p>
-                <strong>Risk response:</strong>
-                <span>
-                    {{assessment.risk_response_name}}
-                </span>
-            </p>
+            <form class="w-50 d-flex flex-column" [formGroup]="formGroup">
+                <h2>
+                    Assessment details:
+                </h2>
+                <div class="d-flex flex-column">
+                    <mat-form-field class="w-100">
+                        <mat-label>Treatment:</mat-label>
+                        <mat-select formControlName="treatment">
+                            <mat-option [value]="item.key" *ngFor="let item of AssessmentTreatment | keyvalue">{{item.value}}</mat-option>
+                        </mat-select>
+                        <mat-hint align="end">Select assessment treatment </mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100">
+                        <mat-label>Assessment Lifecycle Status:</mat-label>
+                        <mat-select formControlName="lifecycle_status">
+                            <mat-option [value]="item.key" *ngFor="let item of AssessmentLifecycleStatus | keyvalue">{{item.value}}</mat-option>
+                        </mat-select>
+                        <mat-hint align="end">Select assessment lifecycle status </mat-hint>
+                    </mat-form-field>
+                </div>
+                <mat-divider class="my-3"></mat-divider>
+                <h2>
+                    Risk response:
+                </h2>
+                <div class="d-flex flex-column">
+                    <mat-form-field class="w-100">
+                        <mat-label>Risk response lifecycle status:</mat-label>
+                        <mat-select formControlName="risk_response_lifecycle_status">
+                            <mat-option [value]="item.key" *ngFor="let item of RiskResponseLifecycleStatus | keyvalue">{{item.value}}</mat-option>
+                        </mat-select>
+                        <mat-hint align="end">Select risk response lifecycle status </mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-100">
+                        <mat-label>Risk response</mat-label>
+                        <textarea matInput formControlName="risk_response" placeholder="Enter risk response"></textarea>
+                        <mat-hint align="end">Enter risk response message</mat-hint>
+
+                    </mat-form-field>
+                </div>
+                <button mat-raised-button class="ms-auto" align="end" color="primary" (click)="updateAssessment(assessment)">Ok</button>
+            </form>
         </mat-card-content>
         <mat-card-actions>
-            <!-- <mat-form-field class="col-6">
-                <mat-label>Treatment</mat-label>
-                <mat-select formControlName="treatment">
-                    <mat-option [value]="item.value" *ngFor="let item of AssessmentTreatment | keyvalue">{{item.key}}</mat-option>
-                </mat-select>
-            </mat-form-field> -->
+
         </mat-card-actions>
     </mat-card>
 </div>
