@@ -62,47 +62,7 @@ export class AssessmentManagementEditComponent implements OnInit
       {
         return plainToClass(ViewModel, x.data);
       }),
-      map(x =>
-      {
-        x.vulnerability$ = x.vulnerability_id ? this.vulnerabilityService.showVulnerability(x.vulnerability_id).pipe(
-          map(y => plainToClass(API.Vulnerability, y.data)),
-          catchError(err =>
-          {
-
-            return EMPTY
-          }),
-        ) : of(-1);
-
-        x.company$ = x.company_id ? this.companyService.showCompany(x.company_id).pipe(
-          map(x =>
-          {
-            return plainToClass(API.Company, x.data)
-          }),
-          catchError(err =>
-          {
-            return EMPTY
-          }),
-        ) : of(-1);
-
-        x.system_group$ = x.system_group_id ? this.systemGroupService.getSystemGroup(x.system_group_id).pipe(
-          map(x => plainToClass(API.SystemGroup, x.data)),
-          catchError(err =>
-          {
-
-            return EMPTY
-          }),
-        ) : of(-1);
-        x.asset$ = x.asset_id ? this.assetService.showAsset(x.asset_id).pipe(
-          map(x => plainToClass(API.Asset, x.data)),
-          catchError(err =>
-          {
-
-            return EMPTY
-          }),
-        ) : of(-1);
-
-        return x;
-      })
+      map(x => this.prepareViewModel(x)),
     )
       .subscribe(assessment =>
       {
@@ -110,6 +70,47 @@ export class AssessmentManagementEditComponent implements OnInit
         this.los.hide();
       }))
   }
+
+  prepareViewModel(assessment: API.Assessment): ViewModel
+  {
+    const viewModel = plainToClass(ViewModel, assessment);
+    viewModel.vulnerability$ = viewModel.vulnerability_id ? this.vulnerabilityService.showVulnerability(viewModel.vulnerability_id).pipe(
+      map(x => plainToClass(API.Vulnerability, x.data)),
+      catchError(err =>
+      {
+        return EMPTY
+      }),
+    ) : of(-1);
+
+    viewModel.company$ = viewModel.company_id ? this.companyService.showCompany(viewModel.company_id).pipe(
+      map(x =>
+      {
+        return plainToClass(API.Company, x.data)
+      }),
+      catchError(err =>
+      {
+        return EMPTY
+      }),
+    ) : of(-1);
+
+    viewModel.system_group$ = viewModel.system_group_id ? this.systemGroupService.getSystemGroup(viewModel.system_group_id).pipe(
+      map(x => plainToClass(API.SystemGroup, x.data)),
+      catchError(err =>
+      {
+        return EMPTY
+      }),
+    ) : of(-1);
+    viewModel.asset$ = viewModel.asset_id ? this.assetService.showAsset(viewModel.asset_id).pipe(
+      map(x => plainToClass(API.Asset, x.data)),
+      catchError(err =>
+      {
+        return EMPTY
+      }),
+    ) : of(-1);
+
+    return viewModel;
+  }
+
 
   setTreatment(treatment: API.AssessmentTreatment): void
   {
@@ -128,8 +129,9 @@ export class AssessmentManagementEditComponent implements OnInit
     this.los.show();
     const body = plainToClass(API.AssessmentStoreRequest, assessment as Object, { excludeExtraneousValues: true });
     this.subscriptions.add(this.assessmentService.storeAssessmentVulnerability(assessment.vulnerability_id, body).subscribe(
-      () =>
+      (assessmentRessource) =>
       {
+        this.assessment = this.prepareViewModel(assessmentRessource.data);
         this.los.hide();
       }
     ))

@@ -13,7 +13,17 @@
                     <span>Assessment #{{assessment.id}}</span>
                 </div>
             </mat-card-title>
-            <mat-card-subtitle>Note {{assessment.note}}</mat-card-subtitle>
+            <mat-card-subtitle>
+                <p>
+                    <strong>Note:</strong> {{assessment.note}}
+                </p>
+                <p>
+                    <strong>Created:</strong> {{assessment.created_at | date:'medium'}}
+                </p>
+                <p>
+                    <strong>Updated:</strong> {{assessment.updated_at | date:'medium'}}
+                </p>
+            </mat-card-subtitle>
             <span class="ms-auto">
                 <button mat-menu-item (click)="openDeleteDialog(assessment.id)">
                     <mat-icon>delete</mat-icon>
@@ -21,14 +31,24 @@
                 </button>
             </span>
         </mat-card-header>
+        <mat-divider class="my-3"></mat-divider>
         <mat-card-content>
-            <p *ngIf="assessment.vulnerability$ | async as x ; else loading">
-                <strong>Vulnerability:</strong>
-                <span>
-                    {{x.cve_id}}
-                    <span [appBaseSeverityHighlight]="x | cve:'baseSeverity'">{{x | cve:'baseSeverity'}}</span>
-                </span>
-            </p>
+            <ng-container *ngIf="assessment.vulnerability$ | async as x ; else loading">
+                <p>
+                    <strong>Vulnerability:</strong>
+                    <span>
+                        {{x.cve_id}}
+                        <span [appBaseSeverityHighlight]="x | cve:'baseSeverity'">{{x | cve:'baseSeverity'}}</span>
+                    </span>
+                </p>
+                <p>
+                    <strong>Details:</strong>
+                    <span>
+                        {{x | cve:'description'}}
+
+                    </span>
+                </p>
+            </ng-container>
             <ng-container *ngIf="assessment.company$ | async as x ; else loading">
                 <p *ngIf="x !== -1">
                     <strong>Company:</strong>
@@ -56,7 +76,7 @@
             </ng-container>
             <p>
                 <strong>Treatment:</strong> {{assessment.treatment}}
-                <button mat-icon-button [matMenuTriggerFor]="treatment">
+                <button mat-button [matMenuTriggerFor]="treatment">
                     <mat-icon color="accent">edit</mat-icon>
                 </button>
                 <mat-menu #treatment="matMenu">
@@ -65,7 +85,7 @@
             </p>
             <p>
                 <strong>Lifecycle Status:</strong> {{assessment.lifecycle_status}}
-                <button mat-icon-button [matMenuTriggerFor]="lifecycle_status">
+                <button mat-button [matMenuTriggerFor]="lifecycle_status">
                     <mat-icon color="accent">edit</mat-icon>
                 </button>
                 <mat-menu #lifecycle_status="matMenu">
@@ -74,11 +94,12 @@
             </p>
 
 
+            <mat-divider class="my-3"></mat-divider>
             <p>
-                <strong>Created:</strong> {{assessment.created_at | date}}
-            </p>
-            <p>
-                <strong>Updated:</strong> {{assessment.updated_at | date}}
+                <strong>Risk response:</strong>
+                <span>
+                    {{assessment.risk_response_name}}
+                </span>
             </p>
         </mat-card-content>
         <mat-card-actions>
@@ -93,6 +114,8 @@
 </div>
 
 <ng-template #loading>
-    <div class="spinner-border spinner-border-sm text-primary mb-2 mr-auto ml-auto" role="status">
+    <div>
+        <p class="spinner-border spinner-border-sm text-primary mb-2 mr-auto ml-auto" role="status">
+        </p>
     </div>
 </ng-template>

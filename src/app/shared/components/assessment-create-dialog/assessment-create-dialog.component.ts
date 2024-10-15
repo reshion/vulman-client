@@ -29,6 +29,8 @@ export class AssessmentCreateDialogComponent
       note: [null],
       treatment: [null],
       lifecycle_status: [API.AssessmentLifecycleStatus.OPEN],
+      risk_response_name: [],
+      risk_response_lifecycle_status: [],
 
     })
 
