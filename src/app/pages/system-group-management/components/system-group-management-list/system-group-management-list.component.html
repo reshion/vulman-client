@@ -12,12 +12,27 @@
             <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="open_cve">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Offene CVE - C / H / M / L </mat-header-cell>
+        <ng-container matColumnDef="all_cve">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> All CVE - C / H / M / L </mat-header-cell>
             <mat-cell *matCellDef="let row">
-                <span *ngIf="row.open_cve">
-                    <app-base-severity-indicator [baseSeverity]="row.open_cve"></app-base-severity-indicator>
-                    <!-- {{row.open_cve?.critical}} / {{row.open_cve?.high}} / {{row.open_cve?.medium}} / {{row.open_cve?.low}} -->
+                <span *ngIf="row.all_cve$ | async as all_cve">
+                    <app-base-severity-indicator [baseSeverity]="all_cve"></app-base-severity-indicator>
+                </span> </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="open_cve">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Open C / H / M / L </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span *ngIf="row.open_cve$ | async as open_cve">
+                    <app-base-severity-indicator [baseSeverity]="open_cve"></app-base-severity-indicator>
+                </span> </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="closed_cve">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Closed - C / H / M / L </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span *ngIf="row.closed_cve$ | async as closed_cve">
+                    <app-base-severity-indicator [baseSeverity]="closed_cve"></app-base-severity-indicator>
                 </span> </mat-cell>
         </ng-container>
 

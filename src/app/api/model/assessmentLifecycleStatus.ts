@@ -13,6 +13,11 @@ import { Type, Expose } from 'class-transformer';
 // @dynamic
 
 
+/**
+ * model.mustache
+ *
+ * Status of the Assessment lifecycle
+ */
 export type AssessmentLifecycleStatus = 'OPEN' | 'CLOSED';
 
 export const AssessmentLifecycleStatus = {

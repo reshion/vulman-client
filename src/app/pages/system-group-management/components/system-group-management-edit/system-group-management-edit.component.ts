@@ -9,7 +9,12 @@ import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.serv
 import { AssessmentCreateDialogComponent } from '@app/shared/components/assessment-create-dialog/assessment-create-dialog.component';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
 import { plainToClass } from 'class-transformer';
-import { map, mergeMap, merge, startWith, switchMap, catchError, of, Subscription, EMPTY } from 'rxjs';
+import { map, mergeMap, merge, startWith, switchMap, catchError, of, Subscription, EMPTY, Observable, tap } from 'rxjs';
+
+class ViewModel extends API.Vulnerability
+{
+  assessment$!: Observable<API.Assessment>;
+}
 
 @Component({
   selector: 'app-system-group-management-edit',
@@ -19,9 +24,9 @@ import { map, mergeMap, merge, startWith, switchMap, catchError, of, Subscriptio
 export class SystemGroupManagementEditComponent
 {
 
-  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'base_severity', 'actions'];
+  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'base_severity', 'assessment', 'actions'];
   totalItems: number = 0;
-  dataSource: MatTableDataSource<API.Vulnerability> = new MatTableDataSource<API.Vulnerability>();
+  dataSource: MatTableDataSource<ViewModel> = new MatTableDataSource<ViewModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   systemGroup!: API.SystemGroup;
@@ -79,8 +84,23 @@ export class SystemGroupManagementEditComponent
       map(vulnerabilities =>
       {
         this.totalItems = vulnerabilities.meta.total;
-        this.dataSource.data = vulnerabilities.data;
-      })
+        return vulnerabilities.data.map(x =>
+        {
+
+          const viewModel = plainToClass(ViewModel, x)
+          const body = new API.AssessmentFindRequest();
+          body.system_group_id = this.systemGroup.id;
+          viewModel.assessment$ = this.assessmentService.findAssessments(viewModel.id, body).pipe(
+            map(response =>
+            {
+              return response.data;
+            })
+          );
+          return viewModel;
+        }
+        );
+      }),
+      tap((vulnerabilities) => this.dataSource.data = vulnerabilities)
     ).subscribe(() =>
     {
       this.los.hide();

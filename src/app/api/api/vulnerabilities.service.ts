@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { AssessmentLifecycleStatus } from '../model/assessmentLifecycleStatus';
 import { BaseSeverityCountResponse } from '../model/baseSeverityCountResponse';
 import { VulnerabilityPagingResource } from '../model/vulnerabilityPagingResource';
 import { VulnerabilityResource } from '../model/vulnerabilityResource';
@@ -163,22 +164,27 @@ export class VulnerabilitiesService {
      * Get summery of base severity information by system group
      * @param systemGroupId System group id
      * @param scan_import_job_id Scan import job id
+     * @param lifecycle_status Assessment Lifecycle Status
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
-    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
-    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
-    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, lifecycle_status?: AssessmentLifecycleStatus, observe?: 'body', reportProgress?: boolean): Observable<BaseSeverityCountResponse>;
+    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, lifecycle_status?: AssessmentLifecycleStatus, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BaseSeverityCountResponse>>;
+    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, lifecycle_status?: AssessmentLifecycleStatus, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BaseSeverityCountResponse>>;
+    public getBaseSeverityBySystemGroup(systemGroupId: number, scan_import_job_id?: number, lifecycle_status?: AssessmentLifecycleStatus, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (systemGroupId === null || systemGroupId === undefined) {
             throw new Error('Required parameter systemGroupId was null or undefined when calling getBaseSeverityBySystemGroup.');
         }
 
 
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (scan_import_job_id !== undefined && scan_import_job_id !== null) {
             queryParameters = queryParameters.set('scan_import_job_id', <any>scan_import_job_id);
+        }
+        if (lifecycle_status !== undefined && lifecycle_status !== null) {
+            queryParameters = queryParameters.set('lifecycle_status', <any>lifecycle_status);
         }
 
         let headers = this.defaultHeaders;

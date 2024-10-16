@@ -1810,6 +1810,15 @@
               "type": "integer",
               "default": 1
             }
+          },
+          {
+            "name": "lifecycle_status",
+            "in": "query",
+            "description": "Assessment Lifecycle Status",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AssessmentLifecycleStatus"
+            }
           }
         ],
         "responses": {
@@ -2127,6 +2136,7 @@
   "components": {
     "schemas": {
       "AssessmentLifecycleStatus": {
+        "description": "Status of the Assessment lifecycle",
         "type": "string",
         "enum": [
           "OPEN",

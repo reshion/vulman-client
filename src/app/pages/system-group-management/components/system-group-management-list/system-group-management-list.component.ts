@@ -12,7 +12,9 @@ import { plainToClass } from 'class-transformer';
 
 class ViewModel extends API.SystemGroup
 {
-  open_cve!: API.BaseSeverityCountResponse;
+  all_cve$!: Observable<API.BaseSeverityCountResponse>;
+  open_cve$!: Observable<API.BaseSeverityCountResponse>;
+  closed_cve$!: Observable<API.BaseSeverityCountResponse>;
 }
 @Component({
   selector: 'app-system-group-management-list',
@@ -21,9 +23,7 @@ class ViewModel extends API.SystemGroup
 })
 export class SystemGroupManagementListComponent
 {
-  /**
-    *
-    */
+
   constructor(
     private systemGroupService: API.SystemGroupsService,
     private vulnerabilityService: API.VulnerabilitiesService,
@@ -33,7 +33,7 @@ export class SystemGroupManagementListComponent
   {
 
   }
-  displayedColumns: string[] = ['id', 'name', 'assets', 'open_cve', 'type', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'assets', 'all_cve', 'open_cve', 'closed_cve', 'type', 'actions'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<ViewModel> = new MatTableDataSource<ViewModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -70,27 +70,19 @@ export class SystemGroupManagementListComponent
       }),
 
 
-      mergeMap(group =>
+      map(group =>
       {
-        const viewModels = group.map(x =>
+        group = group.map(x =>
         {
-          return this.vulnerabilityService.getBaseSeverityBySystemGroup(x.id).pipe(
-            map(response =>
-            {
-              x.open_cve = response;
-              return x;
-            })
-          )
+          x.all_cve$ = this.vulnerabilityService.getBaseSeverityBySystemGroup(x.id)
+          x.open_cve$ = this.vulnerabilityService.getBaseSeverityBySystemGroup(x.id, undefined, API.AssessmentLifecycleStatus.OPEN)
+          x.closed_cve$ = this.vulnerabilityService.getBaseSeverityBySystemGroup(x.id, undefined, API.AssessmentLifecycleStatus.CLOSED)
+          return x;
         })
-        return forkJoin(viewModels);
-
+        return group
       }),
-      // catchError(() =>
-      // {
-      //   this.los.hide();
-      //   return of([]);
-      // })
-    ).subscribe(data => 
+      map(x => x as unknown as ViewModel[]),
+    ).subscribe((data) => 
     {
       this.dataSource.data = (data || []) as ViewModel[]
     });
