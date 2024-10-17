@@ -11,7 +11,7 @@ import * as API from '@app/api';
 export class AssessmentCreateDialogComponent
 {
   formGroup!: FormGroup;
-  assessment!: API.Assessment;
+  assessment?: API.Assessment;
   AssessmentTreatment = API.AssessmentTreatment;
 
   constructor(
@@ -36,9 +36,24 @@ export class AssessmentCreateDialogComponent
 
     this.assessmentService.findAssessments(this.data.vulnerability_id, this.data.request).subscribe(assessment =>
     {
-      this.assessment = assessment.data;
+      this.assessment = assessment.data.find(x =>
+      {
+        if (this.data.request.asset_id)
+        {
+          return x.asset_id === this.data.request.asset_id;
+        }
+        if (this.data.request.system_group_id)
+        {
+          return x.system_group_id === this.data.request.system_group_id;
+        }
+        if (this.data.request.company_id)
+        {
+          return x.company_id === this.data.request.company_id;
+        }
+        return false;
+      });
       this.formGroup.patchValue(
-        { ...assessment.data }
+        { ...this.assessment }
       )
     })
   }

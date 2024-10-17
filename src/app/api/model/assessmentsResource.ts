@@ -13,49 +13,53 @@ import { Type, Expose } from 'class-transformer';
 // @dynamic
 
 import { Assessment } from './assessment';
-import { AssessmentsResource } from './assessmentsResource';
-import { Meta } from './meta';
 
 import { Observable }                                        from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
 
-export class AssessmentPagingResource extends AssessmentsResource { 
+export class AssessmentsResource { 
 
-
-    @Expose()
-    meta!: Meta;
 
     /**
-     * datatype: Meta
-     * datatypeWithEnum: Meta
-     * meta: Meta   
+     * Data wrapper
+     */
+    @Expose()
+    @Type(() => Assessment)
+    data!: Array<Assessment>;
+
+    /**
+     * Description: Data wrapper
+     * Complex type: Assessment
+     * datatype: Array&lt;Assessment&gt;
+     * datatypeWithEnum: Array&lt;Assessment&gt;
+     * data: Array<Assessment>   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
-    constructor(init: Partial<AssessmentPagingResource> = {}) {
-        super(init)  
-                        this.meta = new Meta(init.meta || {})
+    constructor(init: Partial<AssessmentsResource> = {}) {
+         
+                            this.data = init.data?.map(x => new Assessment(x)) || [] 
     }
 
-    static override  getForm(data?: AssessmentPagingResource | AssessmentPagingResource[] | null): FormGroup {
+    static   getForm(data?: AssessmentsResource | AssessmentsResource[] | null): FormGroup {
 
 
         if(!data) {
-            return AssessmentPagingResource.getFormGroup(new AssessmentPagingResource());
+            return AssessmentsResource.getFormGroup(new AssessmentsResource());
         }
 
          if(Array.isArray(data)) {
             let arrayForm = new FormArray<any>([]);
             
             if(data.length > 0) {
-                arrayForm =  new FormArray<any>(data.map(item => AssessmentPagingResource.getFormGroup(item)));                
+                arrayForm =  new FormArray<any>(data.map(item => AssessmentsResource.getFormGroup(item)));                
             }
             return new FormGroup({
                 arrayForm
             });        
         } else {
-             return  AssessmentPagingResource.getFormGroup(data);
+             return  AssessmentsResource.getFormGroup(data);
         }       
      
     }
@@ -66,14 +70,9 @@ export class AssessmentPagingResource extends AssessmentsResource {
    * @param {object} data
    * @returns {FormGroup}
    */
-  static override  getFormGroup(data?: AssessmentPagingResource): FormGroup {
+  static   getFormGroup(data?: AssessmentsResource): FormGroup {
        
         return new FormGroup({           
-                        meta: (() => { 
-                            const fg = Meta.getForm(data?.meta);
-                            fg.addValidators([]);
-                            return fg;
-                        })()
         });
     }
   

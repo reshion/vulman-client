@@ -52,8 +52,15 @@
         <ng-container matColumnDef="assessment">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Assessment</mat-header-cell>
             <mat-cell *matCellDef="let row">
-                <span *ngIf="row.assessment$ | async as assessment">
-                    {{assessment.lifecycle_status}}
+                <span *ngIf="row.assessments$ | async as assessments; else loading">
+                    <ng-container *ngIf="assessments.length > 0">
+                        <ng-container *ngFor="let assessment of assessments">
+                            {{assessment.lifecycle_status}}
+
+                        </ng-container>
+                    </ng-container>
+
+
                 </span>
             </mat-cell>
         </ng-container>
@@ -80,7 +87,9 @@
     <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page of vulnerabilities">
     </mat-paginator>
-
-
-
 </div>
+
+<ng-template #loading>
+    <div class="spinner-border spinner-border-sm text-primary mb-2 mr-auto ml-auto" role="status">
+    </div>
+</ng-template>

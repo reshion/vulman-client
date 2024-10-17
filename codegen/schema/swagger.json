@@ -286,7 +286,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AssessmentResource"
+                  "$ref": "#/components/schemas/AssessmentsResource"
                 }
               }
             }
@@ -2800,8 +2800,8 @@
         },
         "type": "object"
       },
-      "AssessmentPagingResource": {
-        "title": "AssessmentPagingResource",
+      "AssessmentsResource": {
+        "title": "AssessmentsResource",
         "properties": {
           "data": {
             "title": "Data",
@@ -2810,12 +2810,26 @@
             "items": {
               "$ref": "#/components/schemas/Assessment"
             }
-          },
-          "meta": {
-            "$ref": "#/components/schemas/Meta"
           }
         },
         "type": "object"
+      },
+      "AssessmentPagingResource": {
+        "title": "AssessmentPagingResource",
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AssessmentsResource"
+          },
+          {
+            "properties": {
+              "meta": {
+                "$ref": "#/components/schemas/Meta"
+              }
+            },
+            "type": "object"
+          }
+        ]
       },
       "AssetResource": {
         "title": "AssetResource",

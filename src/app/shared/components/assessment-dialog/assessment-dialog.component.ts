@@ -12,7 +12,7 @@ export class AssessmentDialogComponent
 {
 
   formGroup!: FormGroup;
-  assessment!: API.Assessment;
+  assessment?: API.Assessment;
   AssessmentLifecycleStatus = API.AssessmentLifecycleStatus;
   RiskResponseLifecycleStatus = API.RiskResponseLifecycleStatus;
   /**
@@ -41,9 +41,25 @@ export class AssessmentDialogComponent
     this.assessmentService.findAssessments(this.data.vulnerability_id, this.data.request).subscribe(assessment =>
     {
       console.log('Assessment:', assessment);
-      this.assessment = assessment.data;
+
+      this.assessment = assessment.data.find(x =>
+      {
+        if (this.data.request.asset_id)
+        {
+          return x.asset_id === this.data.request.asset_id;
+        }
+        if (this.data.request.system_group_id)
+        {
+          return x.system_group_id === this.data.request.system_group_id;
+        }
+        if (this.data.request.company_id)
+        {
+          return x.company_id === this.data.request.company_id;
+        }
+        return false;
+      });
       this.formGroup.patchValue(
-        { ...assessment.data }
+        { ...this.assessment }
       )
     })
   }

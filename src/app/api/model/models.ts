@@ -6,6 +6,7 @@ export * from './assessmentResource';
 export * from './assessmentStoreRequest';
 export * from './assessmentTreatment';
 export * from './assessmentUpdateRequest';
+export * from './assessmentsResource';
 export * from './asset';
 export * from './assetPagingResource';
 export * from './assetResource';

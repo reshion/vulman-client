@@ -21,6 +21,7 @@ import { AssessmentFindRequest } from '../model/assessmentFindRequest';
 import { AssessmentPagingResource } from '../model/assessmentPagingResource';
 import { AssessmentResource } from '../model/assessmentResource';
 import { AssessmentStoreRequest } from '../model/assessmentStoreRequest';
+import { AssessmentsResource } from '../model/assessmentsResource';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -112,9 +113,9 @@ export class AssessmentsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe?: 'body', reportProgress?: boolean): Observable<AssessmentResource>;
-    public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssessmentResource>>;
-    public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssessmentResource>>;
+    public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe?: 'body', reportProgress?: boolean): Observable<AssessmentsResource>;
+    public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssessmentsResource>>;
+    public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssessmentsResource>>;
     public findAssessments(vulnerability_id: number, body?: AssessmentFindRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (vulnerability_id === null || vulnerability_id === undefined) {
@@ -152,7 +153,7 @@ export class AssessmentsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<AssessmentResource>(`${this.basePath}/api/assessments/find`,
+        return this.httpClient.post<AssessmentsResource>(`${this.basePath}/api/assessments/find`,
             body,
             {
                 params: queryParameters,
