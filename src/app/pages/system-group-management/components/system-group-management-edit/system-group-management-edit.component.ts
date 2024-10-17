@@ -89,7 +89,7 @@ export class SystemGroupManagementEditComponent
 
           const viewModel = plainToClass(ViewModel, x)
           const body = new API.AssessmentFindRequest();
-          body.system_group_id = this.systemGroup.id;
+          //body.system_group_id = this.systemGroup.id;
           viewModel.assessment$ = this.assessmentService.findAssessments(viewModel.id, body).pipe(
             map(response =>
             {

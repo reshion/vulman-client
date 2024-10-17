@@ -28,7 +28,7 @@
         </ng-container> -->
 
         <ng-container matColumnDef="open_cve">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Offene CVE - C / H / M / L </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>CVE - C / H / M / L </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <span *ngIf="row.open_cve$ | async as open_cve ; else loading">
                     <app-base-severity-indicator [baseSeverity]="open_cve"></app-base-severity-indicator>
