@@ -2287,6 +2287,14 @@
                 "description": "Asset vulnerabilities model",
                 "type": "array",
                 "items": {}
+              },
+              "system_groups": {
+                "title": "SystemGroups",
+                "description": "Asset System Group model",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SystemGroup"
+                }
               }
             },
             "type": "object"

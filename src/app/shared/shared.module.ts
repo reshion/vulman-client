@@ -32,6 +32,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ScanImportJobDateSelectComponent } from './components/scan-import-job-date-select/scan-import-job-date-select.component';
 import { AssessmentDialogComponent } from './components/assessment-dialog/assessment-dialog.component';
 import { AssessmentCreateDialogComponent } from './components/assessment-create-dialog/assessment-create-dialog.component';
+import { AssessmentIndicatorComponent } from './components/assessment-indicator/assessment-indicator.component';
+import { RouterModule } from '@angular/router';
+import { AssessmentAssetComponent } from './components/assessment-asset/assessment-asset.component';
+import { AssessmentSystemGroupComponent } from './components/assessment-system-group/assessment-system-group.component';
 
 
 const importsExports = [
@@ -65,6 +69,10 @@ const declarationsExports = [
   BaseSeverityHighlightDirective,
   ScanImportJobDateSelectComponent,
   AssessmentDialogComponent,
+  AssessmentIndicatorComponent,
+  AssessmentAssetComponent,
+  AssessmentSystemGroupComponent,
+
 ]
 
 @NgModule({
@@ -73,10 +81,12 @@ const declarationsExports = [
     FileSelectDialogComponent,
     ConfirmDialogComponent,
     AssessmentCreateDialogComponent,
+
   ],
   imports: [
     CommonModule,
     ...importsExports,
+    RouterModule,
 
   ],
   exports: [

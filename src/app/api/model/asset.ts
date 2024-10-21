@@ -13,6 +13,7 @@ import { Type, Expose } from 'class-transformer';
 // @dynamic
 
 import { BaseModel } from './baseModel';
+import { SystemGroup } from './systemGroup';
 
 /**
  * model.mustache
@@ -45,6 +46,12 @@ export class Asset extends BaseModel {
      */
     @Expose()
     vulnerabilities!: Array<any>;
+    /**
+     * Asset System Group model
+     */
+    @Expose()
+    @Type(() => SystemGroup)
+    system_groups!: Array<SystemGroup>;
 
     /**
      * Description: FQDN of the asset
@@ -70,6 +77,13 @@ export class Asset extends BaseModel {
      * datatypeWithEnum: Array&lt;any&gt;
      * vulnerabilities: Array<any>   
      */
+    /**
+     * Description: Asset System Group model
+     * Complex type: SystemGroup
+     * datatype: Array&lt;SystemGroup&gt;
+     * datatypeWithEnum: Array&lt;SystemGroup&gt;
+     * system_groups: Array<SystemGroup>   
+     */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
 
@@ -85,8 +99,9 @@ export class Asset extends BaseModel {
                     init.operating_system ? this.operating_system = init.operating_system : null,
                
             
-                    init.vulnerabilities ? this.vulnerabilities = init.vulnerabilities : null
+                    init.vulnerabilities ? this.vulnerabilities = init.vulnerabilities : null,
                
+                            this.system_groups = init.system_groups?.map(x => new SystemGroup(x)) || [] 
     }
 
     static override  getForm(data?: Asset | Asset[] | null): FormGroup {
@@ -123,7 +138,7 @@ export class Asset extends BaseModel {
                         fqdn: new FormControl(data?.fqdn, []),
                         unique_id: new FormControl(data?.unique_id, []),
                         operating_system: new FormControl(data?.operating_system, []),
-                        vulnerabilities: new FormControl(data?.vulnerabilities, [])
+                        vulnerabilities: new FormControl(data?.vulnerabilities, []),
         });
     }
   

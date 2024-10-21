@@ -33,16 +33,23 @@
             <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
         </ng-container>
 
-        <!-- Progress Column -->
+        <!-- CVE ID -->
         <ng-container matColumnDef="cve_id">
             <mat-header-cell *matHeaderCellDef mat-sort-header> CVE Id </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.cve_id}} </mat-cell>
         </ng-container>
 
-        <!-- Name Column -->
+        <!-- CVE details -->
         <ng-container matColumnDef="cve_details" class="cve-details">
             <mat-header-cell *matHeaderCellDef mat-sort-header> CVE Description </mat-header-cell>
             <mat-cell *matCellDef="let row"> <span class="text-truncate-">{{row | cve:'description'}}</span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="assessments">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Assessments </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <app-assessment-asset [vulnerabilityId]="row.id" [asset]="asset"></app-assessment-asset>
             </mat-cell>
         </ng-container>
 

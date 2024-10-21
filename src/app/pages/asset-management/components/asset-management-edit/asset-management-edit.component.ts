@@ -18,7 +18,7 @@ import { AssessmentCreateDialogComponent } from '@app/shared/components/assessme
 })
 export class AssetManagementEditComponent implements OnInit
 {
-  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'base_severity', 'actions'];
+  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'assessments', 'base_severity', 'actions'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<API.Vulnerability> = new MatTableDataSource<API.Vulnerability>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -49,19 +49,10 @@
             </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="assessment">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Assessment</mat-header-cell>
+        <ng-container matColumnDef="assessments">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Assessments </mat-header-cell>
             <mat-cell *matCellDef="let row">
-                <span *ngIf="row.assessments$ | async as assessments; else loading">
-                    <ng-container *ngIf="assessments.length > 0">
-                        <ng-container *ngFor="let assessment of assessments">
-                            {{assessment.lifecycle_status}}
-
-                        </ng-container>
-                    </ng-container>
-
-
-                </span>
+                <app-assessment-system-group [vulnerabilityId]="row.id" [systemGroup]="systemGroup"></app-assessment-system-group>
             </mat-cell>
         </ng-container>
 

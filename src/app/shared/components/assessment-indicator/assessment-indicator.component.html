@@ -1,0 +1,21 @@
+<ng-container *ngIf="assessments; else loading">
+    <ng-container *ngIf="assessments.length > 0">
+        <ng-container *ngFor="let assessment of assessments">
+            <button mat-icon-button [routerLink]="['/assessment-management', 'edit', assessment.id]">
+                <ng-container *ngIf="assessment.company_id">
+                    <mat-icon>home</mat-icon>
+                </ng-container>
+                <ng-container *ngIf="assessment.system_group_id">
+                    <mat-icon>devices</mat-icon>
+                </ng-container>
+                <ng-container *ngIf="assessment.asset_id">
+                    <mat-icon>computer</mat-icon>
+                </ng-container>
+            </button>
+        </ng-container>
+    </ng-container>
+</ng-container>
+<ng-template #loading>
+    <div class="spinner-border spinner-border-sm text-primary mb-2 mr-auto ml-auto" role="status">
+    </div>
+</ng-template>

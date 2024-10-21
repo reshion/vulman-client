@@ -24,7 +24,7 @@ class ViewModel extends API.Vulnerability
 export class SystemGroupManagementEditComponent
 {
 
-  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'base_severity', 'assessment', 'actions'];
+  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'base_severity', 'assessments', 'actions'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<ViewModel> = new MatTableDataSource<ViewModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -86,16 +86,7 @@ export class SystemGroupManagementEditComponent
         this.totalItems = vulnerabilities.meta.total;
         return vulnerabilities.data.map(x =>
         {
-
           const viewModel = plainToClass(ViewModel, x)
-          const body = new API.AssessmentFindRequest();
-          //body.system_group_id = this.systemGroup.id;
-          viewModel.assessments$ = this.assessmentService.findAssessments(viewModel.id, body).pipe(
-            map(response =>
-            {
-              return response.data;
-            })
-          );
           return viewModel;
         }
         );
