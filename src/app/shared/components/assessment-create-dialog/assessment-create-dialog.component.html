@@ -1,6 +1,20 @@
 <h1 mat-dialog-title>Assessment Dialog</h1>
 <div mat-dialog-content [formGroup]="formGroup">
-    <p>Assessment Create</p>
+    <div class="d-flex py-4">Create or update Assessment for
+        <ng-container *ngIf="data.request.company_id">
+            company
+            <mat-icon class="ms-2">home</mat-icon>
+        </ng-container>
+        <ng-container *ngIf="data.request.system_group_id">
+            system group
+            <mat-icon class="ms-2">lan</mat-icon>
+        </ng-container>
+        <ng-container *ngIf="data.request.asset_id">
+            asset
+            <mat-icon class="ms-2">computer</mat-icon>
+        </ng-container>
+    </div>
+
     <div class="tab-content row">
         <mat-form-field class="col-6">
             <mat-label>Enter assessment note</mat-label>

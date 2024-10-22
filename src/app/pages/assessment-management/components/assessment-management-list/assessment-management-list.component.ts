@@ -9,7 +9,7 @@ import { DialogMessage } from '@app/shared/classes/dialog-message';
 import { DialogOptions } from '@app/shared/classes/dialog-options';
 import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
 import { plainToClass } from 'class-transformer';
-import { merge, startWith, switchMap, catchError, of, map, EMPTY, Observable, Subscription, BehaviorSubject } from 'rxjs';
+import { merge, startWith, switchMap, catchError, of, map, EMPTY, Observable, Subscription, BehaviorSubject, shareReplay } from 'rxjs';
 
 class ViewModel extends API.Assessment
 {
@@ -34,6 +34,7 @@ export class AssessmentManagementListComponent
       'treatment',
       'lifecycle_status',
       'vulnerability_id',
+      'base_severity',
       'company_id',
       'system_group_id',
       'asset_id',
@@ -95,6 +96,7 @@ export class AssessmentManagementListComponent
 
               return EMPTY
             }),
+            shareReplay(1)
           ) : of(-1);
 
           y.company$ = y.company_id ? this.companyService.showCompany(y.company_id).pipe(
@@ -106,6 +108,7 @@ export class AssessmentManagementListComponent
             {
               return EMPTY
             }),
+            shareReplay(1)
           ) : of(-1);
 
           y.system_group$ = y.system_group_id ? this.systemGroupService.getSystemGroup(y.system_group_id).pipe(
@@ -115,6 +118,7 @@ export class AssessmentManagementListComponent
 
               return EMPTY
             }),
+            shareReplay(1)
           ) : of(-1);
           y.asset$ = y.asset_id ? this.assetService.showAsset(y.asset_id).pipe(
             map(x => plainToClass(API.Asset, x.data)),
@@ -123,6 +127,7 @@ export class AssessmentManagementListComponent
 
               return EMPTY
             }),
+            shareReplay(1)
           ) : of(-1);
 
           return y;

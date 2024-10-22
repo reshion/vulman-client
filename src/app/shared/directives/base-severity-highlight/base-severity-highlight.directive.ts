@@ -24,7 +24,7 @@ export class BaseSeverityHighlightDirective
     this.el.nativeElement.style.display = 'flex';
     this.el.nativeElement.style.justifyContent = 'center';
     this.el.nativeElement.style.alignItems = 'center';
-    this.el.nativeElement.style.margin = '2px';
+    this.el.nativeElement.style.margin = '2px 0';
     this.el.nativeElement.style.width = '80px';
     switch (value)
     {

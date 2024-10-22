@@ -24,17 +24,26 @@
             <mat-cell *matCellDef="let row"> {{row.lifecycle_status}} </mat-cell>
         </ng-container>
 
-        <!-- Fruit Column -->
+        <!-- Vulnerability Id Column -->
         <ng-container matColumnDef="vulnerability_id">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Vulnerability </mat-header-cell>
             <mat-cell *matCellDef="let row">
                 <span *ngIf="row.vulnerability$ | async as x ; else loading">
                     {{x.cve_id}}
+                </span>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="base_severity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Base Severity </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <span *ngIf="row.vulnerability$ | async as x ; else loading">
                     <span [appBaseSeverityHighlight]="x | cve:'baseSeverity'">{{x | cve:'baseSeverity'}}</span>
                 </span>
 
             </mat-cell>
         </ng-container>
+
         <ng-container matColumnDef="company_id">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Company </mat-header-cell>
             <mat-cell *matCellDef="let row">
