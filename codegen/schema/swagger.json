@@ -456,6 +456,15 @@
             }
           },
           {
+            "name": "system_group_id",
+            "in": "query",
+            "description": "System group id",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
             "name": "page",
             "in": "query",
             "description": "Page number",

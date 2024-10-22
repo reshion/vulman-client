@@ -169,15 +169,16 @@ export class AssetsService {
      * Lists assets by vulnerability id
      * 
      * @param vulnerability_id Vulnerability id
+     * @param system_group_id System group id
      * @param page Page number
      * @param count Number of items per page
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAssetsByVulnerability(vulnerability_id: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<AssetPagingResource>;
-    public getAssetsByVulnerability(vulnerability_id: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssetPagingResource>>;
-    public getAssetsByVulnerability(vulnerability_id: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssetPagingResource>>;
-    public getAssetsByVulnerability(vulnerability_id: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getAssetsByVulnerability(vulnerability_id: number, system_group_id?: number, page?: number, count?: number, observe?: 'body', reportProgress?: boolean): Observable<AssetPagingResource>;
+    public getAssetsByVulnerability(vulnerability_id: number, system_group_id?: number, page?: number, count?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssetPagingResource>>;
+    public getAssetsByVulnerability(vulnerability_id: number, system_group_id?: number, page?: number, count?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssetPagingResource>>;
+    public getAssetsByVulnerability(vulnerability_id: number, system_group_id?: number, page?: number, count?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (vulnerability_id === null || vulnerability_id === undefined) {
             throw new Error('Required parameter vulnerability_id was null or undefined when calling getAssetsByVulnerability.');
@@ -185,9 +186,13 @@ export class AssetsService {
 
 
 
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (vulnerability_id !== undefined && vulnerability_id !== null) {
             queryParameters = queryParameters.set('vulnerability_id', <any>vulnerability_id);
+        }
+        if (system_group_id !== undefined && system_group_id !== null) {
+            queryParameters = queryParameters.set('system_group_id', <any>system_group_id);
         }
         if (page !== undefined && page !== null) {
             queryParameters = queryParameters.set('page', <any>page);
