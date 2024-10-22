@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
-import { merge, startWith, switchMap, catchError, of, map, Subscription, EMPTY, mergeMap } from 'rxjs';
+import { merge, startWith, switchMap, catchError, of, map, Subscription, EMPTY, mergeMap, BehaviorSubject } from 'rxjs';
 import * as API from '@app/api';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { RouteKey } from '@app/shared/enums/route-key';
@@ -18,7 +18,7 @@ import { AssessmentCreateDialogComponent } from '@app/shared/components/assessme
 })
 export class CompanyManagementListComponent
 {
-  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'assets_count', 'base_severity', 'actions'];
+  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'assets_count', 'base_severity', 'assessments', 'actions'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<API.Vulnerability> = new MatTableDataSource<API.Vulnerability>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -26,6 +26,8 @@ export class CompanyManagementListComponent
   subscriptions = new Subscription();
   user: API.UserResource | null = null;
   RouteKey = RouteKey;
+  company: API.Company | null = null;
+  reload$ = new BehaviorSubject<boolean>(true);
 
 
 
@@ -34,7 +36,8 @@ export class CompanyManagementListComponent
     private los: LoadingOverlayService,
     private authService: AuthService,
     private assessmentService: API.AssessmentsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private companyService: API.CompaniesService,
   )
   {
 
@@ -42,16 +45,27 @@ export class CompanyManagementListComponent
 
   ngOnInit()
   {
-    this.authService.getUser$().subscribe(user =>
+    this.authService.getUser$().pipe(
+      mergeMap(user =>
+      {
+        this.user = user;
+        if (user?.data?.company)
+        {
+          return this.companyService.showCompany(user.data.company.id);
+        }
+        return of(null);
+      })
+    ).subscribe(company =>
     {
-      this.user = user;
-    })
+      this.company = company?.data || null;
+    });
+
   }
 
 
   ngAfterViewInit(): void
   {
-    this.subscriptions.add(merge(this.paginator.page, this.sort.sortChange).pipe(
+    this.subscriptions.add(merge(this.paginator.page, this.sort.sortChange, this.reload$).pipe(
       startWith({}),
       switchMap(() =>
       {
@@ -125,7 +139,13 @@ export class CompanyManagementListComponent
         }
         return EMPTY;
       })
-    ).subscribe(() => this.los.hide()));
+    ).subscribe({
+      complete: () =>
+      {
+        this.los.hide();
+        this.reload$.next(true);
+      }
+    }));
   }
 }
 

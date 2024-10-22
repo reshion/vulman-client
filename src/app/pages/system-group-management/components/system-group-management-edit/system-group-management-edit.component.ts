@@ -9,7 +9,7 @@ import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.serv
 import { AssessmentCreateDialogComponent } from '@app/shared/components/assessment-create-dialog/assessment-create-dialog.component';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
 import { plainToClass } from 'class-transformer';
-import { map, mergeMap, merge, startWith, switchMap, catchError, of, Subscription, EMPTY, Observable, tap } from 'rxjs';
+import { map, mergeMap, merge, startWith, switchMap, catchError, of, Subscription, EMPTY, Observable, tap, BehaviorSubject } from 'rxjs';
 
 class ViewModel extends API.Vulnerability
 {
@@ -31,6 +31,7 @@ export class SystemGroupManagementEditComponent
   @ViewChild(MatSort) sort!: MatSort;
   systemGroup!: API.SystemGroup;
   subscriptions = new Subscription();
+  reload$ = new BehaviorSubject<boolean>(true);
 
   /**
    *
@@ -64,7 +65,7 @@ export class SystemGroupManagementEditComponent
       mergeMap((systemGroup) =>
       {
         this.systemGroup = systemGroup.data;
-        return merge(this.paginator.page, this.sort.sortChange).pipe(
+        return merge(this.paginator.page, this.sort.sortChange, this.reload$).pipe(
           startWith({}),
           switchMap(() =>
           {
@@ -129,6 +130,14 @@ export class SystemGroupManagementEditComponent
         }
         return EMPTY;
       })
-    ).subscribe(() => this.los.hide()));
+    ).subscribe(
+      {
+        complete: () =>
+        {
+          this.reload$.next(true);
+          this.los.hide();
+        }
+      }
+    ));
   }
 }

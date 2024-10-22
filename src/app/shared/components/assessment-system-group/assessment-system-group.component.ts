@@ -11,7 +11,7 @@ export class AssessmentSystemGroupComponent
 {
   @Input() vulnerabilityId?: number;
   @Input() systemGroup?: API.SystemGroup;
-  @Input() assessments?: API.Assessment[] = [];
+  public assessments?: API.Assessment[];
 
   constructor(private assessmentService: API.AssessmentsService) { }
   ngOnInit(): void
@@ -31,8 +31,13 @@ export class AssessmentSystemGroupComponent
             .pipe(
               tap((response) =>
               {
+                if (!this.assessments)
+                {
+                  this.assessments = [];
+                }
                 if (response.data && response.data.length > 0)
                 {
+
                   this.assessments?.push(...response.data);
                 }
               }),
@@ -50,8 +55,13 @@ export class AssessmentSystemGroupComponent
             .pipe(
               tap((response) =>
               {
+                if (!this.assessments)
+                {
+                  this.assessments = [];
+                }
                 if (response.data && response.data.length > 0)
                 {
+
                   this.assessments?.push(...response.data);
                 }
               }),

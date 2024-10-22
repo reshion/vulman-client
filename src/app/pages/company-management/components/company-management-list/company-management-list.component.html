@@ -31,6 +31,13 @@
             </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="assessments">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Assessments </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <app-assessment-company *ngIf="company" [vulnerabilityId]="row.id" [company]="company"></app-assessment-company>
+            </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef i18n></mat-header-cell>
             <mat-cell *matCellDef="let row">
@@ -40,7 +47,7 @@
                 </button>
                 <mat-menu #actions="matMenu">
                     <button mat-menu-item (click)="openAssessmentDialog(row.id)">
-                        <mat-icon>verified</mat-icon>
+                        <mat-icon>analytics</mat-icon>
                         <span>Assessment</span>
                     </button>
                     <button mat-menu-item [routerLink]="['../',RouteKey.VULNERABILITY, row.id, RouteKey.ASSET, RouteKey.LIST]">

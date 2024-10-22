@@ -46,17 +46,17 @@
             </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="assessments">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Assessments </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-                <app-assessment-asset [vulnerabilityId]="row.id" [asset]="asset"></app-assessment-asset>
-            </mat-cell>
-        </ng-container>
 
         <ng-container matColumnDef="base_severity">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Severity </mat-header-cell>
             <mat-cell *matCellDef="let row"><span [appBaseSeverityHighlight]="row | cve:'baseSeverity'">{{row | cve:'baseSeverity'}}</span>
+            </mat-cell>
+        </ng-container>
 
+        <ng-container matColumnDef="assessments">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Assessments </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <app-assessment-asset [vulnerabilityId]="row.id" [asset]="asset"></app-assessment-asset>
             </mat-cell>
         </ng-container>
 

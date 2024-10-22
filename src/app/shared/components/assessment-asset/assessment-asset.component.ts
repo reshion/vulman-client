@@ -11,7 +11,7 @@ export class AssessmentAssetComponent implements OnInit
 {
   @Input() vulnerabilityId?: number;
   @Input() asset?: API.Asset;
-  @Input() assessments?: API.Assessment[] = [];
+  public assessments?: API.Assessment[];
 
   constructor(private assessmentService: API.AssessmentsService) { }
 
@@ -30,6 +30,10 @@ export class AssessmentAssetComponent implements OnInit
         .pipe(
           tap((response) =>
           {
+            if (!this.assessments)
+            {
+              this.assessments = [];
+            }
             if (response.data && response.data.length > 0)
             {
               this.assessments?.push(...response.data);
@@ -53,6 +57,10 @@ export class AssessmentAssetComponent implements OnInit
               .pipe(
                 tap((response) =>
                 {
+                  if (!this.assessments)
+                  {
+                    this.assessments = [];
+                  }
                   if (response.data && response.data.length > 0)
                   {
                     this.assessments?.push(...response.data);
@@ -74,8 +82,13 @@ export class AssessmentAssetComponent implements OnInit
               .pipe(
                 tap((response) =>
                 {
+                  if (!this.assessments)
+                  {
+                    this.assessments = [];
+                  }
                   if (response.data && response.data.length > 0)
                   {
+
                     this.assessments?.push(...response.data);
                   }
                 }),

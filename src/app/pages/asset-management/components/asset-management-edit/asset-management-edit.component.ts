@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY, Subscription, catchError, map, merge, mergeMap, of, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Subscription, catchError, map, merge, mergeMap, of, startWith, switchMap } from 'rxjs';
 import * as API from '@app/api';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
 import { MatPaginator } from '@angular/material/paginator';
@@ -18,13 +18,14 @@ import { AssessmentCreateDialogComponent } from '@app/shared/components/assessme
 })
 export class AssetManagementEditComponent implements OnInit
 {
-  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'assessments', 'base_severity', 'actions'];
+  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'base_severity', 'assessments', 'actions'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<API.Vulnerability> = new MatTableDataSource<API.Vulnerability>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   asset!: API.Asset;
   subscriptions = new Subscription();
+  reload$ = new BehaviorSubject<boolean>(true);
 
   /**
    *
@@ -60,7 +61,7 @@ export class AssetManagementEditComponent implements OnInit
       mergeMap((asset) =>
       {
         this.asset = asset.data;
-        return merge(this.paginator.page, this.sort.sortChange).pipe(
+        return merge(this.paginator.page, this.sort.sortChange, this.reload$).pipe(
           startWith({}),
           switchMap(() =>
           {
@@ -120,6 +121,14 @@ export class AssetManagementEditComponent implements OnInit
         }
         return EMPTY;
       })
-    ).subscribe(() => this.los.hide()));
+    ).subscribe(
+      {
+        complete: () =>
+        {
+          this.reload$.next(true);
+          this.los.hide();
+        }
+      }
+    ));
   }
 }

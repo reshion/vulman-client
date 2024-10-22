@@ -36,6 +36,7 @@ import { AssessmentIndicatorComponent } from './components/assessment-indicator/
 import { RouterModule } from '@angular/router';
 import { AssessmentAssetComponent } from './components/assessment-asset/assessment-asset.component';
 import { AssessmentSystemGroupComponent } from './components/assessment-system-group/assessment-system-group.component';
+import { AssessmentCompanyComponent } from './components/assessment-company/assessment-company.component';
 
 
 const importsExports = [
@@ -72,7 +73,7 @@ const declarationsExports = [
   AssessmentIndicatorComponent,
   AssessmentAssetComponent,
   AssessmentSystemGroupComponent,
-
+  AssessmentCompanyComponent,
 ]
 
 @NgModule({
