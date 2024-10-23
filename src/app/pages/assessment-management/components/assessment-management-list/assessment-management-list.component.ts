@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as API from '@app/api';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 import { DialogMessage } from '@app/shared/classes/dialog-message';
@@ -58,6 +59,8 @@ export class AssessmentManagementListComponent
     private assetService: API.AssetsService,
     private los: LoadingOverlayService,
     private dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
   )
   {
   }
@@ -140,6 +143,20 @@ export class AssessmentManagementListComponent
         return EMPTY
       })
     ).subscribe(data => this.dataSource.data = data));
+  }
+
+  navigateTo(event: Event, route: Array<any>): void
+  {
+    event.preventDefault();
+    event.stopPropagation();
+    this.router.navigate(route, { relativeTo: this.activatedRoute });
+  }
+
+  stopEvent(event: Event): void
+  {
+    event.preventDefault();
+    event.stopPropagation();
+
   }
 
   openDeleteDialog(id: number): void

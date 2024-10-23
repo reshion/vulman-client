@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { LoadingOverlayModule } from '@app/loading-overlay/loading-overlay.module';
 import { MenuContainerComponent } from './components/menu-container/menu-container.component';
@@ -37,6 +38,7 @@ import { RouterModule } from '@angular/router';
 import { AssessmentAssetComponent } from './components/assessment-asset/assessment-asset.component';
 import { AssessmentSystemGroupComponent } from './components/assessment-system-group/assessment-system-group.component';
 import { AssessmentCompanyComponent } from './components/assessment-company/assessment-company.component';
+import { StopEventDirective } from './directives/stop-event/stop-event.directive';
 
 
 const importsExports = [
@@ -62,6 +64,7 @@ const importsExports = [
   MatNativeDateModule,
   MatSliderModule,
   MatSlideToggleModule,
+  MatGridListModule,
 ]
 const declarationsExports = [
   MenuContainerComponent,
@@ -74,6 +77,7 @@ const declarationsExports = [
   AssessmentAssetComponent,
   AssessmentSystemGroupComponent,
   AssessmentCompanyComponent,
+  StopEventDirective,
 ]
 
 @NgModule({

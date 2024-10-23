@@ -73,7 +73,7 @@
             <mat-header-cell *matHeaderCellDef i18n></mat-header-cell>
             <mat-cell *matCellDef="let row">
 
-                <button mat-icon-button [matMenuTriggerFor]="actions">
+                <button mat-icon-button [matMenuTriggerFor]="actions" appStopEvent>
                     <mat-icon color="accent">more_vert</mat-icon>
                 </button>
                 <mat-menu #actions="matMenu">
@@ -90,7 +90,7 @@
         </ng-container>
 
         <mat-header-row sticky *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigateTo($event, ['../edit', row.id])"></mat-row>
     </mat-table>
 
     <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"

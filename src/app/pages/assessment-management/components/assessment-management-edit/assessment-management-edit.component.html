@@ -4,88 +4,77 @@
             <button mat-icon-button [routerLink]="['/assessment-management']">
                 <mat-icon>arrow_back</mat-icon>
             </button>
-        </ng-container>
-    </app-menu-container>
-    <mat-card appearance="outlined">
-        <mat-card-header *ngIf="assessment">
-            <mat-card-title>
-                <h1 class="d-flex">
-                    <span>Assessment #{{assessment.id}}</span>
-                </h1>
-            </mat-card-title>
-            <mat-card-subtitle>
-                <p>
-                    <strong>Note:</strong> {{assessment.note}}
-                </p>
-                <p>
-                    <strong>Created:</strong> {{assessment.created_at | date:'medium'}}
-                </p>
-                <p>
-                    <strong>Updated:</strong> {{assessment.updated_at | date:'medium'}}
-                </p>
-            </mat-card-subtitle>
             <span class="ms-auto">
                 <button mat-menu-item (click)="openDeleteDialog(assessment.id)">
                     <mat-icon>delete</mat-icon>
                     <span>Delete</span>
                 </button>
             </span>
-        </mat-card-header>
-
-        <mat-card-content>
-            <mat-divider class="my-3"></mat-divider>
-            <ng-container *ngIf="assessment">
-
-                <ng-container *ngIf="assessment.vulnerability$ | async as x ; else loading">
+        </ng-container>
+    </app-menu-container>
+    <mat-grid-list cols="2" rowHeight="1:1">
+        <mat-grid-tile>
+            <div *ngIf="assessment" class="h-100 w-100 p-2 d-flex flex-column">
+                <div class="d-flex">
+                    <h1 class="d-flex">
+                        <span>Assessment #{{assessment.id}}</span>
+                    </h1>
+                </div>
+                <div>
                     <p>
-                        <strong>Vulnerability:</strong>
-                        <span>
-                            {{x.cve_id}}
-                            <span [appBaseSeverityHighlight]="x | cve:'baseSeverity'">{{x | cve:'baseSeverity'}}</span>
-                        </span>
+                        <strong>Note:</strong> {{assessment.note}}
                     </p>
                     <p>
-                        <strong>Details:</strong>
-                        <span>
-                            {{x | cve:'description'}}
-
-                        </span>
+                        <strong>Created:</strong> {{assessment.created_at | date:'medium'}}
                     </p>
-                </ng-container>
-                <ng-container *ngIf="assessment.company$ | async as x ; else loading">
-                    <p *ngIf="x !== -1">
-                        <strong>Company:</strong>
-                        <span>
-                            {{x?.name }}
-                        </span>
+                    <p>
+                        <strong>Updated:</strong> {{assessment.updated_at | date:'medium'}}
                     </p>
-                </ng-container>
-                <ng-container *ngIf="assessment.system_group$ | async as x ; else loading">
-                    <p *ngIf="x !== -1">
-                        <strong>System Group:</strong>
-                        <span>
-                            {{x?.name }}
-                        </span>
-                    </p>
-                </ng-container>
-                <ng-container *ngIf="assessment.asset$ | async as x ; else loading">
-                    <p *ngIf="x !== -1">
-                        <strong>Asset:</strong>
-                        <span>
-                            {{x?.fqdn }}
-                        </span>
-                    </p>
-                </ng-container>
+                </div>
                 <mat-divider class="my-3"></mat-divider>
-            </ng-container>
-            <div class="d-flex">
+                <ng-container *ngIf="assessment">
 
-                <form class="w-50 d-flex flex-column" [formGroup]="formGroup">
+                    <ng-container *ngIf="assessment.vulnerability$ | async as x ; else loading">
+                        <p>
+                            <strong>Vulnerability:</strong>
+                            <span>{{x.cve_id}}</span>
+                        </p>
+                        <p>
+                            <strong>Base Severity:</strong>
+                            <span [appBaseSeverityHighlight]="x | cve:'baseSeverity'">{{x | cve:'baseSeverity'}}</span>
+                        </p>
+                        <p>
+                            <strong>Details:</strong>
+                            <span>{{x | cve:'description'}}</span>
+                        </p>
+                    </ng-container>
+                    <ng-container *ngIf="assessment.company$ | async as x ; else loading">
+                        <p *ngIf="x !== -1">
+                            <strong>Company:</strong>
+                            <span>{{x?.name }}</span>
+                        </p>
+                    </ng-container>
+                    <ng-container *ngIf="assessment.system_group$ | async as x ; else loading">
+                        <p *ngIf="x !== -1">
+                            <strong>System Group:</strong>
+                            <span>{{x?.name }}</span>
+                        </p>
+                    </ng-container>
+                    <ng-container *ngIf="assessment.asset$ | async as x ; else loading">
+                        <p *ngIf="x !== -1">
+                            <strong>Asset:</strong>
+                            <span>{{x?.fqdn }}</span>
+                        </p>
+                    </ng-container>
+                    <mat-divider class="my-3"></mat-divider>
+                </ng-container>
+
+                <form class="w-100 d-flex flex-column" [formGroup]="formGroup">
                     <h2>
                         Assessment details:
                     </h2>
-                    <div class="d-flex flex-column">
-                        <mat-form-field class="w-100">
+                    <div class="row">
+                        <mat-form-field class="col">
                             <mat-label>Treatment:</mat-label>
                             <mat-select formControlName="treatment">
                                 <mat-option [value]="item.key" *ngFor="let item of AssessmentTreatment | keyvalue">{{item.value}}</mat-option>
@@ -93,7 +82,7 @@
                             <mat-hint align="end">Select assessment treatment </mat-hint>
                         </mat-form-field>
 
-                        <mat-form-field class="w-100">
+                        <mat-form-field class="col">
                             <mat-label>Assessment Lifecycle Status:</mat-label>
                             <mat-select formControlName="lifecycle_status">
                                 <mat-option [value]="item.key" *ngFor="let item of AssessmentLifecycleStatus | keyvalue">{{item.value}}</mat-option>
@@ -105,8 +94,8 @@
                     <h2>
                         Risk response:
                     </h2>
-                    <div class="d-flex flex-column">
-                        <mat-form-field class="w-100">
+                    <div class="row">
+                        <mat-form-field class="col-12">
                             <mat-label>Risk response lifecycle status:</mat-label>
                             <mat-select formControlName="risk_response_lifecycle_status">
                                 <mat-option [value]="item.key" *ngFor="let item of RiskResponseLifecycleStatus | keyvalue">{{item.value}}</mat-option>
@@ -114,7 +103,7 @@
                             <mat-hint align="end">Select risk response lifecycle status </mat-hint>
                         </mat-form-field>
 
-                        <mat-form-field class="w-100">
+                        <mat-form-field class="col-12">
                             <mat-label>Risk response</mat-label>
                             <textarea matInput formControlName="risk_response" placeholder="Enter risk response"></textarea>
                             <mat-hint align="end">Enter risk response message</mat-hint>
@@ -123,68 +112,48 @@
                     </div>
                     <button mat-raised-button class="ms-auto" align="end" color="primary" (click)="updateAssessment(assessment)">Ok</button>
                 </form>
-
-
-                <div class="w-50">
-                    <h2>
-                        Affected assets:
-                    </h2>
-                    <mat-table [dataSource]="dataSource" matSort>
-                        <!-- ID Column -->
-                        <ng-container matColumnDef="id">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-                            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
-                        </ng-container>
-
-                        <!-- Progress Column -->
-                        <ng-container matColumnDef="fqdn">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header> FQDN </mat-header-cell>
-                            <mat-cell *matCellDef="let row"> {{row.fqdn}} </mat-cell>
-                        </ng-container>
-
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="unique_id">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header> Unique Id </mat-header-cell>
-                            <mat-cell *matCellDef="let row"> {{row.unique_id}} </mat-cell>
-                        </ng-container>
-
-                        <!-- Fruit Column -->
-                        <ng-container matColumnDef="operating_system">
-                            <mat-header-cell *matHeaderCellDef mat-sort-header> OS </mat-header-cell>
-                            <mat-cell *matCellDef="let row"> {{row.operating_system}} </mat-cell>
-                        </ng-container>
-
-                        <ng-container matColumnDef="actions">
-                            <mat-header-cell *matHeaderCellDef i18n></mat-header-cell>
-                            <mat-cell *matCellDef="let row">
-
-                                <button mat-icon-button [matMenuTriggerFor]="actions">
-                                    <mat-icon color="accent">more_vert</mat-icon>
-                                </button>
-                                <mat-menu #actions="matMenu">
-                                    <button mat-menu-item>
-                                        <mat-icon>analytics</mat-icon>
-                                        <span>Assessment</span>
-                                    </button>
-                                </mat-menu>
-                            </mat-cell>
-                        </ng-container>
-
-                        <mat-header-row sticky *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                    </mat-table>
-
-                    <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
-                        aria-label="Select page of assets"></mat-paginator>
-                </div>
             </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <div class="h-100 w-100 p-2 d-flex flex-column">
+                <h2>
+                    Affected assets:
+                </h2>
+                <mat-table [dataSource]="dataSource" matSort>
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+                    </ng-container>
 
+                    <!-- Progress Column -->
+                    <ng-container matColumnDef="fqdn">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> FQDN </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.fqdn}} </mat-cell>
+                    </ng-container>
 
-        </mat-card-content>
-        <mat-card-actions>
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="unique_id">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> Unique Id </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.unique_id}} </mat-cell>
+                    </ng-container>
 
-        </mat-card-actions>
-    </mat-card>
+                    <!-- Fruit Column -->
+                    <ng-container matColumnDef="operating_system">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> OS </mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.operating_system}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row sticky *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table>
+
+                <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+                    aria-label="Select page of assets"></mat-paginator>
+            </div>
+        </mat-grid-tile>
+
+    </mat-grid-list>
 </div>
 
 <ng-template #loading>

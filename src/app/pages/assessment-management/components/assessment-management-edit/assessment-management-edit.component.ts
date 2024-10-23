@@ -97,7 +97,7 @@ export class AssessmentManagementEditComponent implements OnInit, AfterViewInit
       }))
   }
 
-  displayedColumns: string[] = ['id', 'fqdn', 'unique_id', 'operating_system', 'actions'];
+  displayedColumns: string[] = ['id', 'fqdn', 'unique_id', 'operating_system'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<API.Asset> = new MatTableDataSource<API.Asset>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -21,7 +21,7 @@ export class BaseSeverityHighlightDirective
     this.el.nativeElement.style.padding = '5px';
     this.el.nativeElement.style.borderRadius = '5px';
     this.el.nativeElement.style.border = '3px solid black';
-    this.el.nativeElement.style.display = 'flex';
+    this.el.nativeElement.style.display = 'inline-flex';
     this.el.nativeElement.style.justifyContent = 'center';
     this.el.nativeElement.style.alignItems = 'center';
     this.el.nativeElement.style.margin = '2px 0';
