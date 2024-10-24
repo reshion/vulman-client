@@ -50,20 +50,20 @@
                     </ng-container>
                     <ng-container *ngIf="assessment.company$ | async as x ; else loading">
                         <p *ngIf="x !== -1">
-                            <strong>Company:</strong>
-                            <span>{{x?.name }}</span>
+                            <strong>Scope: </strong>
+                            <span>Company {{x?.name }}</span>
                         </p>
                     </ng-container>
                     <ng-container *ngIf="assessment.system_group$ | async as x ; else loading">
                         <p *ngIf="x !== -1">
-                            <strong>System Group:</strong>
-                            <span>{{x?.name }}</span>
+                            <strong>Scope: </strong>
+                            <span>System Group {{x?.name }}</span>
                         </p>
                     </ng-container>
                     <ng-container *ngIf="assessment.asset$ | async as x ; else loading">
                         <p *ngIf="x !== -1">
-                            <strong>Asset:</strong>
-                            <span>{{x?.fqdn }}</span>
+                            <strong>Scope: </strong>
+                            <span>Asset {{x?.fqdn }}</span>
                         </p>
                     </ng-container>
                     <mat-divider class="my-3"></mat-divider>
