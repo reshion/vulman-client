@@ -53,7 +53,7 @@ export class Company extends NamedBaseModel {
             
                     init.tenant_id ? this.tenant_id = init.tenant_id : null,
                
-                        this.tenant = new Tenant(init.tenant || {})
+                            this.tenant = new Tenant(init.tenant || {})
     }
 
     static override  getForm(data?: Company | Company[] | null): FormGroup {

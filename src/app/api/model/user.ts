@@ -53,7 +53,7 @@ export class User extends NamedBaseModel {
             
                     init.email_verified_at ? this.email_verified_at = init.email_verified_at : null,
                
-                        this.company = new Company(init.company || {})
+                            this.company = new Company(init.company || {})
     }
 
     static override  getForm(data?: User | User[] | null): FormGroup {

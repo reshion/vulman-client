@@ -53,7 +53,7 @@ export class SystemGroupPagingResource {
     constructor(init: Partial<SystemGroupPagingResource> = {}) {
          
                             this.data = init.data?.map(x => new SystemGroup(x)) || [] ,
-                        this.meta = new Meta(init.meta || {})
+                            this.meta = new Meta(init.meta || {})
     }
 
     static   getForm(data?: SystemGroupPagingResource | SystemGroupPagingResource[] | null): FormGroup {

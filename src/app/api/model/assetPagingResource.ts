@@ -53,7 +53,7 @@ export class AssetPagingResource {
     constructor(init: Partial<AssetPagingResource> = {}) {
          
                             this.data = init.data?.map(x => new Asset(x)) || [] ,
-                        this.meta = new Meta(init.meta || {})
+                            this.meta = new Meta(init.meta || {})
     }
 
     static   getForm(data?: AssetPagingResource | AssetPagingResource[] | null): FormGroup {

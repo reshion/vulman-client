@@ -18,6 +18,7 @@ export class AssessmentAssetComponent implements OnInit
   ngOnInit(): void
   {
     let body = new API.AssessmentFindRequest();
+    body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
     if (this.vulnerabilityId)
     {
 
@@ -49,6 +50,7 @@ export class AssessmentAssetComponent implements OnInit
         this.asset.system_groups.forEach((systemGroup) =>
         {
           body = new API.AssessmentFindRequest();
+          body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
           body.system_group_id = systemGroup.id;
           if (this.vulnerabilityId)
           {
@@ -76,6 +78,7 @@ export class AssessmentAssetComponent implements OnInit
         {
           body = new API.AssessmentFindRequest();
           body.company_id = companyId;
+          body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
           if (this.vulnerabilityId)
           {
             this.assessmentService.findAssessments(this.vulnerabilityId, body)

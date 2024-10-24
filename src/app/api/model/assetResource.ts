@@ -38,7 +38,7 @@ export class AssetResource {
 
     constructor(init: Partial<AssetResource> = {}) {
          
-                        this.data = new Asset(init.data || {})
+                            this.data = new Asset(init.data || {})
     }
 
     static   getForm(data?: AssetResource | AssetResource[] | null): FormGroup {

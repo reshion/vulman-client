@@ -38,7 +38,7 @@ export class SystemGroupResource {
 
     constructor(init: Partial<SystemGroupResource> = {}) {
          
-                        this.data = new SystemGroup(init.data || {})
+                            this.data = new SystemGroup(init.data || {})
     }
 
     static   getForm(data?: SystemGroupResource | SystemGroupResource[] | null): FormGroup {

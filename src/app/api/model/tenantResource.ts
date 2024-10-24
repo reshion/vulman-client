@@ -38,7 +38,7 @@ export class TenantResource {
 
     constructor(init: Partial<TenantResource> = {}) {
          
-                        this.data = new Tenant(init.data || {})
+                            this.data = new Tenant(init.data || {})
     }
 
     static   getForm(data?: TenantResource | TenantResource[] | null): FormGroup {

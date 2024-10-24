@@ -77,7 +77,7 @@
                         <mat-form-field class="col">
                             <mat-label>Treatment:</mat-label>
                             <mat-select formControlName="treatment">
-                                <mat-option [value]="item.key" *ngFor="let item of AssessmentTreatment | keyvalue">{{item.value}}</mat-option>
+                                <mat-option [value]="item.value" *ngFor="let item of AssessmentTreatment | keyvalue">{{item.key}}</mat-option>
                             </mat-select>
                             <mat-hint align="end">Select assessment treatment </mat-hint>
                         </mat-form-field>
@@ -85,7 +85,7 @@
                         <mat-form-field class="col">
                             <mat-label>Assessment Lifecycle Status:</mat-label>
                             <mat-select formControlName="lifecycle_status">
-                                <mat-option [value]="item.key" *ngFor="let item of AssessmentLifecycleStatus | keyvalue">{{item.value}}</mat-option>
+                                <mat-option [value]="item.value" *ngFor="let item of AssessmentLifecycleStatus | keyvalue">{{item.key}}</mat-option>
                             </mat-select>
                             <mat-hint align="end">Select assessment lifecycle status </mat-hint>
                         </mat-form-field>
@@ -98,7 +98,7 @@
                         <mat-form-field class="col-12">
                             <mat-label>Risk response lifecycle status:</mat-label>
                             <mat-select formControlName="risk_response_lifecycle_status">
-                                <mat-option [value]="item.key" *ngFor="let item of RiskResponseLifecycleStatus | keyvalue">{{item.value}}</mat-option>
+                                <mat-option [value]="item.value" *ngFor="let item of RiskResponseLifecycleStatus | keyvalue">{{item.key}}</mat-option>
                             </mat-select>
                             <mat-hint align="end">Select risk response lifecycle status </mat-hint>
                         </mat-form-field>

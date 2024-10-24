@@ -8,12 +8,12 @@ import * as API from '@app/api';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
 import { AssessmentCreateDialogComponent } from '@app/shared/components/assessment-create-dialog/assessment-create-dialog.component';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
-import { plainToClass } from 'class-transformer';
+import { plainToClass, plainToInstance } from 'class-transformer';
 import { map, mergeMap, merge, startWith, switchMap, catchError, of, Subscription, EMPTY, Observable, tap, BehaviorSubject } from 'rxjs';
 
 class ViewModel extends API.Vulnerability
 {
-  assessments$!: Observable<API.Assessment[]>;
+  assetsCount$!: Observable<number>;
 }
 
 @Component({
@@ -24,7 +24,7 @@ class ViewModel extends API.Vulnerability
 export class SystemGroupManagementEditComponent
 {
 
-  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'base_severity', 'assessments', 'actions'];
+  displayedColumns: string[] = ['id', 'cve_id', 'cve_details', 'base_severity', 'assets_count', 'assessments', 'actions'];
   totalItems: number = 0;
   dataSource: MatTableDataSource<ViewModel> = new MatTableDataSource<ViewModel>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -43,6 +43,7 @@ export class SystemGroupManagementEditComponent
     private vulnerabilitiesService: API.VulnerabilitiesService,
     private los: LoadingOverlayService,
     private dialog: MatDialog,
+    private assetService: API.AssetsService,
   )
   {
 
@@ -80,18 +81,22 @@ export class SystemGroupManagementEditComponent
             );
           }),
         )
-
       }),
       map(vulnerabilities =>
       {
         this.totalItems = vulnerabilities.meta.total;
         return vulnerabilities.data.map(x =>
         {
-          const viewModel = plainToClass(ViewModel, x)
+          const viewModel = plainToInstance(ViewModel, x)
+
+          viewModel.assetsCount$ = this.assetService.getAssetsByVulnerability(viewModel.id, this.systemGroup.id).pipe(
+            map(assets => assets.meta.total)
+          );
+
           return viewModel;
-        }
-        );
+        });
       }),
+
       tap((vulnerabilities) => this.dataSource.data = vulnerabilities)
     ).subscribe(() =>
     {
@@ -103,6 +108,7 @@ export class SystemGroupManagementEditComponent
   {
     const request = new API.AssessmentFindRequest();
     request.system_group_id = systemGroupId;
+    request.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
 
     this.subscriptions.add(this.dialog.open(AssessmentCreateDialogComponent, {
       width: '800px',
@@ -125,6 +131,10 @@ export class SystemGroupManagementEditComponent
             {
               this.los.hide();
               return EMPTY;
+            }),
+            tap(() =>
+            {
+              this.reload$.next(true);
             })
           )
         }
@@ -134,7 +144,6 @@ export class SystemGroupManagementEditComponent
       {
         complete: () =>
         {
-          this.reload$.next(true);
           this.los.hide();
         }
       }

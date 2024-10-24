@@ -183,8 +183,8 @@ export class AssessmentManagementEditComponent implements OnInit, AfterViewInit
     assessment.treatment = this.formGroup.controls['treatment'].value;
     assessment.lifecycle_status = this.formGroup.controls['lifecycle_status'].value;
     this.los.show();
-    const body = plainToClass(API.AssessmentStoreRequest, assessment as Object, { excludeExtraneousValues: true });
-    this.subscriptions.add(this.assessmentService.storeAssessmentVulnerability(assessment.vulnerability_id, body).subscribe(
+    const body = plainToClass(API.AssessmentUpdateRequest, assessment as Object, { excludeExtraneousValues: true });
+    this.subscriptions.add(this.assessmentService.updateAssessment(assessment.id, body).subscribe(
       (assessmentRessource) =>
       {
         this.assessment = this.prepareViewModel(assessmentRessource.data);

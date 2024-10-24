@@ -33,7 +33,7 @@ export class AssessmentResource {
 
     constructor(init: Partial<AssessmentResource> = {}) {
          
-                        this.data = new Assessment(init.data || {})
+                            this.data = new Assessment(init.data || {})
     }
 
     static   getForm(data?: AssessmentResource | AssessmentResource[] | null): FormGroup {

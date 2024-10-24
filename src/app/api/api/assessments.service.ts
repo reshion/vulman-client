@@ -21,6 +21,7 @@ import { AssessmentFindRequest } from '../model/assessmentFindRequest';
 import { AssessmentPagingResource } from '../model/assessmentPagingResource';
 import { AssessmentResource } from '../model/assessmentResource';
 import { AssessmentStoreRequest } from '../model/assessmentStoreRequest';
+import { AssessmentUpdateRequest } from '../model/assessmentUpdateRequest';
 import { AssessmentsResource } from '../model/assessmentsResource';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -382,10 +383,10 @@ export class AssessmentsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateAssessment(id: number, body?: AssessmentStoreRequest, observe?: 'body', reportProgress?: boolean): Observable<AssessmentResource>;
-    public updateAssessment(id: number, body?: AssessmentStoreRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssessmentResource>>;
-    public updateAssessment(id: number, body?: AssessmentStoreRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssessmentResource>>;
-    public updateAssessment(id: number, body?: AssessmentStoreRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateAssessment(id: number, body?: AssessmentUpdateRequest, observe?: 'body', reportProgress?: boolean): Observable<AssessmentResource>;
+    public updateAssessment(id: number, body?: AssessmentUpdateRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AssessmentResource>>;
+    public updateAssessment(id: number, body?: AssessmentUpdateRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AssessmentResource>>;
+    public updateAssessment(id: number, body?: AssessmentUpdateRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling updateAssessment.');

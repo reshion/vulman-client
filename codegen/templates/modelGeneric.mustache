@@ -77,7 +77,9 @@ export class {{classname}} {{#parent}}extends {{{parent}}} {{/parent}}{ {{>model
                         init.{{name}} ? this.{{name}} = init.{{name}} : null{{^@last}},{{/@last}}
                     {{/isObject}}
                     {{#isObject}}
-                        this.{{name}} = new {{{datatype}}}(init.{{name}} || {}){{^@last}},{{/@last}}
+                        {{#isNot this 'enum'}}
+                            this.{{name}} = new {{{datatype}}}(init.{{name}} || {}){{^@last}},{{/@last}}
+                       {{/isNot}}  
                     {{/isObject}}
                 {{/isContainer}}               
             {{/isPrimitiveType}}            

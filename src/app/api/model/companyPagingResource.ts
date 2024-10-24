@@ -53,7 +53,7 @@ export class CompanyPagingResource {
     constructor(init: Partial<CompanyPagingResource> = {}) {
          
                             this.data = init.data?.map(x => new Company(x)) || [] ,
-                        this.meta = new Meta(init.meta || {})
+                            this.meta = new Meta(init.meta || {})
     }
 
     static   getForm(data?: CompanyPagingResource | CompanyPagingResource[] | null): FormGroup {

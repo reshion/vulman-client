@@ -38,7 +38,7 @@ export class ScanImportJobResource {
 
     constructor(init: Partial<ScanImportJobResource> = {}) {
          
-                        this.data = new ScanImportJob(init.data || {})
+                            this.data = new ScanImportJob(init.data || {})
     }
 
     static   getForm(data?: ScanImportJobResource | ScanImportJobResource[] | null): FormGroup {

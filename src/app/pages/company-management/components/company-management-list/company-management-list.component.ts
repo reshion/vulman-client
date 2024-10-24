@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { LoadingOverlayService } from '@app/loading-overlay/loading-overlay.service';
-import { merge, startWith, switchMap, catchError, of, map, Subscription, EMPTY, mergeMap, BehaviorSubject } from 'rxjs';
+import { merge, startWith, switchMap, catchError, of, map, Subscription, EMPTY, mergeMap, BehaviorSubject, tap } from 'rxjs';
 import * as API from '@app/api';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { RouteKey } from '@app/shared/enums/route-key';
@@ -112,6 +112,7 @@ export class CompanyManagementListComponent
   {
     const request = new API.AssessmentFindRequest();
     request.company_id = this.user?.data?.company.id;
+    request.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
 
     this.subscriptions.add(this.dialog.open(AssessmentCreateDialogComponent, {
       width: '800px',
@@ -134,6 +135,10 @@ export class CompanyManagementListComponent
             {
               this.los.hide();
               return EMPTY;
+            }),
+            tap(() =>
+            {
+              this.reload$.next(true);
             })
           )
         }
@@ -143,7 +148,6 @@ export class CompanyManagementListComponent
       complete: () =>
       {
         this.los.hide();
-        this.reload$.next(true);
       }
     }));
   }

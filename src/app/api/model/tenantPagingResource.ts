@@ -53,7 +53,7 @@ export class TenantPagingResource {
     constructor(init: Partial<TenantPagingResource> = {}) {
          
                             this.data = init.data?.map(x => new Tenant(x)) || [] ,
-                        this.meta = new Meta(init.meta || {})
+                            this.meta = new Meta(init.meta || {})
     }
 
     static   getForm(data?: TenantPagingResource | TenantPagingResource[] | null): FormGroup {

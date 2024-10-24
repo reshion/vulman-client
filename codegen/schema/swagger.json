@@ -192,7 +192,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AssessmentStoreRequest"
+                "$ref": "#/components/schemas/AssessmentUpdateRequest"
               }
             }
           }
@@ -2534,6 +2534,9 @@
             "type": "integer",
             "example": "1",
             "nullable": true
+          },
+          "lifecycle_status": {
+            "$ref": "#/components/schemas/AssessmentLifecycleStatus"
           }
         },
         "type": "object"
@@ -2601,23 +2604,14 @@
           "lifecycle_status": {
             "$ref": "#/components/schemas/AssessmentLifecycleStatus"
           },
-          "company_id": {
-            "title": "company_id",
-            "description": "The company id of the Assessment",
-            "type": "integer",
-            "example": "1"
+          "risk_response": {
+            "title": "risk_response",
+            "description": "Risk Response of the Assessment",
+            "type": "string",
+            "example": "Approve"
           },
-          "system_group_id": {
-            "title": "system_group_id",
-            "description": "The system group id of the Assessment",
-            "type": "integer",
-            "example": "1"
-          },
-          "asset_id": {
-            "title": "asset_id",
-            "description": "The asset id of the Assessment",
-            "type": "integer",
-            "example": "1"
+          "risk_response_lifecycle_status": {
+            "$ref": "#/components/schemas/RiskResponseLifecycleStatus"
           }
         },
         "type": "object"

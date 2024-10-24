@@ -38,7 +38,7 @@ export class UserResource {
 
     constructor(init: Partial<UserResource> = {}) {
          
-                        this.data = new User(init.data || {})
+                            this.data = new User(init.data || {})
     }
 
     static   getForm(data?: UserResource | UserResource[] | null): FormGroup {

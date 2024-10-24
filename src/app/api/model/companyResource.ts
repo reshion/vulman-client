@@ -38,7 +38,7 @@ export class CompanyResource {
 
     constructor(init: Partial<CompanyResource> = {}) {
          
-                        this.data = new Company(init.data || {})
+                            this.data = new Company(init.data || {})
     }
 
     static   getForm(data?: CompanyResource | CompanyResource[] | null): FormGroup {

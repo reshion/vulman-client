@@ -49,6 +49,14 @@
             </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="assets_count">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Assets </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+
+                <ng-container *ngIf="row.assetsCount$ | async as assetsCount else loading">{{assetsCount}}</ng-container>
+            </mat-cell>
+        </ng-container>
+
         <ng-container matColumnDef="assessments">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Assessments </mat-header-cell>
             <mat-cell *matCellDef="let row">
@@ -73,7 +81,10 @@
         </ng-container>
 
         <mat-header-row sticky *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+
+        </mat-row>
+
     </mat-table>
     <mat-paginator [length]="totalItems" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page of vulnerabilities">

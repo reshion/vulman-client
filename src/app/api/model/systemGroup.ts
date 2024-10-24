@@ -76,7 +76,7 @@ export class SystemGroup extends NamedBaseModel {
             
                     init.company_id ? this.company_id = init.company_id : null,
                
-                        this.company = new Company(init.company || {}),
+                            this.company = new Company(init.company || {}),
                             this.assets = init.assets?.map(x => new Asset(x)) || [] 
     }
 

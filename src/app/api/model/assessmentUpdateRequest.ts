@@ -14,6 +14,7 @@ import { Type, Expose } from 'class-transformer';
 
 import { AssessmentLifecycleStatus } from './assessmentLifecycleStatus';
 import { AssessmentTreatment } from './assessmentTreatment';
+import { RiskResponseLifecycleStatus } from './riskResponseLifecycleStatus';
 
 import { Observable }                                        from 'rxjs';
 import { AbstractControl, FormControl, FormGroup, FormArray, Validators }                            from '@angular/forms';
@@ -31,20 +32,12 @@ export class AssessmentUpdateRequest {
     @Expose()
     lifecycle_status!: AssessmentLifecycleStatus;
     /**
-     * The company id of the Assessment
+     * Risk Response of the Assessment
      */
     @Expose()
-    company_id!: number;
-    /**
-     * The system group id of the Assessment
-     */
+    risk_response!: string;
     @Expose()
-    system_group_id!: number;
-    /**
-     * The asset id of the Assessment
-     */
-    @Expose()
-    asset_id!: number;
+    risk_response_lifecycle_status!: RiskResponseLifecycleStatus;
 
     /**
      * Description: Note of the Assessment
@@ -63,22 +56,15 @@ export class AssessmentUpdateRequest {
      * lifecycle_status: AssessmentLifecycleStatus   
      */
     /**
-     * Description: The company id of the Assessment
-     * datatype: number
-     * datatypeWithEnum: number
-     * company_id: number   
+     * Description: Risk Response of the Assessment
+     * datatype: string
+     * datatypeWithEnum: string
+     * risk_response: string   
      */
     /**
-     * Description: The system group id of the Assessment
-     * datatype: number
-     * datatypeWithEnum: number
-     * system_group_id: number   
-     */
-    /**
-     * Description: The asset id of the Assessment
-     * datatype: number
-     * datatypeWithEnum: number
-     * asset_id: number   
+     * datatype: RiskResponseLifecycleStatus
+     * datatypeWithEnum: RiskResponseLifecycleStatus
+     * risk_response_lifecycle_status: RiskResponseLifecycleStatus   
      */
 
     // validations?: Map<string, Array<{[key: string]: string}>> = new Map<string, Array<{[key: string]: string}>>();
@@ -91,14 +77,9 @@ export class AssessmentUpdateRequest {
                         init.treatment ? this.treatment = init.treatment : null,
                         init.lifecycle_status ? this.lifecycle_status = init.lifecycle_status : null,
             
-                    init.company_id ? this.company_id = init.company_id : null,
+                    init.risk_response ? this.risk_response = init.risk_response : null,
                
-            
-                    init.system_group_id ? this.system_group_id = init.system_group_id : null,
-               
-            
-                    init.asset_id ? this.asset_id = init.asset_id : null
-               
+                        init.risk_response_lifecycle_status ? this.risk_response_lifecycle_status = init.risk_response_lifecycle_status : null
     }
 
     static   getForm(data?: AssessmentUpdateRequest | AssessmentUpdateRequest[] | null): FormGroup {
@@ -135,9 +116,8 @@ export class AssessmentUpdateRequest {
                         note: new FormControl(data?.note, []),
                         treatment: new FormControl(data?.treatment, []),
                         lifecycle_status: new FormControl(data?.lifecycle_status, []),
-                        company_id: new FormControl(data?.company_id, [Validators.pattern('^[0-9]*$')]),
-                        system_group_id: new FormControl(data?.system_group_id, [Validators.pattern('^[0-9]*$')]),
-                        asset_id: new FormControl(data?.asset_id, [Validators.pattern('^[0-9]*$')])
+                        risk_response: new FormControl(data?.risk_response, []),
+                        risk_response_lifecycle_status: new FormControl(data?.risk_response_lifecycle_status, [])
         });
     }
   

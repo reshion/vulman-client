@@ -35,7 +35,7 @@ export class AssessmentPagingResource extends AssessmentsResource {
 
     constructor(init: Partial<AssessmentPagingResource> = {}) {
         super(init)  
-                        this.meta = new Meta(init.meta || {})
+                            this.meta = new Meta(init.meta || {})
     }
 
     static override  getForm(data?: AssessmentPagingResource | AssessmentPagingResource[] | null): FormGroup {

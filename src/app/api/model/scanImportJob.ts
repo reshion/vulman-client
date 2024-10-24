@@ -39,7 +39,7 @@ export class ScanImportJob extends BaseModel {
 
     constructor(init: Partial<ScanImportJob> = {}) {
         super(init)  
-                        this.company = new Company(init.company || {})
+                            this.company = new Company(init.company || {})
     }
 
     static override  getForm(data?: ScanImportJob | ScanImportJob[] | null): FormGroup {

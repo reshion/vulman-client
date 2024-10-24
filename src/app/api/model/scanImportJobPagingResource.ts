@@ -53,7 +53,7 @@ export class ScanImportJobPagingResource {
     constructor(init: Partial<ScanImportJobPagingResource> = {}) {
          
                             this.data = init.data?.map(x => new ScanImportJob(x)) || [] ,
-                        this.meta = new Meta(init.meta || {})
+                            this.meta = new Meta(init.meta || {})
     }
 
     static   getForm(data?: ScanImportJobPagingResource | ScanImportJobPagingResource[] | null): FormGroup {

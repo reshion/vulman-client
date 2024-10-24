@@ -176,19 +176,19 @@ export class Assessment extends BaseModel {
             
                     init.company_id ? this.company_id = init.company_id : null,
                
-                        this.company = new Company(init.company || {}),
+                            this.company = new Company(init.company || {}),
             
                     init.vulnerability_id ? this.vulnerability_id = init.vulnerability_id : null,
                
-                        this.vulnerability = new Vulnerability(init.vulnerability || {}),
+                            this.vulnerability = new Vulnerability(init.vulnerability || {}),
             
                     init.asset_id ? this.asset_id = init.asset_id : null,
                
-                        this.asset = new Asset(init.asset || {}),
+                            this.asset = new Asset(init.asset || {}),
             
                     init.system_group_id ? this.system_group_id = init.system_group_id : null,
                
-                        this.system_group = new SystemGroup(init.system_group || {}),
+                            this.system_group = new SystemGroup(init.system_group || {}),
             
                     init.risk_response ? this.risk_response = init.risk_response : null
                

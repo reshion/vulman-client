@@ -18,6 +18,7 @@ export class AssessmentCompanyComponent implements OnInit
   ngOnInit(): void
   {
     let body = new API.AssessmentFindRequest();
+    body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
     if (this.vulnerabilityId)
     {
 

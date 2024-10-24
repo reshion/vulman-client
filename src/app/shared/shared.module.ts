@@ -20,6 +20,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { LoadingOverlayModule } from '@app/loading-overlay/loading-overlay.module';
 import { MenuContainerComponent } from './components/menu-container/menu-container.component';
@@ -65,6 +66,7 @@ const importsExports = [
   MatSliderModule,
   MatSlideToggleModule,
   MatGridListModule,
+  MatExpansionModule,
 ]
 const declarationsExports = [
   MenuContainerComponent,

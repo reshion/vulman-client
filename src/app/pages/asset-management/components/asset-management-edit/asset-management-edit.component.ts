@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, EMPTY, Subscription, catchError, map, merge, mergeMap, of, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Subscription, catchError, map, merge, mergeMap, of, startWith, switchMap, tap } from 'rxjs';
 import * as API from '@app/api';
 import { UrlAndQueryParamKey } from '@app/shared/enums/url-and-query-param-key';
 import { MatPaginator } from '@angular/material/paginator';
@@ -94,6 +94,7 @@ export class AssetManagementEditComponent implements OnInit
   {
     const request = new API.AssessmentFindRequest();
     request.asset_id = assetId;
+    request.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
 
     this.subscriptions.add(this.dialog.open(AssessmentCreateDialogComponent, {
       width: '800px',
@@ -116,6 +117,10 @@ export class AssetManagementEditComponent implements OnInit
             {
               this.los.hide();
               return EMPTY;
+            }),
+            tap(() =>
+            {
+              this.reload$.next(true);
             })
           )
         }
@@ -125,7 +130,6 @@ export class AssetManagementEditComponent implements OnInit
       {
         complete: () =>
         {
-          this.reload$.next(true);
           this.los.hide();
         }
       }

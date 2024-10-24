@@ -24,6 +24,7 @@ export class AssessmentSystemGroupComponent
       {
         body = new API.AssessmentFindRequest();
         body.system_group_id = this.systemGroup.id;
+        body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
         if (this.vulnerabilityId)
         {
 
@@ -49,6 +50,7 @@ export class AssessmentSystemGroupComponent
         if (companyId)
         {
           body = new API.AssessmentFindRequest();
+          body.lifecycle_status = API.AssessmentLifecycleStatus.OPEN;
           body.company_id = companyId;
 
           this.assessmentService.findAssessments(this.vulnerabilityId, body)
